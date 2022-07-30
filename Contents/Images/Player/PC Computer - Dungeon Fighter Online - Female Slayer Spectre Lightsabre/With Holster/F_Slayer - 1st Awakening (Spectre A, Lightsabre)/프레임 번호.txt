@@ -1,0 +1,6 @@
+stand1 : 9~12
+stand2 : 0~8
+walk : 13~22
+run1 : 146~149 (한번만)
+run2 : 150~157
+attack : 

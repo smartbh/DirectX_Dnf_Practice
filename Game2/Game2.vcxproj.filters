@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ST_Player.h" />
+    <ClInclude Include="ST_Bullet.h" />
+    <ClInclude Include="ST_playerBullet.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="bossFem.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DnFPlayer.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCharacter.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ST_Player.cpp" />
+    <ClCompile Include="ST_Bullet.cpp" />
+    <ClCompile Include="ST_playerBullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="bossFem.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DnFPlayer.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCharacter.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{1a8b9530-b8c4-42f7-a991-1958fe9321ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

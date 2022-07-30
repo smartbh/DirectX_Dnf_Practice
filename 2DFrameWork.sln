@@ -1,0 +1,254 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2DFrameWork", "2DFrameWork\2DFrameWork.vcxproj", "{C2138BC9-A195-455F-91A6-5FF469EB5E61}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game1", "Game1\Game1.vcxproj", "{62755BC4-7433-469B-8413-314F6EC62971}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61} = {C2138BC9-A195-455F-91A6-5FF469EB5E61}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game2", "Game2\Game2.vcxproj", "{E4AABC26-46D5-436A-BE00-FF12933156D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61} = {C2138BC9-A195-455F-91A6-5FF469EB5E61}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contents", "Contents", "{0EC98764-9025-4AF9-8937-0EB5970059BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{E3F02C0D-0DAD-4181-A968-85F48C12D251}"
+	ProjectSection(SolutionItems) = preProject
+		Shaders\1.Basic.hlsl = Shaders\1.Basic.hlsl
+		Shaders\2.Image.hlsl = Shaders\2.Image.hlsl
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{54A27132-8557-498B-9819-8A219F8DF917}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\attack1.png = Contents\Images\attack1.png
+		Contents\Images\attack2.png = Contents\Images\attack2.png
+		Contents\Images\attack3.png = Contents\Images\attack3.png
+		Contents\Images\PLrun1.png = Contents\Images\PLrun1.png
+		Contents\Images\PLrun2.png = Contents\Images\PLrun2.png
+		Contents\Images\PLstand1.png = Contents\Images\PLstand1.png
+		Contents\Images\PLstand2.png = Contents\Images\PLstand2.png
+		Contents\Images\PLwalk.png = Contents\Images\PLwalk.png
+		Contents\Images\stand.png = Contents\Images\stand.png
+		Contents\Images\start1.png = Contents\Images\start1.png
+		Contents\Images\start2.png = Contents\Images\start2.png
+		Contents\Images\start3.png = Contents\Images\start3.png
+		Contents\Images\start4.png = Contents\Images\start4.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Txt", "Txt", "{BC1DD457-26F1-4145-994B-7D33F751C292}"
+	ProjectSection(SolutionItems) = preProject
+		Txt\렌더링 파이프라인.txt = Txt\렌더링 파이프라인.txt
+		Txt\벡터.txt = Txt\벡터.txt
+		Txt\삼각함수.txt = Txt\삼각함수.txt
+		Txt\좌표해상도.txt = Txt\좌표해상도.txt
+		Txt\행렬.txt = Txt\행렬.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound", "Sound", "{031D9208-75CB-45ED-AE3F-F9B0AA28E8CC}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Desktop\Framework\Contents\Sound\bgm.wav = ..\..\Desktop\Framework\Contents\Sound\bgm.wav
+		..\..\Desktop\Framework\Contents\Sound\gun.wav = ..\..\Desktop\Framework\Contents\Sound\gun.wav
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "boss", "boss", "{990869FE-3C2F-4397-9062-25FB5DE6562B}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\attack1.png = Contents\Images\attack1.png
+		Contents\Images\attack2.png = Contents\Images\attack2.png
+		Contents\Images\attack3.png = Contents\Images\attack3.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "appear", "appear", "{9F3EA6A5-CAE3-462F-AEE4-5554F0EC525F}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\appear\appear.gif = Contents\Images\boss\appear\appear.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "attack", "attack", "{632C81BB-99A7-4C2B-A6EC-1662C1C0DBBB}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\attack\attack.gif = Contents\Images\boss\attack\attack.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "die", "die", "{9EAC55B1-F716-40D8-91A8-6BD53AC0414D}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\die\die.gif = Contents\Images\boss\die\die.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "disap", "disap", "{A6952822-C851-47BC-B726-3E35C5B28986}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\disap\disap.gif = Contents\Images\boss\disap\disap.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grog", "grog", "{72B352D8-62B1-44B2-9428-97DD13DDF0EF}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\grog\gorg.gif = Contents\Images\boss\grog\gorg.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "magic1", "magic1", "{2976BEB0-6A81-4DFE-963B-84DB0B4EB18E}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\magic1\magic1.gif = Contents\Images\boss\magic1\magic1.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "magic2", "magic2", "{7C6044BB-0E66-4B42-9DC4-13A14E345215}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\magic2\magic2.gif = Contents\Images\boss\magic2\magic2.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "magic3", "magic3", "{E52BDA84-9950-492A-BFBD-246BA01C561A}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\magic3\magic3.gif = Contents\Images\boss\magic3\magic3.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "magic4", "magic4", "{F1A2174A-5458-4F93-BBF9-AAD1D193B170}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\magic4\magic4.gif = Contents\Images\boss\magic4\magic4.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stand", "stand", "{8E171A48-7E11-4DB1-A92D-F2E762EF7C25}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\stand\stand.gif = Contents\Images\boss\stand\stand.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start", "start", "{82875867-8146-4AF2-9F20-A3DEF69A4FE8}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\start\start.gif = Contents\Images\boss\start\start.gif
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start_frame1", "start_frame1", "{ED32D753-13AD-4A18-BCAD-2540CC4FBA7B}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\start\start_frame1\frame_00_delay-0.1s.png = Contents\Images\boss\start\start_frame1\frame_00_delay-0.1s.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start_frame2", "start_frame2", "{87CBFF7E-CB09-4762-9563-1A912CF76A48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start_frame3", "start_frame3", "{C2EFCDF2-AE17-4826-890D-2AC00B6C724C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start_frame4", "start_frame4", "{26D0240E-9C05-49FF-8699-01BCF2AE815C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start_frame5", "start_frame5", "{9959119E-9D7D-4E5A-99DA-1934D0DB1DE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "start_frame_whole", "start_frame_whole", "{6B982419-6E51-4A5B-A6FD-C5109B91151F}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\start\start_frame_whole\frame_00_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_00_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_01_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_01_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_02_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_02_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_03_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_03_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_04_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_04_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_05_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_05_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_06_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_06_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_07_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_07_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_08_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_08_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_09_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_09_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_10_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_10_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_11_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_11_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_12_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_12_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_13_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_13_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_14_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_14_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_15_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_15_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_16_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_16_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_17_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_17_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_18_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_18_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_19_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_19_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_20_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_20_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_21_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_21_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_22_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_22_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_23_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_23_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_24_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_24_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_25_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_25_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_26_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_26_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_27_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_27_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_28_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_28_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_29_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_29_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_30_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_30_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_31_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_31_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_32_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_32_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_33_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_33_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_34_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_34_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_35_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_35_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_36_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_36_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_37_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_37_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_38_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_38_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_39_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_39_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_40_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_40_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_41_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_41_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_42_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_42_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_43_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_43_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_44_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_44_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_45_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_45_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_46_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_46_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_47_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_47_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_48_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_48_delay-0.1s.png
+		Contents\Images\boss\start\start_frame_whole\frame_49_delay-0.1s.png = Contents\Images\boss\start\start_frame_whole\frame_49_delay-0.1s.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "walk", "walk", "{301CD46C-4F9A-42AF-9D54-40007A40B4BB}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\Images\boss\walk\walk.gif = Contents\Images\boss\walk\walk.gif
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Debug|x64.ActiveCfg = Debug|x64
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Debug|x64.Build.0 = Debug|x64
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Debug|x86.ActiveCfg = Debug|Win32
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Debug|x86.Build.0 = Debug|Win32
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Release|x64.ActiveCfg = Release|x64
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Release|x64.Build.0 = Release|x64
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Release|x86.ActiveCfg = Release|Win32
+		{C2138BC9-A195-455F-91A6-5FF469EB5E61}.Release|x86.Build.0 = Release|Win32
+		{62755BC4-7433-469B-8413-314F6EC62971}.Debug|x64.ActiveCfg = Debug|x64
+		{62755BC4-7433-469B-8413-314F6EC62971}.Debug|x64.Build.0 = Debug|x64
+		{62755BC4-7433-469B-8413-314F6EC62971}.Debug|x86.ActiveCfg = Debug|Win32
+		{62755BC4-7433-469B-8413-314F6EC62971}.Debug|x86.Build.0 = Debug|Win32
+		{62755BC4-7433-469B-8413-314F6EC62971}.Release|x64.ActiveCfg = Release|x64
+		{62755BC4-7433-469B-8413-314F6EC62971}.Release|x64.Build.0 = Release|x64
+		{62755BC4-7433-469B-8413-314F6EC62971}.Release|x86.ActiveCfg = Release|Win32
+		{62755BC4-7433-469B-8413-314F6EC62971}.Release|x86.Build.0 = Release|Win32
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Debug|x64.ActiveCfg = Debug|x64
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Debug|x64.Build.0 = Debug|x64
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Debug|x86.ActiveCfg = Debug|Win32
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Debug|x86.Build.0 = Debug|Win32
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Release|x64.ActiveCfg = Release|x64
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Release|x64.Build.0 = Release|x64
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Release|x86.ActiveCfg = Release|Win32
+		{E4AABC26-46D5-436A-BE00-FF12933156D1}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{54A27132-8557-498B-9819-8A219F8DF917} = {0EC98764-9025-4AF9-8937-0EB5970059BA}
+		{031D9208-75CB-45ED-AE3F-F9B0AA28E8CC} = {0EC98764-9025-4AF9-8937-0EB5970059BA}
+		{990869FE-3C2F-4397-9062-25FB5DE6562B} = {54A27132-8557-498B-9819-8A219F8DF917}
+		{9F3EA6A5-CAE3-462F-AEE4-5554F0EC525F} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{632C81BB-99A7-4C2B-A6EC-1662C1C0DBBB} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{9EAC55B1-F716-40D8-91A8-6BD53AC0414D} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{A6952822-C851-47BC-B726-3E35C5B28986} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{72B352D8-62B1-44B2-9428-97DD13DDF0EF} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{2976BEB0-6A81-4DFE-963B-84DB0B4EB18E} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{7C6044BB-0E66-4B42-9DC4-13A14E345215} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{E52BDA84-9950-492A-BFBD-246BA01C561A} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{F1A2174A-5458-4F93-BBF9-AAD1D193B170} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{8E171A48-7E11-4DB1-A92D-F2E762EF7C25} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{82875867-8146-4AF2-9F20-A3DEF69A4FE8} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+		{ED32D753-13AD-4A18-BCAD-2540CC4FBA7B} = {82875867-8146-4AF2-9F20-A3DEF69A4FE8}
+		{87CBFF7E-CB09-4762-9563-1A912CF76A48} = {82875867-8146-4AF2-9F20-A3DEF69A4FE8}
+		{C2EFCDF2-AE17-4826-890D-2AC00B6C724C} = {82875867-8146-4AF2-9F20-A3DEF69A4FE8}
+		{26D0240E-9C05-49FF-8699-01BCF2AE815C} = {82875867-8146-4AF2-9F20-A3DEF69A4FE8}
+		{9959119E-9D7D-4E5A-99DA-1934D0DB1DE8} = {82875867-8146-4AF2-9F20-A3DEF69A4FE8}
+		{6B982419-6E51-4A5B-A6FD-C5109B91151F} = {82875867-8146-4AF2-9F20-A3DEF69A4FE8}
+		{301CD46C-4F9A-42AF-9D54-40007A40B4BB} = {990869FE-3C2F-4397-9062-25FB5DE6562B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E65A645-0ED0-45FC-8214-114C1DE27774}
+	EndGlobalSection
+EndGlobal
