@@ -22,6 +22,7 @@ DnFPlayer::DnFPlayer()
 	stand1->pivot = OFFSET_N;
 	stand1->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand1->visible = false;
+	// 4 * 0.1 = 0.4f
 
 	stand2 = new ObImage(L"PLstand2.png");
 	stand2->SetParentRT(*col);
@@ -30,8 +31,9 @@ DnFPlayer::DnFPlayer()
 	stand2->scale.y = 231.0f * 3.0f;
 	stand2->SetLocalPosY(160.0f);
 	stand2->pivot = OFFSET_N;
-	stand2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	stand2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand2->visible = false;
+	// 17 * 0.1 = 1.7f
 
 	/* walk */
 	walk = new ObImage(L"PLwalk.png");
@@ -72,13 +74,12 @@ DnFPlayer::DnFPlayer()
 
 	///기본 변수
 	state = PLSTATE::STAND;
-	getTickTime = 1.3f;
+	getTickTime = 0.0f;
+	standTime = 0.0f;
 	Timer = 0.0f;
 
 	attackCount = 0;
-
-	motionRand = 0;
-
+	walkCount = 0;
 }
 
 DnFPlayer::~DnFPlayer()
@@ -90,21 +91,96 @@ void DnFPlayer::Update()
 
 	if (state == PLSTATE::STAND)
 	{
-		motionRand = RANDOM->Int(0, 4);
+		//motionRand = RANDOM->Int(0, 4);
 
 		stand1->visible = true;
 
-		cout << 
+		standTime += DELTA;
+
+		cout << standTime << endl;
+
+		if (standTime > 10.0f) //가만히 있는지 10초정도 지나면
+		{
+			state = PLSTATE::STAND2;
+			stand1->visible = false;
+			stand2->visible = true;
+			getTickTime = 1.7f; //stand2의 애니메이션 출력 시간
+		}
+
+		if (INPUT->KeyDown(VK_RIGHT))
+		{
+			cout << "걷기시작" << endl;
+			stand1->visible = false;
+			walk->visible = true;
+			walkCount = 1;
+			standTime = 0.0f;
+			getTickTime = 0.5f;
+			state = PLSTATE::WALK_R;
+		}
+	}
+	else if (state == PLSTATE::STAND2)
+	{
+		getTickTime -= DELTA;
+		if (getTickTime > 0.0f)
+		{
+			cout << getTickTime << endl;
+		}
+		else
+		{
+			stand1->visible = true;
+			stand2->visible = false;
+			getTickTime = 0.0f;
+			standTime = 0.0f;
+			state = PLSTATE::STAND;
+		}
+	}
+	else if (state == PLSTATE::WALK_R) //오른쪽으로 걷기
+	{
+		if (INPUT->KeyUp(VK_RIGHT))
+		{
+			stand1->visible = true;
+			walk->visible = false;
+			state = PLSTATE::STAND;
+		}
+		else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))
+		{
+			walk->visible = false;
+			run1->visible = true;
+
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				cout << getTickTime << endl;
+			}
+			else
+			{
+				run1->visible = false;
+				run2->visible = true;
+				getTickTime = 0.0f;
+				state = PLSTATE::RUN_R;
+			}
+		}
+	}
+	else if (state == PLSTATE::RUN_R)
+	{
+		if (INPUT->KeyUp(VK_LSHIFT))
+		{
+			walkCount = 0;
+			run2->visible = false;
+			walk->visible = true;
+			state = PLSTATE::WALK_R;
+		}
+
 	}
 
 
 
 	col->Update();
 	stand1->Update();
-	//stand2->Update();
-	//walk->Update();
+	stand2->Update();
+	walk->Update();
 	run1->Update();
-	//run2->Update();
+	run2->Update();
 	//stand2->Update();
 	//stand2->Update();
 	//stand2->Update();
@@ -113,11 +189,11 @@ void DnFPlayer::Update()
 void DnFPlayer::Render()
 {
 	col->Render();
-	//stand1->Render();
-	//stand2->Render();
-	//walk->Render();
+	stand1->Render();
+	stand2->Render();
+	walk->Render();
 	run1->Render();
-	//run2->Render();
+	run2->Render();
 	//stand2->Render();
 	//stand2->Render();
 	//stand2->Render();

@@ -3,9 +3,13 @@ enum class PLSTATE
 {
 	START,
 	STAND,
+	STAND2,
 	SIT,
 	ATTACK,
-	WALK,
+	WALK_R,
+	WALK_L,
+	RUN_R,
+	RUN_L,
 	DIE,
 	APPEAR,
 	DISAPPEAR,
@@ -22,14 +26,18 @@ private:
 	Vector2			dir;
 	ObRect*			col;
 	PLSTATE			state;
+	
 	float			hp;
-	float			damagingTime;
 
+	float			damagingTime;
+	float			standTime;
 	float			getTickTime;
 	float			Timer;
-	int				attackCount;
 
-	int				motionRand;
+
+	int				attackCount; //공격횟수 다단
+	int				walkCount; //걷기 누르는 횟수(2번 = run)
+
 
 	/// <summary>
 	/// 애니메이션 이미지 모음
