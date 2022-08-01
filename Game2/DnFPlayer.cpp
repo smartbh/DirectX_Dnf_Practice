@@ -162,7 +162,7 @@ void DnFPlayer::Update()
 		}
 	}
 	else if (state == PLSTATE::RUN_R)
-	{
+	{	
 		if (INPUT->KeyUp(VK_LSHIFT))
 		{
 			walkCount = 0;
