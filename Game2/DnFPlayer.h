@@ -46,20 +46,28 @@ private:
 	/// 애니메이션 이미지 모음
 	/// </summary>
 	/// stand 1~2
-	ObImage*	stand1;
-	ObImage*	stand2;
+	ObImage*		stand1;
+	ObImage*		stand2;
 	
 	/// <summary>
 	/// walk
 	/// </summary>
-	ObImage*	walk;
+	ObImage*		walk;
 
 	/// <summary>
 	/// run
 	/// </summary>
-	ObImage*	run1;
-	ObImage*	run2;
+	ObImage*		run1;
+	ObImage*		run2;
 
+	//jump
+	ObImage*		jump;
+	
+	/* attack 1~4 */
+	ObImage*		attack1;
+	ObImage*		attack2;
+	ObImage*		attack3;
+	ObImage*		attack4;
 
 
 

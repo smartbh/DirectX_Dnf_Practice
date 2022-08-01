@@ -69,6 +69,17 @@ DnFPlayer::DnFPlayer()
 	run2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	run2->visible = false;
 
+	//jump
+	jump = new ObImage(L"PLjump.png");
+	jump->SetParentRT(*col);
+	jump->maxFrame.x = 6;
+	jump->scale.x = 372.0f * 1.5f;
+	jump->scale.y = 231.0f * 1.5f;
+	jump->SetLocalPosY(60.0f);
+	jump->pivot = OFFSET_N;
+	jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	jump->visible = false;
+
 	//attack 1~6?
 
 
@@ -97,6 +108,7 @@ void DnFPlayer::Update()
 	/// </summary>
 	if (state == PLSTATE::STAND)
 	{
+		jump->visible = false; //점프 끝났으니
 		//motionRand = RANDOM->Int(0, 4);
 
 		stand1->visible = true;
@@ -128,6 +140,9 @@ void DnFPlayer::Update()
 		{
 			cout << "점프" << endl;
 			state = PLSTATE::JUMP;
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			stand1->visible = false;
+			jump->visible = true;
 			gravity = -700.0f;
 		}
 	}
@@ -197,7 +212,7 @@ void DnFPlayer::Update()
 	walk->Update();
 	run1->Update();
 	run2->Update();
-	//stand2->Update();
+	jump->Update();
 	//stand2->Update();
 	//stand2->Update();
 }
@@ -210,7 +225,7 @@ void DnFPlayer::Render()
 	walk->Render();
 	run1->Render();
 	run2->Render();
-	//stand2->Render();
+	jump->Render();
 	//stand2->Render();
 	//stand2->Render();
 }
