@@ -89,8 +89,8 @@ DnFPlayer::~DnFPlayer()
 void DnFPlayer::Update()
 {
 	/////플레이어 중력
-	//col->MoveWorldPos(DOWN * gravity * DELTA);
-	//gravity += 700.0f * DELTA;
+	col->MoveWorldPos(DOWN * gravity * DELTA);
+	gravity += 700.0f * DELTA;
 
 	/// <summary>
 	/// 플레이어 조작
@@ -122,6 +122,13 @@ void DnFPlayer::Update()
 			standTime = 0.0f;
 			getTickTime = 0.5f;
 			state = PLSTATE::WALK_R;
+		}
+
+		else if (INPUT->KeyDown('C'))
+		{
+			cout << "점프" << endl;
+			state = PLSTATE::JUMP;
+			gravity = -700.0f;
 		}
 	}
 	else if (state == PLSTATE::STAND2)
@@ -178,6 +185,9 @@ void DnFPlayer::Update()
 		}
 
 	}
+	else if (state == PLSTATE::JUMP) {
+
+	}
 
 
 
@@ -212,11 +222,22 @@ ObRect* DnFPlayer::getCol()
 
 float DnFPlayer::getPlGravity()
 {
-	return 0.0f;
+	return gravity;
 }
 
-void DnFPlayer::setPlGravity()
+void DnFPlayer::setPlGravity(float number)
 {
+	gravity = number;
+}
+
+PLSTATE DnFPlayer::getPlState()
+{
+	return state;
+}
+
+void DnFPlayer::setPlState(PLSTATE new_state)
+{
+	state = new_state;
 }
 
 void DnFPlayer::TakeDamage(int damage)

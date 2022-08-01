@@ -16,6 +16,7 @@ void Main::Init()
 	bgCol = new ObRect();
 	bgCol->scale = Vector2(app.GetWidth(), 20.0f);
 	bgCol->isFilled = false;
+	bgCol->pivot = OFFSET_T;
 	bgCol->SetWorldPos(Vector2(0.0f, -226.0f));
 	bgCol->collider = COLLIDER::RECT;
 
@@ -52,7 +53,15 @@ void Main::LateUpdate()
 {
 	if (bgCol->Intersect(player->getCol()->GetWorldPos())) //¶¥ÀÌ¶û Ãæµ¹½Ã
 	{
-		player->getCol()->SetWorldPosY(bgCol->GetWorldPos().y + 30.0f);
+		player->getCol()->SetWorldPosY(bgCol->GetWorldPos().y);
+		player->setPlGravity(0.0f);
+
+		if (player->getPlState() == PLSTATE::JUMP)
+		{
+			player->setPlState(PLSTATE::STAND);
+		}
+
+		player->Update();
 	}
 }
 

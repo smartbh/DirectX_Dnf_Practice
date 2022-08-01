@@ -5,6 +5,7 @@ enum class PLSTATE
 	STAND,
 	STAND2,
 	SIT,
+	JUMP,
 	ATTACK,
 	WALK_R,
 	WALK_L,
@@ -71,7 +72,9 @@ public:
 	void		Render();
 	ObRect*		getCol();
 	float		getPlGravity();
-	void		setPlGravity();
+	void		setPlGravity(float number);
+	PLSTATE		getPlState();
+	void		setPlState(PLSTATE new_state);
 	void		TakeDamage(int damage);
 };
 
