@@ -246,7 +246,7 @@ void DnFPlayer::Update()
 			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 			walk->visible = false;
 			jump->visible = true;
-			gravity = -700.0f;
+			gravity = -500.0f;
 		}
 	}
 	else if (state == PLSTATE::RUN_R)
