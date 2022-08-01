@@ -214,9 +214,6 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::WALK_R) //오른쪽으로 걷기
 	{
-		col->MoveWorldPos(RIGHT * 200.0f * DELTA);
-		CAM->position += RIGHT * 200.0f * DELTA;
-
 		if (INPUT->KeyUp(VK_RIGHT))
 		{
 			stand1->visible = true;
@@ -254,8 +251,8 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::RUN_R)
 	{
-		col->MoveWorldPos(RIGHT * 400.0f * DELTA);
-		CAM->position += RIGHT * 400.0f * DELTA;
+		/*col->MoveWorldPos(RIGHT * 400.0f * DELTA);
+		CAM->position += RIGHT * 400.0f * DELTA;*/
 
 		if (INPUT->KeyUp(VK_LSHIFT))
 		{

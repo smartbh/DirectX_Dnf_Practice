@@ -32,7 +32,7 @@ void Main::Release()
 void Main::Update()
 {	
 	//창크기에 맞춰서 배경 충돌체 위치조정;
-	bgCol->scale = Vector2(app.GetWidth(), 20.0f);
+	bgCol->scale = Vector2(app.GetWidth() * 3.0f, 20.0f);
 	bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f));
 	
 	/*ImGui::Text("FPS : %d", TIMER->GetFramePerSecond());
@@ -42,6 +42,31 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
+
+	if (INPUT->KeyPress(VK_RIGHT))
+	{
+		//1초에 100픽셀 움직여라
+		bg1->uv.x += DELTA / bg1->scale.x * 50.0f;
+		bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
+
+		bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
+		bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
+
+		player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
+		CAM->position += RIGHT * 200.0f * DELTA;
+	}
+	else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
+	{
+		bg1->uv.x += DELTA / bg1->scale.x * 200.0f;
+		bg1->uv.z += DELTA / bg1->scale.x * 200.0f;
+
+		bg2->uv.x += DELTA / bg2->scale.x * 300.0f;
+		bg2->uv.z += DELTA / bg2->scale.x * 300.0f;
+
+		player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
+		CAM->position += RIGHT * 1000.0f * DELTA;
+	}
+
 	bg1->Update();
 	bg2->Update();
 	bgCol->Update();
