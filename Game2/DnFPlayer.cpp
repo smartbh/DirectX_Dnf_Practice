@@ -96,7 +96,7 @@ DnFPlayer::DnFPlayer()
 	attack2->maxFrame.x = 4;
 	attack2->scale.x = 372.0f * 1.5f;
 	attack2->scale.y = 231.0f * 1.5f;
-	attack2->SetLocalPosY(60.0f);
+	attack2->SetLocalPosY(90.0f);
 	attack2->pivot = OFFSET_N;
 	attack2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	attack2->visible = false;
@@ -304,7 +304,7 @@ void DnFPlayer::Update()
 			attack4->visible = true;
 			attack4->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 
-			getTickTime = 2.0f;
+			getTickTime = 1.0f;
 			attackCount = 0;
 			cout << attackCount << endl;
 		}
@@ -317,13 +317,15 @@ void DnFPlayer::Update()
 				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				cout << "dddd" << endl;
 				cout << getTickTime << endl;
+				cout << "attackCount : " << attackCount << endl;
 			}
 			else
 			{
 				cout << "시간 끝 애니메이션 변화" << endl;
-				state = PLSTATE::STAND;
 				attack4->visible = false;
 				getTickTime = 0.0f;
+				cout << "attackCount : " << attackCount << endl;
+				state = PLSTATE::STAND;
 			}
 
 		}
@@ -383,6 +385,11 @@ PLSTATE DnFPlayer::getPlState()
 void DnFPlayer::setPlState(PLSTATE new_state)
 {
 	state = new_state;
+}
+
+int DnFPlayer::getPlAttackCount()
+{
+	return attackCount;
 }
 
 void DnFPlayer::TakeDamage(int damage)

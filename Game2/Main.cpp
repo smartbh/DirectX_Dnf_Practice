@@ -55,7 +55,7 @@ void Main::Update()
 		player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
 		CAM->position += RIGHT * 200.0f * DELTA;
 	}
-	else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
+	if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
 	{
 		bg1->uv.x += DELTA / bg1->scale.x * 200.0f;
 		bg1->uv.z += DELTA / bg1->scale.x * 200.0f;
@@ -66,6 +66,13 @@ void Main::Update()
 		player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
 		CAM->position += RIGHT * 1000.0f * DELTA;
 	}
+	if (INPUT->KeyDown('Z'))//공격
+	{
+		if(player->getPlAttackCount() < 3)
+			player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
+	}
+
+	
 
 	bg1->Update();
 	bg2->Update();

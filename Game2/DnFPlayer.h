@@ -84,6 +84,7 @@ public:
 	void		setPlGravity(float number);
 	PLSTATE		getPlState();
 	void		setPlState(PLSTATE new_state);
+	int			getPlAttackCount();
 	void		TakeDamage(int damage);
 };
 
