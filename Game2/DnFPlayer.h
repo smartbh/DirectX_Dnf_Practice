@@ -34,6 +34,8 @@ private:
 	float			getTickTime;
 	float			Timer;
 
+	float			gravity;//Áß·Â
+
 
 	int				attackCount; //°ø°ÝÈ½¼ö ´Ù´Ü
 	int				walkCount; //°È±â ´©¸£´Â È½¼ö(2¹ø = run)
@@ -68,6 +70,8 @@ public:
 	void		Update();
 	void		Render();
 	ObRect*		getCol();
+	float		getPlGravity();
+	void		setPlGravity();
 	void		TakeDamage(int damage);
 };
 

@@ -3,7 +3,7 @@
 DnFPlayer::DnFPlayer()
 {
 	col = new ObRect();
-	col->scale = Vector2(120.0f, 330.0f);
+	col->scale = Vector2(120.0f, 231.0f) / 2.0f;
 	col->SetWorldPos(Vector2(0.0f, 0.0f));
 	col->pivot = OFFSET_B;
 	col->isFilled = false;
@@ -16,9 +16,9 @@ DnFPlayer::DnFPlayer()
 	stand1 = new ObImage(L"PLstand1.png");
 	stand1->SetParentRT(*col);
 	stand1->maxFrame.x = 4;
-	stand1->scale.x = 372.0f * 3.0f;
-	stand1->scale.y = 231.0f * 3.0f;
-	stand1->SetLocalPosY(160.0f);
+	stand1->scale.x = 372.0f* 1.5f; //* 3.0f
+	stand1->scale.y = 231.0f* 1.5f;
+	stand1->SetLocalPosY(60.0f);
 	stand1->pivot = OFFSET_N;
 	stand1->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand1->visible = false;
@@ -27,9 +27,9 @@ DnFPlayer::DnFPlayer()
 	stand2 = new ObImage(L"PLstand2.png");
 	stand2->SetParentRT(*col);
 	stand2->maxFrame.x = 17;
-	stand2->scale.x = 372.0f * 3.0f;
-	stand2->scale.y = 231.0f * 3.0f;
-	stand2->SetLocalPosY(160.0f);
+	stand2->scale.x = 372.0f* 1.5f;
+	stand2->scale.y = 231.0f* 1.5f;
+	stand2->SetLocalPosY(60.0f);
 	stand2->pivot = OFFSET_N;
 	stand2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand2->visible = false;
@@ -39,9 +39,9 @@ DnFPlayer::DnFPlayer()
 	walk = new ObImage(L"PLwalk.png");
 	walk->SetParentRT(*col);
 	walk->maxFrame.x = 10;
-	walk->scale.x = 372.0f * 3.0f;
-	walk->scale.y = 231.0f * 3.0f;
-	walk->SetLocalPosY(160.0f);
+	walk->scale.x = 372.0f* 1.5f;
+	walk->scale.y = 231.0f* 1.5f;
+	walk->SetLocalPosY(60.0f);
 	walk->pivot = OFFSET_N;
 	walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	walk->visible = false;
@@ -51,9 +51,9 @@ DnFPlayer::DnFPlayer()
 	run1 = new ObImage(L"PLrun1.png");
 	run1->SetParentRT(*col);
 	run1->maxFrame.x = 5;
-	run1->scale.x = 372.0f * 3.0f;
-	run1->scale.y = 231.0f * 3.0f;
-	run1->SetLocalPosY(160.0f);
+	run1->scale.x = 372.0f* 1.5f;
+	run1->scale.y = 231.0f* 1.5f;
+	run1->SetLocalPosY(60.0f);
 	run1->pivot = OFFSET_N;
 	run1->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	run1->visible = false;
@@ -62,9 +62,9 @@ DnFPlayer::DnFPlayer()
 	run2 = new ObImage(L"PLrun2.png");
 	run2->SetParentRT(*col);
 	run2->maxFrame.x = 8;
-	run2->scale.x = 372.0f * 3.0f;
-	run2->scale.y = 231.0f * 3.0f;
-	run2->SetLocalPosY(160.0f);
+	run2->scale.x = 372.0f * 1.5f;
+	run2->scale.y = 231.0f * 1.5f;
+	run2->SetLocalPosY(60.0f);
 	run2->pivot = OFFSET_N;
 	run2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	run2->visible = false;
@@ -88,7 +88,13 @@ DnFPlayer::~DnFPlayer()
 
 void DnFPlayer::Update()
 {
+	/////플레이어 중력
+	//col->MoveWorldPos(DOWN * gravity * DELTA);
+	//gravity += 700.0f * DELTA;
 
+	/// <summary>
+	/// 플레이어 조작
+	/// </summary>
 	if (state == PLSTATE::STAND)
 	{
 		//motionRand = RANDOM->Int(0, 4);
@@ -145,20 +151,20 @@ void DnFPlayer::Update()
 		else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))
 		{
 			walk->visible = false;
-			run1->visible = true;
+			//run1->visible = true;
 
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
-			{
-				cout << getTickTime << endl;
-			}
-			else
-			{
-				run1->visible = false;
+			//getTickTime -= DELTA;
+			//if (getTickTime > 0.0f)
+			//{
+			//	cout << getTickTime << endl;
+			//}
+			//else
+			//{
+				//run1->visible = false;
 				run2->visible = true;
 				getTickTime = 0.0f;
 				state = PLSTATE::RUN_R;
-			}
+			//}
 		}
 	}
 	else if (state == PLSTATE::RUN_R)
@@ -202,6 +208,15 @@ void DnFPlayer::Render()
 ObRect* DnFPlayer::getCol()
 {
 	return col;
+}
+
+float DnFPlayer::getPlGravity()
+{
+	return 0.0f;
+}
+
+void DnFPlayer::setPlGravity()
+{
 }
 
 void DnFPlayer::TakeDamage(int damage)
