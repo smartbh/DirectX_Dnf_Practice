@@ -41,6 +41,7 @@ private:
 	int				attackCount; //공격횟수 다단
 	int				walkCount; //걷기 누르는 횟수(2번 = run)
 
+	Vector2			playerDir;
 
 	/// <summary>
 	/// 애니메이션 이미지 모음

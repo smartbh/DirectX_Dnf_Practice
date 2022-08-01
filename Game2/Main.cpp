@@ -10,7 +10,7 @@ void Main::Init()
 
 	bg2 = new ObImage(L"bg_2_fix.png");
 	bg2->scale = Vector2(1344.0f, 274.0f) * 1.5f;
-	bg2->SetWorldPosY(-500.0f + 274.0f);
+	bg2->SetWorldPosY(-500.0f + 100.0f);
 	bg2->space = SPACE::SCREEN;
 
 	bgCol = new ObRect();

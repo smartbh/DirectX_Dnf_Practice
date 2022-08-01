@@ -81,7 +81,45 @@ DnFPlayer::DnFPlayer()
 	jump->visible = false;
 
 	//attack 1~6?
+	attack1 = new ObImage(L"PLattack1.png");
+	attack1->SetParentRT(*col);
+	attack1->maxFrame.x = 5;
+	attack1->scale.x = 372.0f * 1.5f;
+	attack1->scale.y = 231.0f * 1.5f;
+	attack1->SetLocalPosY(60.0f);
+	attack1->pivot = OFFSET_N;
+	attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	attack1->visible = false;
 
+	attack2 = new ObImage(L"PLattack2.png");
+	attack2->SetParentRT(*col);
+	attack2->maxFrame.x = 4;
+	attack2->scale.x = 372.0f * 1.5f;
+	attack2->scale.y = 231.0f * 1.5f;
+	attack2->SetLocalPosY(60.0f);
+	attack2->pivot = OFFSET_N;
+	attack2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	attack2->visible = false;
+
+	attack3 = new ObImage(L"PLattack3.png");
+	attack3->SetParentRT(*col);
+	attack3->maxFrame.x = 9;
+	attack3->scale.x = 372.0f * 1.5f;
+	attack3->scale.y = 231.0f * 1.5f;
+	attack3->SetLocalPosY(60.0f);
+	attack3->pivot = OFFSET_N;
+	attack3->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	attack3->visible = false;
+
+	attack4 = new ObImage(L"PLattack4.png");
+	attack4->SetParentRT(*col);
+	attack4->maxFrame.x = 4;
+	attack4->scale.x = 372.0f * 1.5f;
+	attack4->scale.y = 231.0f * 1.5f;
+	attack4->SetLocalPosY(60.0f);
+	attack4->pivot = OFFSET_N;
+	attack4->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	attack4->visible = false;
 
 	///기본 변수
 	state = PLSTATE::STAND;
@@ -91,6 +129,7 @@ DnFPlayer::DnFPlayer()
 
 	attackCount = 0;
 	walkCount = 0;
+	playerDir = RIGHT;
 }
 
 DnFPlayer::~DnFPlayer()
@@ -106,7 +145,7 @@ void DnFPlayer::Update()
 	/// <summary>
 	/// 플레이어 조작
 	/// </summary>
-	if (state == PLSTATE::STAND)
+	if (state == PLSTATE::STAND) //오른쪽 스탠딩
 	{
 		jump->visible = false; //점프 끝났으니
 		//motionRand = RANDOM->Int(0, 4);
@@ -145,6 +184,17 @@ void DnFPlayer::Update()
 			jump->visible = true;
 			gravity = -700.0f;
 		}
+
+		else if (INPUT->KeyDown('Z'))
+		{
+			stand1->visible = false;
+
+			attack1->visible = true;
+			attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			state = PLSTATE::ATTACK;
+			cout << "공격1" << endl;
+			attackCount = 1;
+		}
 	}
 	else if (state == PLSTATE::STAND2)
 	{
@@ -164,13 +214,16 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::WALK_R) //오른쪽으로 걷기
 	{
+		col->MoveWorldPos(RIGHT * 200.0f * DELTA);
+		CAM->position += RIGHT * 200.0f * DELTA;
+
 		if (INPUT->KeyUp(VK_RIGHT))
 		{
 			stand1->visible = true;
 			walk->visible = false;
 			state = PLSTATE::STAND;
 		}
-		else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))
+		else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
 		{
 			walk->visible = false;
 			//run1->visible = true;
@@ -188,9 +241,22 @@ void DnFPlayer::Update()
 				state = PLSTATE::RUN_R;
 			//}
 		}
+
+		else if (INPUT->KeyDown('C'))
+		{
+			cout << "점프" << endl;
+			state = PLSTATE::JUMP;
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			walk->visible = false;
+			jump->visible = true;
+			gravity = -700.0f;
+		}
 	}
 	else if (state == PLSTATE::RUN_R)
-	{	
+	{
+		col->MoveWorldPos(RIGHT * 400.0f * DELTA);
+		CAM->position += RIGHT * 400.0f * DELTA;
+
 		if (INPUT->KeyUp(VK_LSHIFT))
 		{
 			walkCount = 0;
@@ -198,9 +264,72 @@ void DnFPlayer::Update()
 			walk->visible = true;
 			state = PLSTATE::WALK_R;
 		}
+		else if (INPUT->KeyDown('C'))
+		{
+			cout << "점프" << endl;
+			state = PLSTATE::JUMP;
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			run2->visible = false;
+			jump->visible = true;
+			gravity = -700.0f;
+		}
 
 	}
 	else if (state == PLSTATE::JUMP) {
+		//점프공격 염두
+	}
+	else if (state == PLSTATE::ATTACK) {
+		cout << attackCount << endl;
+
+		if (INPUT->KeyDown('Z') && attackCount == 1) //2연타
+		{
+			cout << "공격2" << endl;
+			attack1->visible = false;
+			attack2->visible = true;
+			attack2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			attackCount = 2;
+			cout << attackCount << endl;
+		}
+
+		else if (INPUT->KeyDown('Z') && attackCount == 2) //3연타
+		{
+			cout << "공격3" << endl;
+			attack2->visible = false;
+			attack3->visible = true;
+			attack3->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			attackCount = 3;
+			cout << attackCount << endl;
+		}
+		else if (INPUT->KeyDown('Z') && attackCount == 3) //3연타
+		{
+			cout << "공격4" << endl;
+			attack3->visible = false;
+			attack4->visible = true;
+			attack4->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+
+			getTickTime = 2.0f;
+			attackCount = 0;
+			cout << attackCount << endl;
+		}
+
+		if (attackCount == 0)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				cout << "dddd" << endl;
+				cout << getTickTime << endl;
+			}
+			else
+			{
+				cout << "시간 끝 애니메이션 변화" << endl;
+				state = PLSTATE::STAND;
+				attack4->visible = false;
+				getTickTime = 0.0f;
+			}
+
+		}
 
 	}
 
@@ -213,8 +342,10 @@ void DnFPlayer::Update()
 	run1->Update();
 	run2->Update();
 	jump->Update();
-	//stand2->Update();
-	//stand2->Update();
+	attack1->Update();
+	attack2->Update();
+	attack3->Update();
+	attack4->Update();
 }
 
 void DnFPlayer::Render()
@@ -226,8 +357,10 @@ void DnFPlayer::Render()
 	run1->Render();
 	run2->Render();
 	jump->Render();
-	//stand2->Render();
-	//stand2->Render();
+	attack1->Render();
+	attack2->Render();
+	attack3->Render();
+	attack4->Render();
 }
 
 ObRect* DnFPlayer::getCol()
