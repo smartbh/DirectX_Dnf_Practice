@@ -85,6 +85,8 @@ public:
 	PLSTATE		getPlState();
 	void		setPlState(PLSTATE new_state);
 	int			getPlAttackCount();
+	void		printPlState();
+	Vector2		getPlDir();
 	void		TakeDamage(int damage);
 };
 

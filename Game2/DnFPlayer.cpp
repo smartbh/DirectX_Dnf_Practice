@@ -3,7 +3,7 @@
 DnFPlayer::DnFPlayer()
 {
 	col = new ObRect();
-	col->scale = Vector2(120.0f, 231.0f) / 2.0f;
+	col->scale = Vector2(120.0f, 300.0f) / 2.0f;
 	col->SetWorldPos(Vector2(0.0f, 0.0f));
 	col->pivot = OFFSET_B;
 	col->isFilled = false;
@@ -18,7 +18,8 @@ DnFPlayer::DnFPlayer()
 	stand1->maxFrame.x = 4;
 	stand1->scale.x = 372.0f* 1.5f; //* 3.0f
 	stand1->scale.y = 231.0f* 1.5f;
-	stand1->SetLocalPosY(60.0f);
+	stand1->SetLocalPosX(-10.0f);
+	stand1->SetLocalPosY(80.0f);
 	stand1->pivot = OFFSET_N;
 	stand1->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand1->visible = false;
@@ -29,7 +30,7 @@ DnFPlayer::DnFPlayer()
 	stand2->maxFrame.x = 17;
 	stand2->scale.x = 372.0f* 1.5f;
 	stand2->scale.y = 231.0f* 1.5f;
-	stand2->SetLocalPosY(60.0f);
+	stand2->SetLocalPosY(80.0f);
 	stand2->pivot = OFFSET_N;
 	stand2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand2->visible = false;
@@ -41,7 +42,7 @@ DnFPlayer::DnFPlayer()
 	walk->maxFrame.x = 10;
 	walk->scale.x = 372.0f* 1.5f;
 	walk->scale.y = 231.0f* 1.5f;
-	walk->SetLocalPosY(60.0f);
+	walk->SetLocalPosY(80.0f);
 	walk->pivot = OFFSET_N;
 	walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	walk->visible = false;
@@ -145,56 +146,162 @@ void DnFPlayer::Update()
 	/// <summary>
 	/// 플레이어 조작
 	/// </summary>
-	if (state == PLSTATE::STAND) //오른쪽 스탠딩
+	if (state == PLSTATE::STAND)
 	{
-		jump->visible = false; //점프 끝났으니
-		//motionRand = RANDOM->Int(0, 4);
-
-		stand1->visible = true;
-
-		standTime += DELTA;
-
-		cout << standTime << endl;
-
-		if (standTime > 10.0f) //가만히 있는지 10초정도 지나면
+		if (playerDir == RIGHT) //오른쪽 스탠딩
 		{
-			state = PLSTATE::STAND2;
-			stand1->visible = false;
-			stand2->visible = true;
-			getTickTime = 1.7f; //stand2의 애니메이션 출력 시간
+			jump->visible = false; //점프 끝났으니
+			//motionRand = RANDOM->Int(0, 4);
+
+			//sonic->run->reverseLR = !sonic->run->reverseLR; 뒤집기
+			stand1->reverseLR = false; //우측, 기본이 false
+			stand2->reverseLR = false;
+			walk->reverseLR = false;
+			jump->reverseLR = false;
+			run2->reverseLR = false;
+			attack1->reverseLR = false;
+			attack2->reverseLR = false;
+			attack3->reverseLR = false;
+			attack4->reverseLR = false;
+
+			stand1->visible = true;
+
+			standTime += DELTA;
+
+			cout << standTime << endl;
+
+			if (standTime > 10.0f) //가만히 있는지 10초정도 지나면
+			{
+				state = PLSTATE::STAND2;
+				stand1->visible = false;
+				stand2->visible = true;
+				getTickTime = 1.7f; //stand2의 애니메이션 출력 시간
+			}
+
+			if (INPUT->KeyDown(VK_RIGHT))
+			{
+				cout << "걷기시작" << endl;
+				stand1->visible = false;
+				walk->visible = true;
+				playerDir = RIGHT;
+				walkCount = 1;
+				standTime = 0.0f;
+				getTickTime = 0.5f;
+				state = PLSTATE::WALK_R;
+			}
+			else if (INPUT->KeyDown(VK_LEFT))
+			{
+				cout << "걷기시작" << endl;
+				stand1->visible = false;
+				walk->reverseLR = true;
+				walk->visible = true;
+				playerDir = LEFT;
+				walkCount = 1;
+				standTime = 0.0f;
+				getTickTime = 0.5f;
+				state = PLSTATE::WALK_L;
+			}
+
+			if (INPUT->KeyDown('C'))
+			{
+				cout << "점프" << endl;
+				state = PLSTATE::JUMP;
+				jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				stand1->visible = false;
+				jump->visible = true;
+				gravity = -700.0f;
+			}
+
+			if (INPUT->KeyDown('Z'))
+			{
+				stand1->visible = false;
+
+				attack1->visible = true;
+				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				state = PLSTATE::ATTACK;
+				cout << "공격1" << endl;
+				attackCount = 1;
+			}
 		}
 
-		if (INPUT->KeyDown(VK_RIGHT))
+		if (playerDir == LEFT) //왼쪽 스탠딩
 		{
-			cout << "걷기시작" << endl;
-			stand1->visible = false;
-			walk->visible = true;
-			walkCount = 1;
-			standTime = 0.0f;
-			getTickTime = 0.5f;
-			state = PLSTATE::WALK_R;
-		}
+			jump->visible = false; //점프 끝났으니
+			//motionRand = RANDOM->Int(0, 4);
 
-		else if (INPUT->KeyDown('C'))
-		{
-			cout << "점프" << endl;
-			state = PLSTATE::JUMP;
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			stand1->visible = false;
-			jump->visible = true;
-			gravity = -700.0f;
-		}
+			//sonic->run->reverseLR = !sonic->run->reverseLR; 뒤집기
+			stand1->reverseLR = true; //좌측, 기본이 false
+			stand2->reverseLR = true; 
+			walk->reverseLR = true; 
+			jump->reverseLR = true; 
+			run2->reverseLR = true; 
+			attack1->reverseLR = true; 
+			attack2->reverseLR = true; 
+			attack3->reverseLR = true; 
+			attack4->reverseLR = true; 
 
-		else if (INPUT->KeyDown('Z'))
-		{
-			stand1->visible = false;
+			stand1->visible = true;
 
-			attack1->visible = true;
-			attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			state = PLSTATE::ATTACK;
-			cout << "공격1" << endl;
-			attackCount = 1;
+			standTime += DELTA;
+
+			cout << standTime << endl;
+
+			if (standTime > 10.0f) //가만히 있는지 10초정도 지나면
+			{
+				state = PLSTATE::STAND2;
+				stand1->visible = false;
+				stand2->visible = true;
+				getTickTime = 1.7f; //stand2의 애니메이션 출력 시간
+			}
+
+
+			if (INPUT->KeyDown(VK_LEFT))
+			{
+				cout << "걷기시작" << endl;
+				stand1->visible = false;
+				walk->visible = true;
+				playerDir = LEFT;
+				walkCount = 1;
+				standTime = 0.0f;
+				getTickTime = 0.5f;
+				state = PLSTATE::WALK_L;
+			}
+
+			else if (INPUT->KeyDown(VK_RIGHT))
+			{
+				cout << "걷기시작" << endl;
+				stand1->visible = false;
+				walk->reverseLR = false;
+				walk->visible = true;
+				playerDir = RIGHT;
+				walkCount = 1;
+				standTime = 0.0f;
+				getTickTime = 0.5f;
+				state = PLSTATE::WALK_R;
+			}
+
+			if (INPUT->KeyDown('C'))
+			{
+				cout << "점프" << endl;
+				state = PLSTATE::JUMP;
+				jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				stand1->visible = false;
+				jump->visible = true;
+				gravity = -700.0f;
+			}
+
+			if (INPUT->KeyDown('Z'))
+			{
+				stand1->visible = false;
+
+				attack1->visible = true;
+				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				state = PLSTATE::ATTACK;
+				cout << "공격1" << endl;
+				attackCount = 1;
+			}
 		}
+		
 	}
 	else if (state == PLSTATE::STAND2)
 	{
@@ -223,20 +330,9 @@ void DnFPlayer::Update()
 		else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
 		{
 			walk->visible = false;
-			//run1->visible = true;
-
-			//getTickTime -= DELTA;
-			//if (getTickTime > 0.0f)
-			//{
-			//	cout << getTickTime << endl;
-			//}
-			//else
-			//{
-				//run1->visible = false;
-				run2->visible = true;
-				getTickTime = 0.0f;
-				state = PLSTATE::RUN_R;
-			//}
+			run2->visible = true;
+			getTickTime = 0.0f;
+			state = PLSTATE::RUN_R;
 		}
 
 		else if (INPUT->KeyDown('C'))
@@ -249,6 +345,39 @@ void DnFPlayer::Update()
 			gravity = -500.0f;
 		}
 	}
+	else if (state == PLSTATE::WALK_L) //왼쪽으로 걷기
+	{
+		if (INPUT->KeyUp(VK_LEFT))
+		{
+			playerDir = LEFT;
+			stand1->reverseLR = true;
+			stand1->visible = true;
+			walk->visible = false;
+			state = PLSTATE::STAND;
+		}
+		else if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT))//달리기
+		{
+			playerDir = LEFT;
+			walk->visible = false;
+			run2->reverseLR = true;
+			run2->visible = true;
+			getTickTime = 0.0f;
+			state = PLSTATE::RUN_L;
+		}
+
+		else if (INPUT->KeyDown('C'))
+		{
+			playerDir = LEFT;
+			cout << "점프" << endl;
+			state = PLSTATE::JUMP;
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			walk->visible = false;
+			jump->reverseLR = true;
+			jump->visible = true;
+			gravity = -500.0f;
+		}
+	}
+
 	else if (state == PLSTATE::RUN_R)
 	{
 		/*col->MoveWorldPos(RIGHT * 400.0f * DELTA);
@@ -256,10 +385,41 @@ void DnFPlayer::Update()
 
 		if (INPUT->KeyUp(VK_LSHIFT))
 		{
-			walkCount = 0;
+			playerDir = RIGHT;
 			run2->visible = false;
 			walk->visible = true;
 			state = PLSTATE::WALK_R;
+		}
+		if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT)) //왼쪽으로 돌때
+		{
+			playerDir = LEFT;
+			run2->reverseLR = true;
+			run2->visible = true;
+			getTickTime = 0.0f;
+			state = PLSTATE::RUN_L;
+		}
+		if (INPUT->KeyDown('C'))
+		{
+			cout << "점프" << endl;
+			state = PLSTATE::JUMP;
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			run2->visible = false;
+			jump->visible = true;
+			gravity = -700.0f;
+		}
+
+	}
+	else if (state == PLSTATE::RUN_L)
+	{
+		/*col->MoveWorldPos(RIGHT * 400.0f * DELTA);
+		CAM->position += RIGHT * 400.0f * DELTA;*/
+
+		if (INPUT->KeyUp(VK_LSHIFT))
+		{
+			playerDir = LEFT;
+			run2->visible = false;
+			walk->visible = true;
+			state = PLSTATE::WALK_L;
 		}
 		else if (INPUT->KeyDown('C'))
 		{
@@ -270,7 +430,6 @@ void DnFPlayer::Update()
 			jump->visible = true;
 			gravity = -700.0f;
 		}
-
 	}
 	else if (state == PLSTATE::JUMP) {
 		//점프공격 염두
@@ -390,6 +549,78 @@ void DnFPlayer::setPlState(PLSTATE new_state)
 int DnFPlayer::getPlAttackCount()
 {
 	return attackCount;
+}
+
+void DnFPlayer::printPlState()
+{
+	//START,
+	//	STAND,
+	//	STAND2,
+	//	SIT,
+	//	JUMP,
+	//	ATTACK,
+	//	WALK_R,
+	//	WALK_L,
+	//	RUN_R,
+	//	RUN_L,
+	//	DIE,
+	//	APPEAR,
+	//	DISAPPEAR,
+	//	GORG,
+	//	SKILL1,
+	//	SKILL2,
+	//	SKILL3,
+	//	SKILL4
+	if (state == PLSTATE::START)
+	{
+		cout << "state : START" << endl;
+	}
+	else if (state == PLSTATE::STAND)
+	{
+		cout << "state : STAND" << endl;
+	}
+	else if (state == PLSTATE::WALK_R)
+	{
+		cout << "state : WALK_R" << endl;
+	}
+	else if (state == PLSTATE::WALK_L)
+	{
+		cout << "state : WALK_L" << endl;
+	}
+	else if (state == PLSTATE::RUN_R)
+	{
+		cout << "state : RUN_R" << endl;
+	}
+	else if (state == PLSTATE::RUN_L)
+	{
+		cout << "state : RUN_L" << endl;
+	}
+	else if (state == PLSTATE::ATTACK)
+	{
+		cout << "state : RUN_R" << endl;
+	}
+	else if (state == PLSTATE::JUMP)
+	{
+		cout << "state : RUN_R" << endl;
+	}
+	else if (state == PLSTATE::RUN_R)
+	{
+		cout << "state : RUN_R" << endl;
+	}
+	else if (state == PLSTATE::RUN_R)
+	{
+		cout << "state : RUN_R" << endl;
+	}
+	else if (state == PLSTATE::RUN_R)
+	{
+		cout << "state : RUN_R" << endl;
+	}
+
+}
+
+Vector2 DnFPlayer::getPlDir()
+{
+	return playerDir;
 }
 
 void DnFPlayer::TakeDamage(int damage)

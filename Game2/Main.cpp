@@ -17,7 +17,7 @@ void Main::Init()
 	bgCol->scale = Vector2(app.GetWidth(), 20.0f);
 	bgCol->isFilled = false;
 	bgCol->pivot = OFFSET_T;
-	bgCol->SetWorldPos(Vector2(0.0f, -226.0f));
+	bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f)); // -226.0f
 	bgCol->collider = COLLIDER::RECT;
 
 	player = new DnFPlayer();
@@ -33,7 +33,7 @@ void Main::Update()
 {	
 	//창크기에 맞춰서 배경 충돌체 위치조정;
 	bgCol->scale = Vector2(app.GetWidth() * 3.0f, 20.0f);
-	bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f));
+	//bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f));
 	
 	/*ImGui::Text("FPS : %d", TIMER->GetFramePerSecond());
 
@@ -42,6 +42,8 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
+
+	ImGui::Text("%s",player->printPlState())
 
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
@@ -53,7 +55,20 @@ void Main::Update()
 		bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
 
 		player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
+		bgCol->MoveWorldPos(RIGHT * 200.0f * DELTA);
 		CAM->position += RIGHT * 200.0f * DELTA;
+	}
+	else if (INPUT->KeyPress(VK_LEFT))
+	{
+		bg1->uv.x -= DELTA / bg1->scale.x * 50.0f;
+		bg1->uv.z -= DELTA / bg1->scale.x * 50.0f;
+
+		bg2->uv.x -= DELTA / bg2->scale.x * 100.0f;
+		bg2->uv.z -= DELTA / bg2->scale.x * 100.0f;
+
+		player->getCol()->MoveWorldPos(LEFT * 200.0f * DELTA);
+		bgCol->MoveWorldPos(LEFT * 200.0f * DELTA);
+		CAM->position += LEFT * 200.0f * DELTA;
 	}
 	if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
 	{
@@ -64,11 +79,23 @@ void Main::Update()
 		bg2->uv.z += DELTA / bg2->scale.x * 300.0f;
 
 		player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
+		bgCol->MoveWorldPos(RIGHT * 1000.0f * DELTA);
 		CAM->position += RIGHT * 1000.0f * DELTA;
+	}
+	else if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT)) {
+		bg1->uv.x -= DELTA / bg1->scale.x * 200.0f;
+		bg1->uv.z -= DELTA / bg1->scale.x * 200.0f;
+
+		bg2->uv.x -= DELTA / bg2->scale.x * 300.0f;
+		bg2->uv.z -= DELTA / bg2->scale.x * 300.0f;
+
+		player->getCol()->MoveWorldPos(LEFT * 1000.0f * DELTA);
+		bgCol->MoveWorldPos(LEFT * 1000.0f * DELTA);
+		CAM->position += LEFT * 1000.0f * DELTA;
 	}
 	if (INPUT->KeyDown('Z'))//공격
 	{
-		if(player->getPlAttackCount() < 3)
+		if(player->getPlAttackCount() < 3 && player->getPlState() == PLSTATE::ATTACK)
 			player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
 	}
 
