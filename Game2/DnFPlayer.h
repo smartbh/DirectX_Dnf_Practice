@@ -6,6 +6,7 @@ enum class PLSTATE
 	STAND2,
 	SIT,
 	JUMP,
+	JUMPATTACK,
 	ATTACK,
 	WALK_R,
 	WALK_L,
@@ -26,6 +27,8 @@ class DnFPlayer
 private:
 	Vector2			dir;
 	ObRect*			col;
+	ObRect*			weaponCol;
+
 	PLSTATE			state;
 	
 	float			hp;
@@ -63,12 +66,19 @@ private:
 
 	//jump
 	ObImage*		jump;
+	ObImage*		jumpAttack;
 	
 	/* attack 1~4 */
 	ObImage*		attack1;
 	ObImage*		attack2;
 	ObImage*		attack3;
 	ObImage*		attack4;
+
+	/* skill 1~4 */
+	ObImage* skill1; //´ë½¬
+	ObImage* skill2; //Âî¸£±â
+	ObImage* skill3;
+	ObImage* skill4;
 
 
 
@@ -86,7 +96,7 @@ public:
 	void		setPlState(PLSTATE new_state);
 	int			getPlAttackCount();
 	void		printPlState();
-	void		getPlDir();
+	Vector2		getPlDir();
 	void		TakeDamage(int damage);
 };
 

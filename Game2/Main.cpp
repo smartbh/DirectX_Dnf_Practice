@@ -48,32 +48,42 @@ void Main::Update()
 	
 	//ImGui::Text("%s", player->printPlState());
 	
-	if (INPUT->KeyPress(VK_RIGHT))
+	if (INPUT->KeyPress(VK_RIGHT))//player->getPlState() == PLSTATE::WALK_R
 	{
-		//1초에 100픽셀 움직여라
-		bg1->uv.x += DELTA / bg1->scale.x * 50.0f;
-		bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
+		if (player->getPlState() == PLSTATE::WALK_R ||
+			player->getPlState() == PLSTATE::JUMP)
+		{
+			//1초에 100픽셀 움직여라
+			bg1->uv.x += DELTA / bg1->scale.x * 50.0f;
+			bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
 
-		bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
-		bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
+			bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
+			bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
 
-		player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
-		bgCol->MoveWorldPos(RIGHT * 200.0f * DELTA);
-		CAM->position += RIGHT * 200.0f * DELTA;
+			player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
+			bgCol->MoveWorldPos(RIGHT * 200.0f * DELTA);
+			CAM->position += RIGHT * 200.0f * DELTA;
+		}
+
 	}
 	else if (INPUT->KeyPress(VK_LEFT))
 	{
-		bg1->uv.x -= DELTA / bg1->scale.x * 50.0f;
-		bg1->uv.z -= DELTA / bg1->scale.x * 50.0f;
+		if (player->getPlState() == PLSTATE::WALK_L ||
+			player->getPlState() == PLSTATE::JUMP)
+		{
+			bg1->uv.x -= DELTA / bg1->scale.x * 50.0f;
+			bg1->uv.z -= DELTA / bg1->scale.x * 50.0f;
 
-		bg2->uv.x -= DELTA / bg2->scale.x * 100.0f;
-		bg2->uv.z -= DELTA / bg2->scale.x * 100.0f;
+			bg2->uv.x -= DELTA / bg2->scale.x * 100.0f;
+			bg2->uv.z -= DELTA / bg2->scale.x * 100.0f;
 
-		player->getCol()->MoveWorldPos(LEFT * 200.0f * DELTA);
-		bgCol->MoveWorldPos(LEFT * 200.0f * DELTA);
-		CAM->position += LEFT * 200.0f * DELTA;
+			player->getCol()->MoveWorldPos(LEFT * 200.0f * DELTA);
+			bgCol->MoveWorldPos(LEFT * 200.0f * DELTA);
+			CAM->position += LEFT * 200.0f * DELTA;
+		}
+
 	}
-	if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
+	if (player->getPlState() == PLSTATE::RUN_R)//달리기 INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT)
 	{
 		bg1->uv.x += DELTA / bg1->scale.x * 200.0f;
 		bg1->uv.z += DELTA / bg1->scale.x * 200.0f;
@@ -85,7 +95,7 @@ void Main::Update()
 		bgCol->MoveWorldPos(RIGHT * 1000.0f * DELTA);
 		CAM->position += RIGHT * 1000.0f * DELTA;
 	}
-	else if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT)) {
+	else if (player->getPlState() == PLSTATE::RUN_L) {
 		bg1->uv.x -= DELTA / bg1->scale.x * 200.0f;
 		bg1->uv.z -= DELTA / bg1->scale.x * 200.0f;
 
@@ -99,7 +109,10 @@ void Main::Update()
 	if (INPUT->KeyDown('Z'))//공격
 	{
 		if(player->getPlAttackCount() < 3 && player->getPlState() == PLSTATE::ATTACK)
-			player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
+			if(player->getPlDir() == RIGHT)
+				player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
+			else if(player->getPlDir() == LEFT)
+				player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x - 5.0f);
 	}
 
 	//맵 이동범위 제한
