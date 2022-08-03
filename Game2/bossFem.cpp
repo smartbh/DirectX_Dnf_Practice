@@ -109,6 +109,31 @@ bossFem::~bossFem()
 
 void bossFem::Update()
 {
+	if (bossDir.x < 0)
+		cout << "bossDir = LEFT" << endl;
+	else if (bossDir.x > 0)
+		cout << "bossDir = RIGHT" << endl;
+
+
+	if (isDamaged) //update에, isDamaged가 true면
+	{
+		damagingTime -= DELTA;
+
+		stand->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
+		attack[0]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
+		attack[1]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
+		attack[2]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
+
+		if (damagingTime < 0.0f)
+		{
+			stand->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
+			attack[0]->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
+			attack[1]->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
+			attack[2]->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
+			isDamaged = false;
+		}
+
+	}
 
 	if (BSstate == BOSSSTATE::START) {
 		cout << "스타트 성공" << endl;
@@ -119,7 +144,7 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "dddd" << endl;
+				cout << "start1" << endl;
 				cout << getTickTime << endl;
 			}
 			else
@@ -136,7 +161,7 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "dddd" << endl;
+				cout << "start2" << endl;
 				cout << getTickTime << endl;
 			}
 			else
@@ -153,7 +178,7 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "dddd" << endl;
+				cout << "start3" << endl;
 				cout << getTickTime << endl;
 			}
 			else
@@ -170,7 +195,7 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "dddd" << endl;
+				cout << "start4" << endl;
 				cout << getTickTime << endl;
 			}
 			else
@@ -187,82 +212,112 @@ void bossFem::Update()
 	}
 	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
 	{
-		col->pivot = OFFSET_B;
-		col->scale = stand->scale;
-		col->scale.y += 70.0f;
-		stand->pivot = OFFSET_B;
-		stand->visible = true;
-
-		if (INPUT->KeyDown('Z'))
+		if (bossDir == RIGHT)
 		{
-			stand->visible = false;
-			
-			attack[0]->visible = true;
-			attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			BSstate = BOSSSTATE::ATTACK;
-			cout << "공격1" << endl;
-			attackCount = 1;
-		}
+			//stand->reverseLR = false;
+			//attack[0]->reverseLR = false;
+			//attack[1]->reverseLR = false;
+			//attack[2]->reverseLR = false;
 
-			
-	}
-	else if (BSstate == BOSSSTATE::ATTACK) {
-		cout << attackCount << endl;
-		if (INPUT->KeyDown('Z') && attackCount == 1)
-		{
-			cout << "공격2" << endl;
-			attack[0]->visible = false;
-			attack[1]->visible = true;
-			attack[1]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			attackCount = 2;
-			cout << attackCount << endl;
-		}
+			col->pivot = OFFSET_B;
+			col->scale = stand->scale;
+			col->scale.y += 70.0f;
+			stand->pivot = OFFSET_B;
+			stand->visible = true;
 
-		else if (INPUT->KeyDown('Z') && attackCount == 2)
-		{
-			cout << "공격3" << endl;
-			attack[1]->visible = false;
-			attack[2]->visible = true;
-			attack[2]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-
-			getTickTime = 1.6f;
-			attackCount = 0;
-			cout << attackCount << endl;
-		}
-
-		if (attackCount == 0)
-		{
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
+			if (INPUT->KeyDown('Z'))
 			{
-				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "dddd" << endl;
-				cout << getTickTime << endl;
+				stand->visible = false;
+
+				attack[0]->visible = true;
+				attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				BSstate = BOSSSTATE::ATTACK;
+				cout << "공격1" << endl;
+				attackCount = 1;
 			}
-			else
+		}
+		else if (bossDir == RIGHT)
+		{
+			//stand->reverseLR = true;
+			//attack[0]->reverseLR = true;
+			//attack[1]->reverseLR = true;
+			//attack[2]->reverseLR = true;
+
+			col->pivot = OFFSET_B;
+			col->scale = stand->scale;
+			col->scale.y += 70.0f;
+			stand->pivot = OFFSET_B;
+			stand->visible = true;
+
+			if (INPUT->KeyDown('Z'))
 			{
-				cout << "시간 끝 애니메이션 변화" << endl;
-				BSstate = BOSSSTATE::STAND;
-				attack[2]->visible = false;
-				getTickTime = 0.0f;
+				stand->visible = false;
+
+				attack[0]->visible = true;
+				attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				BSstate = BOSSSTATE::ATTACK;
+				cout << "공격1" << endl;
+				attackCount = 1;
+			}
+		}
+		else if (BSstate == BOSSSTATE::ATTACK) {
+			cout << attackCount << endl;
+			if (INPUT->KeyDown('Z') && attackCount == 1)
+			{
+				cout << "공격2" << endl;
+				attack[0]->visible = false;
+				attack[1]->visible = true;
+				attack[1]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				attackCount = 2;
+				cout << attackCount << endl;
 			}
 
+			else if (INPUT->KeyDown('Z') && attackCount == 2)
+			{
+				cout << "공격3" << endl;
+				attack[1]->visible = false;
+				attack[2]->visible = true;
+				attack[2]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+
+				getTickTime = 1.6f;
+				attackCount = 0;
+				cout << attackCount << endl;
+			}
+
+			if (attackCount == 0)
+			{
+				getTickTime -= DELTA;
+				if (getTickTime > 0.0f)
+				{
+					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					cout << "dddd" << endl;
+					cout << getTickTime << endl;
+				}
+				else
+				{
+					cout << "시간 끝 애니메이션 변화" << endl;
+					BSstate = BOSSSTATE::STAND;
+					attack[2]->visible = false;
+					getTickTime = 0.0f;
+				}
+
+			}
+			//else
+			//{
+			//	state = BOSSSTATE::STAND;
+			//}
 		}
-		//else
-		//{
-		//	state = BOSSSTATE::STAND;
-		//}
+		col->Update();
+		start1->Update();
+		start2->Update();
+		start3->Update();
+		start4->Update();
+		stand->Update();
+		attack[0]->Update();
+		attack[1]->Update();
+		attack[2]->Update();
+		//attack->Update();
 	}
-	col->Update();
-	start1->Update();
-	start2->Update();
-	start3->Update();
-	start4->Update();
-	stand->Update();
-	attack[0]->Update();
-	attack[1]->Update();
-	attack[2]->Update();
-	//attack->Update();
 }
 
 void bossFem::Render()
@@ -284,15 +339,30 @@ ObRect* bossFem::getCol()
 	return col;
 }
 
+void bossFem::setBossDir(Vector2 _playerPos)
+{
+	bossDir.x = _playerPos.x - col->GetWorldPos().x;
+	cout << "bossDIR.x : " << bossDir.x << endl;
+	if (bossDir.x < 0)
+		bossDir = LEFT;
+	else if(bossDir.x > 0)
+		bossDir = RIGHT;
+}
+
 void bossFem::TakeDamage(int damage)
 {
-	hp -= damage;
+	hp -= damage * DELTA;
 	damagingTime = 0.5f;
+	isDamaged = true;
 
 	if (hp < 0)
 	{
 		col->visible = false;
 		col->colOnOff = false;
+		stand->visible = false;
+		attack[0]->visible = false;
+		attack[1]->visible = false;
+		attack[2]->visible = false;
 	}
 
 	if (damagingTime > 0.0f)
@@ -302,21 +372,4 @@ void bossFem::TakeDamage(int damage)
 	}
 	else
 		col->color.w = 0.5f;
-
-
-	if (isDamaged) //update에, isDamaged가 true면
-	{
-		damageTime -= DELTA;
-
-		run->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
-		spin->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
-
-		if (damageTime < 0.0f)
-		{
-			run->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
-			spin->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
-			isDamaged = false;
-		}
-
-	}
 }

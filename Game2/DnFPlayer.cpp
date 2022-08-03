@@ -194,7 +194,7 @@ void DnFPlayer::Update()
 	/// </summary>
 	if (state == PLSTATE::STAND)
 	{
-		weaponCol->colOnOff = true;
+		weaponCol->colOnOff = false;
 		weaponCol->scale = Vector2(120.0f, 300.0f) / 2.0f;
 		weaponCol->SetLocalPos(Vector2(0.0f, 70.0f));
 

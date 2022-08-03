@@ -42,20 +42,21 @@ private:
 
 	float			getTickTime;
 	float			Timer;
-	float			
-		;
+	float			damagingTime;
 	bool			isDamaged;
 
 	float			hp;
+	Vector2			bossDir;
 	int				attackCount;
 
 public:
 	bossFem();
 	~bossFem();
 
-	void Update();
-	void Render();
-	ObRect* getCol();
-	void TakeDamage(int damage);
+	void		Update();
+	void		Render();
+	ObRect*		getCol();
+	void		setBossDir(Vector2 _playerPos);
+	void		TakeDamage(int damage);
 };
 

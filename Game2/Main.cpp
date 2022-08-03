@@ -43,6 +43,7 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
+	boss->setBossDir(player->getCol()->GetWorldPos());
 	player->printPlState();
 	player->getPlDir();
 	
@@ -164,7 +165,7 @@ void Main::LateUpdate()
 
 	if (boss->getCol()->Intersect(player->getWeaponCol()))
 	{
-		boss->getCol()->MoveWorldPos(LEFT * 1000.0f);
+		boss->TakeDamage(10.0f);
 	}
 }
 
