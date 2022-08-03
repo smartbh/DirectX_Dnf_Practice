@@ -4,7 +4,7 @@ DnFPlayer::DnFPlayer()
 {
 	col = new ObRect();
 	col->scale = Vector2(120.0f, 300.0f) / 2.0f;
-	col->SetWorldPos(Vector2(0.0f, 0.0f));
+	col->SetWorldPos(Vector2(0.0f, -450.0f));
 	col->pivot = OFFSET_B;
 	col->isFilled = false;
 	col->visible = true;
@@ -171,6 +171,7 @@ DnFPlayer::DnFPlayer()
 	getTickTime = 0.0f;
 	standTime = 0.0f;
 	Timer = 0.0f;
+	hp = 100.0f;
 
 	attackCount = 0;
 	walkCount = 0;
@@ -185,15 +186,15 @@ DnFPlayer::~DnFPlayer()
 void DnFPlayer::Update()
 {
 	/////플레이어 중력
-	//col->MoveWorldPos(DOWN * gravity * DELTA);
-	//gravity += 700.0f * DELTA;
+	col->MoveWorldPos(DOWN * gravity * DELTA);
+	gravity += 700.0f * DELTA;
 
 	/// <summary>
 	/// 플레이어 조작
 	/// </summary>
 	if (state == PLSTATE::STAND)
 	{
-		weaponCol->colOnOff = false;
+		weaponCol->colOnOff = true;
 		weaponCol->scale = Vector2(120.0f, 300.0f) / 2.0f;
 		weaponCol->SetLocalPos(Vector2(0.0f, 70.0f));
 
@@ -284,6 +285,10 @@ void DnFPlayer::Update()
 			{
 				stand1->visible = false;
 
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(200.0f, 100.0f);
+				weaponCol->SetLocalPos(Vector2(150.0f, 50.0f));
+
 				skill1->visible = true;
 				skill1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 1.1f;
@@ -293,6 +298,10 @@ void DnFPlayer::Update()
 			else if (INPUT->KeyDown('S')) //스킬2
 			{
 				stand1->visible = false;
+
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(200.0f, 300.0f);
+				weaponCol->SetLocalPos(Vector2(150.0f, 50.0f));
 
 				skill2->visible = true;
 				skill2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
@@ -387,6 +396,10 @@ void DnFPlayer::Update()
 			{
 				stand1->visible = false;
 
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(-200.0f, 100.0f);
+				weaponCol->SetLocalPos(Vector2(-150.0f, 50.0f));
+
 				skill1->visible = true;
 				skill1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 1.1f;
@@ -396,6 +409,10 @@ void DnFPlayer::Update()
 			else if (INPUT->KeyDown('S')) //스킬2 찌르기
 			{
 				stand1->visible = false;
+
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(-200.0f, 300.0f);
+				weaponCol->SetLocalPos(Vector2(-150.0f, 50.0f));
 
 				skill2->visible = true;
 				skill2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
@@ -570,6 +587,10 @@ void DnFPlayer::Update()
 		{
 			if (INPUT->KeyDown('Z'))
 			{
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(100.0f, 200.0f);
+				weaponCol->SetLocalPos(Vector2(30.0f, 30.0f));
+
 				jump->visible = false;
 				jumpAttack->visible = true;
 				jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
@@ -582,6 +603,10 @@ void DnFPlayer::Update()
 		{
 			if (INPUT->KeyDown('Z')) //왼쪽공격
 			{
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(100.0f, 200.0f);
+				weaponCol->SetLocalPos(Vector2(-30.0f, -30.0f));
+
 				jumpAttack->reverseLR = true;
 				jump->visible = false;
 				jumpAttack->visible = true;
@@ -594,6 +619,7 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::JUMPATTACK)
 	{
+		weaponCol->colOnOff = true;
 		//0.6시간 후 다시 점프로
 		//공격시 해당 위치에 잠시 고정
 		col->SetWorldPos(col->GetWorldPos());
@@ -618,6 +644,7 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::ATTACK) {
 		cout << attackCount << endl;
+		weaponCol->colOnOff = true;
 
 		if (INPUT->KeyDown('Z') && attackCount == 1) //2연타
 		{
@@ -683,6 +710,8 @@ void DnFPlayer::Update()
 
 	else if (state == PLSTATE::SKILL1)
 	{
+		weaponCol->colOnOff = true;
+
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
 		{
@@ -703,6 +732,8 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::SKILL2) 
 	{
+		weaponCol->colOnOff = true;
+
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
 		{
@@ -888,5 +919,24 @@ void DnFPlayer::TakeDamage(int damage)
 	{
 		col->visible = false;
 		col->colOnOff = false;
+
+		stand1->visible = false;
+		stand2->visible = false;
+
+		walk->visible = false;
+
+		run1->visible = false;
+		run2->visible = false;
+
+		jump->visible = false;
+		jumpAttack->visible = false;
+
+		attack1->visible = false;
+		attack2->visible = false;
+		attack3->visible = false;
+		attack4->visible = false;
+
+		skill1->visible = false; //대쉬
+		skill2->visible = false; //찌르기
 	}
 }

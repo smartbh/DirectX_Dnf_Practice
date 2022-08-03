@@ -98,6 +98,7 @@ bossFem::bossFem()
 	BSstate = BOSSSTATE::START;
 	getTickTime = 1.3f;
 	Timer = 0.0f;
+	hp = 100.0f;
 
 	attackCount = 0;
 }
@@ -111,7 +112,8 @@ void bossFem::Update()
 
 	if (BSstate == BOSSSTATE::START) {
 		cout << "스타트 성공" << endl;
-		
+		col->colOnOff = false;
+
 		if (start1->visible) {
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
@@ -177,14 +179,15 @@ void bossFem::Update()
 				start4->visible = false;
 				getTickTime = 0.0f;
 				cout << "마지막 성공" << endl;
+				col->colOnOff = true;
 				BSstate = BOSSSTATE::STAND;
+				col->SetWorldPos(Vector2(-20.0f, -450.0f));
 			}
 		}
 	}
 	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
 	{
 		col->pivot = OFFSET_B;
-		col->SetLocalPos(Vector2( -20.0f, -150.0f));
 		col->scale = stand->scale;
 		col->scale.y += 70.0f;
 		stand->pivot = OFFSET_B;
@@ -279,4 +282,41 @@ void bossFem::Render()
 ObRect* bossFem::getCol()
 {
 	return col;
+}
+
+void bossFem::TakeDamage(int damage)
+{
+	hp -= damage;
+	damagingTime = 0.5f;
+
+	if (hp < 0)
+	{
+		col->visible = false;
+		col->colOnOff = false;
+	}
+
+	if (damagingTime > 0.0f)
+	{
+		damagingTime -= DELTA;
+		col->color.w = RANDOM->Float(0.0f, 0.5f);
+	}
+	else
+		col->color.w = 0.5f;
+
+
+	if (isDamaged) //update에, isDamaged가 true면
+	{
+		damageTime -= DELTA;
+
+		run->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
+		spin->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 1.0f);
+
+		if (damageTime < 0.0f)
+		{
+			run->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
+			spin->color = Color(0.5f, 0.5f, 0.5f, 1.0f);
+			isDamaged = false;
+		}
+
+	}
 }

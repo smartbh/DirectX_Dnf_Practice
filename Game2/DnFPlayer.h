@@ -77,10 +77,6 @@ private:
 	/* skill 1~4 */
 	ObImage* skill1; //대쉬
 	ObImage* skill2; //찌르기
-	ObImage* skill3;
-	ObImage* skill4;
-
-
 
 public:
 

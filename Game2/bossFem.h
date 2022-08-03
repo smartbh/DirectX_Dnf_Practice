@@ -42,6 +42,11 @@ private:
 
 	float			getTickTime;
 	float			Timer;
+	float			
+		;
+	bool			isDamaged;
+
+	float			hp;
 	int				attackCount;
 
 public:
