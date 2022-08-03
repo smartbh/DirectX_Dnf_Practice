@@ -313,6 +313,18 @@ void bossFem::Update()
 		//	state = BOSSSTATE::STAND;
 		//}
 	}
+
+	if (hp < 0)
+	{
+		col->visible = false;
+		col->colOnOff = false;
+		stand->visible = false;
+		attack[0]->visible = false;
+		attack[1]->visible = false;
+		attack[2]->visible = false;
+	}
+
+
 	col->Update();
 	start1->Update();
 	start2->Update();
@@ -359,16 +371,6 @@ void bossFem::TakeDamage(int damage)
 	hp -= damage * DELTA;
 	damagingTime = 0.5f;
 	isDamaged = true;
-
-	if (hp < 0)
-	{
-		col->visible = false;
-		col->colOnOff = false;
-		stand->visible = false;
-		attack[0]->visible = false;
-		attack[1]->visible = false;
-		attack[2]->visible = false;
-	}
 
 	if (damagingTime > 0.0f)
 	{
