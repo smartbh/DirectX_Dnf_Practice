@@ -15,13 +15,12 @@ DnFPlayer::DnFPlayer()
 	weaponCol = new ObRect();
 	weaponCol->SetParentRT(*col);
 	weaponCol->scale = Vector2(120.0f, 300.0f) / 2.0f;
-	weaponCol->SetLocalPos(Vector2(0.0f, 0.0f));
+	weaponCol->SetLocalPos(Vector2(0.0f, 50.0f));
 	weaponCol->pivot = OFFSET_N;
 	weaponCol->isFilled = false;
 	weaponCol->visible = true;
 	weaponCol->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 	weaponCol->collider = COLLIDER::RECT;
-	weaponCol->colOnOff = false;
 
 	/* 애니메이션 모음 */
 	/// stand 1~2
@@ -100,7 +99,7 @@ DnFPlayer::DnFPlayer()
 	jumpAttack->scale.y = 231.0f * 1.5f;
 	jumpAttack->SetLocalPosY(60.0f);
 	jumpAttack->pivot = OFFSET_N;
-	jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	jumpAttack->visible = false;
 
 	//attack 1~6?
@@ -111,7 +110,7 @@ DnFPlayer::DnFPlayer()
 	attack1->scale.y = 231.0f * 1.5f;
 	attack1->SetLocalPosY(60.0f);
 	attack1->pivot = OFFSET_N;
-	attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	attack1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	attack1->visible = false;
 
 	attack2 = new ObImage(L"PLattack2.png");
@@ -121,7 +120,7 @@ DnFPlayer::DnFPlayer()
 	attack2->scale.y = 231.0f * 1.5f;
 	attack2->SetLocalPosY(90.0f);
 	attack2->pivot = OFFSET_N;
-	attack2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	attack2->visible = false;
 
 	attack3 = new ObImage(L"PLattack3.png");
@@ -131,7 +130,7 @@ DnFPlayer::DnFPlayer()
 	attack3->scale.y = 231.0f * 1.5f;
 	attack3->SetLocalPosY(60.0f);
 	attack3->pivot = OFFSET_N;
-	attack3->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	attack3->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	attack3->visible = false;
 
 	attack4 = new ObImage(L"PLattack4.png");
@@ -141,7 +140,7 @@ DnFPlayer::DnFPlayer()
 	attack4->scale.y = 231.0f * 1.5f;
 	attack4->SetLocalPosY(60.0f);
 	attack4->pivot = OFFSET_N;
-	attack4->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	attack4->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 	attack4->visible = false;
 
 	// skill 1 ~ 4
@@ -152,7 +151,7 @@ DnFPlayer::DnFPlayer()
 	skill1->scale.y = 231.0f * 1.5f;
 	skill1->SetLocalPosY(60.0f);
 	skill1->pivot = OFFSET_N;
-	skill1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	skill1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	skill1->visible = false;
 	//1.1
 
@@ -163,7 +162,7 @@ DnFPlayer::DnFPlayer()
 	skill2->scale.y = 231.0f * 1.5f;
 	skill2->SetLocalPosY(60.0f);
 	skill2->pivot = OFFSET_N;
-	skill2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	skill2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	skill2->visible = false;
 	//1.3
 
@@ -186,14 +185,18 @@ DnFPlayer::~DnFPlayer()
 void DnFPlayer::Update()
 {
 	/////플레이어 중력
-	col->MoveWorldPos(DOWN * gravity * DELTA);
-	gravity += 700.0f * DELTA;
+	//col->MoveWorldPos(DOWN * gravity * DELTA);
+	//gravity += 700.0f * DELTA;
 
 	/// <summary>
 	/// 플레이어 조작
 	/// </summary>
 	if (state == PLSTATE::STAND)
 	{
+		weaponCol->colOnOff = false;
+		weaponCol->scale = Vector2(120.0f, 300.0f) / 2.0f;
+		weaponCol->SetLocalPos(Vector2(0.0f, 70.0f));
+
 		if (playerDir == RIGHT) //오른쪽 스탠딩
 		{
 			jump->visible = false; //점프 끝났으니
@@ -257,39 +260,42 @@ void DnFPlayer::Update()
 			{
 				cout << "점프" << endl;
 				state = PLSTATE::JUMP;
-				jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				stand1->visible = false;
 				jump->visible = true;
 				gravity = -700.0f;
 			}
 
-			if (INPUT->KeyDown('Z'))
+			if (INPUT->KeyDown('Z')) //일반공격
 			{
 				stand1->visible = false;
 
 				attack1->visible = true;
-				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2( 200.0f, 100.0f);
+				weaponCol->SetLocalPos(Vector2 (150.0f,50.0f));
 				state = PLSTATE::ATTACK;
 				cout << "공격1" << endl;
 				attackCount = 1;
 			}
 
-			if (INPUT->KeyDown('A'))
+			if (INPUT->KeyDown('A')) //스킬1
 			{
 				stand1->visible = false;
 
 				skill1->visible = true;
-				skill1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				skill1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 1.1f;
 				state = PLSTATE::SKILL1;
 				cout << "스킬1 대쉬" << endl;
 			}
-			else if (INPUT->KeyDown('S'))
+			else if (INPUT->KeyDown('S')) //스킬2
 			{
 				stand1->visible = false;
 
 				skill2->visible = true;
-				skill2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				skill2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 1.3f;
 				state = PLSTATE::SKILL2;
 				cout << "스킬1 찌르기" << endl;
@@ -358,7 +364,7 @@ void DnFPlayer::Update()
 			{
 				cout << "점프" << endl;
 				state = PLSTATE::JUMP;
-				jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				stand1->visible = false;
 				jump->visible = true;
 				gravity = -700.0f;
@@ -366,34 +372,36 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('Z'))
 			{
+				weaponCol->colOnOff = true;
+				weaponCol->scale = Vector2(-200.0f, 100.0f);
+				weaponCol->SetLocalPos(Vector2(-150.0f, 50.0f));
 				stand1->visible = false;
-
 				attack1->visible = true;
-				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				state = PLSTATE::ATTACK;
 				cout << "공격1" << endl;
 				attackCount = 1;
 			}
 
-			if (INPUT->KeyDown('A'))
+			if (INPUT->KeyDown('A')) //스킬1 돌진
 			{
 				stand1->visible = false;
 
 				skill1->visible = true;
-				skill1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				skill1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 1.1f;
 				state = PLSTATE::SKILL1;
 				cout << "스킬1 대쉬" << endl;
 			}
-			else if (INPUT->KeyDown('S'))
+			else if (INPUT->KeyDown('S')) //스킬2 찌르기
 			{
 				stand1->visible = false;
 
 				skill2->visible = true;
-				skill2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				skill2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 1.3f;
 				state = PLSTATE::SKILL2;
-				cout << "스킬1 찌르기" << endl;
+				cout << "스킬2 찌르기" << endl;
 			}
 		}
 		
@@ -445,7 +453,7 @@ void DnFPlayer::Update()
 		{
 			cout << "점프" << endl;
 			state = PLSTATE::JUMP;
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 			walk->visible = false;
 			jump->visible = true;
 			gravity = -500.0f;
@@ -487,7 +495,7 @@ void DnFPlayer::Update()
 			playerDir = LEFT;
 			cout << "점프" << endl;
 			state = PLSTATE::JUMP;
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 			walk->visible = false;
 			jump->reverseLR = true;
 			jump->visible = true;
@@ -519,7 +527,7 @@ void DnFPlayer::Update()
 		{
 			cout << "점프" << endl;
 			state = PLSTATE::JUMP;
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 			run2->visible = false;
 			jump->visible = true;
 			gravity = -700.0f;
@@ -550,7 +558,7 @@ void DnFPlayer::Update()
 		{
 			cout << "점프" << endl;
 			state = PLSTATE::JUMP;
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 			run2->visible = false;
 			jump->visible = true;
 			gravity = -700.0f;
@@ -564,9 +572,10 @@ void DnFPlayer::Update()
 			{
 				jump->visible = false;
 				jumpAttack->visible = true;
-				jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 0.6f;
 				state = PLSTATE::JUMPATTACK;
+
 			}
 		}
 		if (playerDir == LEFT)
@@ -576,7 +585,7 @@ void DnFPlayer::Update()
 				jumpAttack->reverseLR = true;
 				jump->visible = false;
 				jumpAttack->visible = true;
-				jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				jumpAttack->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				getTickTime = 0.6f;
 				state = PLSTATE::JUMPATTACK;
 			}
@@ -615,7 +624,7 @@ void DnFPlayer::Update()
 			cout << "공격2" << endl;
 			attack1->visible = false;
 			attack2->visible = true;
-			attack2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 			attackCount = 2;
 			cout << attackCount << endl;
 			state = PLSTATE::ATTACK;
@@ -626,7 +635,8 @@ void DnFPlayer::Update()
 			cout << "공격3" << endl;
 			attack2->visible = false;
 			attack3->visible = true;
-			attack3->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			attack3->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
+			weaponCol->SetLocalPosY(100.0f);
 			attackCount = 3;
 			cout << attackCount << endl;
 			state = PLSTATE::ATTACK;
@@ -636,7 +646,11 @@ void DnFPlayer::Update()
 			cout << "공격4" << endl;
 			attack3->visible = false;
 			attack4->visible = true;
-			attack4->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+			attack4->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
+			
+			weaponCol->scale.y *= 2.0f;
+			weaponCol->SetLocalPosY(50.0f);
+			
 
 			getTickTime = 1.0f;
 			attackCount = 0;
@@ -709,6 +723,7 @@ void DnFPlayer::Update()
 
 
 	col->Update();
+	weaponCol->Update();
 	stand1->Update();
 	stand2->Update();
 	walk->Update();
@@ -727,6 +742,7 @@ void DnFPlayer::Update()
 void DnFPlayer::Render()
 {
 	col->Render();
+	weaponCol->Render();
 	stand1->Render();
 	stand2->Render();
 	walk->Render();
@@ -745,6 +761,11 @@ void DnFPlayer::Render()
 ObRect* DnFPlayer::getCol()
 {
 	return col;
+}
+
+ObRect* DnFPlayer::getWeaponCol()
+{
+	return weaponCol;
 }
 
 float DnFPlayer::getPlGravity()

@@ -90,10 +90,15 @@ public:
 	void		Update();
 	void		Render();
 	ObRect*		getCol();
+	ObRect*		getWeaponCol();
+	
+
 	float		getPlGravity();
 	void		setPlGravity(float number);
+
 	PLSTATE		getPlState();
 	void		setPlState(PLSTATE new_state);
+
 	int			getPlAttackCount();
 	void		printPlState();
 	Vector2		getPlDir();

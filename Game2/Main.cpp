@@ -114,6 +114,23 @@ void Main::Update()
 			else if(player->getPlDir() == LEFT)
 				player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x - 5.0f);
 	}
+	if (INPUT->KeyDown('A')) //스킬 돌진
+	{
+		if (player->getPlDir() == RIGHT)
+		{
+			//player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 100.0f);
+			player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
+			bgCol->MoveWorldPos(RIGHT * 1000.0f * DELTA);
+			CAM->position += RIGHT * 1000.0f * DELTA;
+		}
+		else if (player->getPlDir() == LEFT)
+		{
+			player->getCol()->MoveWorldPos(LEFT * 1000.0f * DELTA);
+			bgCol->MoveWorldPos(LEFT * 1000.0f * DELTA);
+			CAM->position += LEFT * 1000.0f * DELTA;
+		}
+
+	}
 
 	//맵 이동범위 제한
 	//player->getCol()->SetWorldPosX(Utility::Saturate(player->getCol()->GetWorldPos().x, 0.0f, 1000.0f));
@@ -141,6 +158,11 @@ void Main::LateUpdate()
 		}
 
 		player->Update();
+	}
+
+	if (boss->getCol()->Intersect(player->getWeaponCol()))
+	{
+		boss->getCol()->MoveWorldPos(LEFT * 1000.0f * DELTA);
 	}
 }
 
