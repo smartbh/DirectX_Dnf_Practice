@@ -138,186 +138,191 @@ void bossFem::Update()
 	if (BSstate == BOSSSTATE::START) {
 		cout << "스타트 성공" << endl;
 		col->colOnOff = false;
-
-		if (start1->visible) {
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
-			{
-				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "start1" << endl;
-				cout << getTickTime << endl;
-			}
-			else
-			{
-				cout << "시간 끝 애니메이션 변화" << endl;
-				start1->visible = false;
-				start2->visible = true;
-				getTickTime = 1.0f;
-			}
-		}
-
-		if (start2->visible) {
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
-			{
-				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "start2" << endl;
-				cout << getTickTime << endl;
-			}
-			else
-			{
-				cout << "시간 끝 애니메이션 변화" << endl;
-				start2->visible = false;
-				start3->visible = true;
-				getTickTime = 1.3f;
-			}
-		}
-
-		if (start3->visible) {
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
-			{
-				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "start3" << endl;
-				cout << getTickTime << endl;
-			}
-			else
-			{
-				cout << "시간 끝 애니메이션 변화" << endl;
-				start3->visible = false;
-				start4->visible = true;
-				getTickTime = 1.4f;
-			}
-		}
-
-		if (start4->visible) {
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
-			{
-				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				cout << "start4" << endl;
-				cout << getTickTime << endl;
-			}
-			else
-			{
-				cout << "시간 끝 애니메이션 변화" << endl;
-				start4->visible = false;
-				getTickTime = 0.0f;
-				cout << "마지막 성공" << endl;
-				col->colOnOff = true;
-				BSstate = BOSSSTATE::STAND;
-				col->SetWorldPos(Vector2(-20.0f, -450.0f));
-			}
-		}
-	}
-	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
-	{
-		if (bossDir == RIGHT)
+		if (bossDir == RIGHT || bossDir == LEFT)
 		{
-			//stand->reverseLR = false;
-			//attack[0]->reverseLR = false;
-			//attack[1]->reverseLR = false;
-			//attack[2]->reverseLR = false;
-
-			col->pivot = OFFSET_B;
-			col->scale = stand->scale;
-			col->scale.y += 70.0f;
-			stand->pivot = OFFSET_B;
-			stand->visible = true;
-
-			if (INPUT->KeyDown('Z'))
-			{
-				stand->visible = false;
-
-				attack[0]->visible = true;
-				attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				BSstate = BOSSSTATE::ATTACK;
-				cout << "공격1" << endl;
-				attackCount = 1;
-			}
-		}
-		else if (bossDir == RIGHT)
-		{
-			//stand->reverseLR = true;
-			//attack[0]->reverseLR = true;
-			//attack[1]->reverseLR = true;
-			//attack[2]->reverseLR = true;
-
-			col->pivot = OFFSET_B;
-			col->scale = stand->scale;
-			col->scale.y += 70.0f;
-			stand->pivot = OFFSET_B;
-			stand->visible = true;
-
-			if (INPUT->KeyDown('Z'))
-			{
-				stand->visible = false;
-
-				attack[0]->visible = true;
-				attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				BSstate = BOSSSTATE::ATTACK;
-				cout << "공격1" << endl;
-				attackCount = 1;
-			}
-		}
-		else if (BSstate == BOSSSTATE::ATTACK) {
-			cout << attackCount << endl;
-			if (INPUT->KeyDown('Z') && attackCount == 1)
-			{
-				cout << "공격2" << endl;
-				attack[0]->visible = false;
-				attack[1]->visible = true;
-				attack[1]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				attackCount = 2;
-				cout << attackCount << endl;
-			}
-
-			else if (INPUT->KeyDown('Z') && attackCount == 2)
-			{
-				cout << "공격3" << endl;
-				attack[1]->visible = false;
-				attack[2]->visible = true;
-				attack[2]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-
-				getTickTime = 1.6f;
-				attackCount = 0;
-				cout << attackCount << endl;
-			}
-
-			if (attackCount == 0)
-			{
+			if (start1->visible) {
 				getTickTime -= DELTA;
 				if (getTickTime > 0.0f)
 				{
 					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					cout << "dddd" << endl;
+					cout << "start1" << endl;
 					cout << getTickTime << endl;
 				}
 				else
 				{
 					cout << "시간 끝 애니메이션 변화" << endl;
-					BSstate = BOSSSTATE::STAND;
-					attack[2]->visible = false;
-					getTickTime = 0.0f;
+					start1->visible = false;
+					start2->visible = true;
+					getTickTime = 1.0f;
 				}
-
 			}
-			//else
-			//{
-			//	state = BOSSSTATE::STAND;
-			//}
+
+			if (start2->visible) {
+				getTickTime -= DELTA;
+				if (getTickTime > 0.0f)
+				{
+					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					cout << "start2" << endl;
+					cout << getTickTime << endl;
+				}
+				else
+				{
+					cout << "시간 끝 애니메이션 변화" << endl;
+					start2->visible = false;
+					start3->visible = true;
+					getTickTime = 1.3f;
+				}
+			}
+
+			if (start3->visible) {
+				getTickTime -= DELTA;
+				if (getTickTime > 0.0f)
+				{
+					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					cout << "start3" << endl;
+					cout << getTickTime << endl;
+				}
+				else
+				{
+					cout << "시간 끝 애니메이션 변화" << endl;
+					start3->visible = false;
+					start4->visible = true;
+					getTickTime = 1.4f;
+				}
+			}
+
+			if (start4->visible) {
+				getTickTime -= DELTA;
+				if (getTickTime > 0.0f)
+				{
+					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					cout << "start4" << endl;
+					cout << getTickTime << endl;
+				}
+				else
+				{
+					cout << "시간 끝 애니메이션 변화" << endl;
+					start4->visible = false;
+					getTickTime = 0.0f;
+					cout << "마지막 성공" << endl;
+					col->colOnOff = true;
+					BSstate = BOSSSTATE::STAND;
+					col->SetWorldPos(Vector2(-20.0f, -450.0f));
+				}
+			}
 		}
-		col->Update();
-		start1->Update();
-		start2->Update();
-		start3->Update();
-		start4->Update();
-		stand->Update();
-		attack[0]->Update();
-		attack[1]->Update();
-		attack[2]->Update();
-		//attack->Update();
+		
 	}
+	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
+	{
+		if (bossDir == RIGHT)
+		{
+			stand->reverseLR = false;
+			attack[0]->reverseLR = false;
+			attack[1]->reverseLR = false;
+			attack[2]->reverseLR = false;
+
+			col->pivot = OFFSET_B;
+			col->scale = stand->scale;
+			col->scale.y += 70.0f;
+			stand->pivot = OFFSET_B;
+			stand->visible = true;
+
+			if (INPUT->KeyDown('Z'))
+			{
+				stand->visible = false;
+
+				attack[0]->visible = true;
+				attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				BSstate = BOSSSTATE::ATTACK;
+				cout << "공격1" << endl;
+				attackCount = 1;
+			}
+		}
+		else if (bossDir == LEFT)
+		{
+			stand->reverseLR = true;
+			attack[0]->reverseLR = true;
+			attack[1]->reverseLR = true;
+			attack[2]->reverseLR = true;
+
+			col->pivot = OFFSET_B;
+			col->scale = stand->scale;
+			col->scale.y += 70.0f;
+			stand->pivot = OFFSET_B;
+			stand->visible = true;
+
+			if (INPUT->KeyDown('Z'))
+			{
+				stand->visible = false;
+
+				attack[0]->visible = true;
+				attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				BSstate = BOSSSTATE::ATTACK;
+				cout << "공격1" << endl;
+				attackCount = 1;
+			}
+		}
+			
+	}
+	else if (BSstate == BOSSSTATE::ATTACK)
+	{
+		cout << attackCount << endl;
+		if (INPUT->KeyDown('Z') && attackCount == 1)
+		{
+			cout << "공격2" << endl;
+			attack[0]->visible = false;
+			attack[1]->visible = true;
+			attack[1]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			attackCount = 2;
+			cout << attackCount << endl;
+		}
+
+		else if (INPUT->KeyDown('Z') && attackCount == 2)
+		{
+			cout << "공격3" << endl;
+			attack[1]->visible = false;
+			attack[2]->visible = true;
+			attack[2]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+
+			getTickTime = 1.6f;
+			attackCount = 0;
+			cout << attackCount << endl;
+		}
+
+		if (attackCount == 0)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				cout << "dddd" << endl;
+				cout << getTickTime << endl;
+			}
+			else
+			{
+				cout << "시간 끝 애니메이션 변화" << endl;
+				BSstate = BOSSSTATE::STAND;
+				attack[2]->visible = false;
+				getTickTime = 0.0f;
+			}
+
+		}
+		//else
+		//{
+		//	state = BOSSSTATE::STAND;
+		//}
+	}
+	col->Update();
+	start1->Update();
+	start2->Update();
+	start3->Update();
+	start4->Update();
+	stand->Update();
+	attack[0]->Update();
+	attack[1]->Update();
+	attack[2]->Update();
+	//attack->Update();
 }
 
 void bossFem::Render()
