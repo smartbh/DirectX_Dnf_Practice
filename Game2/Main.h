@@ -7,6 +7,7 @@ private:
 	ObRect*		bgCol; //배경아래 충돌체 발판
 
 	DnFPlayer*	player; //플레이어
+	bossFem *	boss;
 
 
 public:

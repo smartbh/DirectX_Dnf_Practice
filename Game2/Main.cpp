@@ -21,6 +21,7 @@ void Main::Init()
 	bgCol->collider = COLLIDER::RECT;
 
 	player = new DnFPlayer();
+	boss = new bossFem();
 
 }
 
@@ -42,9 +43,11 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
-
-	ImGui::Text("%s",player->printPlState())
-
+	player->printPlState();
+	player->getPlDir();
+	
+	//ImGui::Text("%s", player->printPlState());
+	
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
 		//1초에 100픽셀 움직여라
@@ -99,12 +102,16 @@ void Main::Update()
 			player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
 	}
 
+	//맵 이동범위 제한
+	//player->getCol()->SetWorldPosX(Utility::Saturate(player->getCol()->GetWorldPos().x, 0.0f, 1000.0f));
+	//CAM->position.x = Utility::Saturate(CAM->position.x, 0.0f, 100.0f);
 	
 
 	bg1->Update();
 	bg2->Update();
 	bgCol->Update();
 	player->Update();
+	boss->Update();
 
 }
 
@@ -130,6 +137,7 @@ void Main::Render()
 	bg2->Render();
 	bgCol->Render();
 	player->Render();
+	boss->Render();
 }
 
 void Main::ResizeScreen()

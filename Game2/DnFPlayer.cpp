@@ -135,6 +135,7 @@ DnFPlayer::DnFPlayer()
 
 DnFPlayer::~DnFPlayer()
 {
+
 }
 
 void DnFPlayer::Update()
@@ -321,11 +322,22 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::WALK_R) //오른쪽으로 걷기
 	{
-		if (INPUT->KeyUp(VK_RIGHT))
+		if (INPUT->KeyUp(VK_RIGHT)) //걷기 끝내면
 		{
 			stand1->visible = true;
 			walk->visible = false;
 			state = PLSTATE::STAND;
+		}
+		if (INPUT->KeyPress(VK_LEFT)) //왼쪽 전환
+		{
+			stand1->visible = false;
+			walk->reverseLR = true;
+			walk->visible = true;
+			playerDir = LEFT;
+			walkCount = 1;
+			standTime = 0.0f;
+			getTickTime = 0.5f;
+			state = PLSTATE::WALK_L;
 		}
 		else if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT))//달리기
 		{
@@ -354,6 +366,17 @@ void DnFPlayer::Update()
 			stand1->visible = true;
 			walk->visible = false;
 			state = PLSTATE::STAND;
+		}
+		if (INPUT->KeyPress(VK_RIGHT)) //오른쪽 전환
+		{
+			stand1->visible = false;
+			walk->reverseLR = false;
+			walk->visible = true;
+			playerDir = RIGHT;
+			walkCount = 1;
+			standTime = 0.0f;
+			getTickTime = 0.5f;
+			state = PLSTATE::WALK_R;
 		}
 		else if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT))//달리기
 		{
@@ -390,7 +413,7 @@ void DnFPlayer::Update()
 			walk->visible = true;
 			state = PLSTATE::WALK_R;
 		}
-		if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT)) //왼쪽으로 돌때
+		else if (INPUT->KeyPress(VK_LEFT) && INPUT->KeyPress(VK_LSHIFT)) //왼쪽으로 돌때
 		{
 			playerDir = LEFT;
 			run2->reverseLR = true;
@@ -420,6 +443,14 @@ void DnFPlayer::Update()
 			run2->visible = false;
 			walk->visible = true;
 			state = PLSTATE::WALK_L;
+		}
+		if (INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT)) //오른쪽으로 돌때
+		{
+			playerDir = RIGHT;
+			run2->reverseLR = false;
+			run2->visible = true;
+			getTickTime = 0.0f;
+			state = PLSTATE::RUN_R;
 		}
 		else if (INPUT->KeyDown('C'))
 		{
@@ -553,74 +584,84 @@ int DnFPlayer::getPlAttackCount()
 
 void DnFPlayer::printPlState()
 {
-	//START,
-	//	STAND,
-	//	STAND2,
-	//	SIT,
-	//	JUMP,
-	//	ATTACK,
-	//	WALK_R,
-	//	WALK_L,
-	//	RUN_R,
-	//	RUN_L,
-	//	DIE,
-	//	APPEAR,
-	//	DISAPPEAR,
-	//	GORG,
-	//	SKILL1,
-	//	SKILL2,
-	//	SKILL3,
-	//	SKILL4
+	string print_out;
+
 	if (state == PLSTATE::START)
 	{
 		cout << "state : START" << endl;
+		print_out = "state : START";
+		//return print_out;
 	}
 	else if (state == PLSTATE::STAND)
 	{
 		cout << "state : STAND" << endl;
+		print_out = "state : STAND";
+		//return print_out;
 	}
 	else if (state == PLSTATE::WALK_R)
 	{
 		cout << "state : WALK_R" << endl;
+		print_out = "state : WALK_R";
+		//return print_out;
 	}
 	else if (state == PLSTATE::WALK_L)
 	{
 		cout << "state : WALK_L" << endl;
+		print_out = "state : WALK_L";
+		//return print_out;
 	}
 	else if (state == PLSTATE::RUN_R)
 	{
 		cout << "state : RUN_R" << endl;
+		print_out = "state : RUN_R";
+		//return print_out;
 	}
 	else if (state == PLSTATE::RUN_L)
 	{
 		cout << "state : RUN_L" << endl;
+		print_out = "state : RUN_L";
+		//return print_out;
 	}
 	else if (state == PLSTATE::ATTACK)
 	{
-		cout << "state : RUN_R" << endl;
+		cout << "state : ATTACK" << endl;
+		print_out = "state : ATTACK";
+		//return print_out;
 	}
 	else if (state == PLSTATE::JUMP)
 	{
-		cout << "state : RUN_R" << endl;
+		cout << "state : JUMP" << endl;
+		print_out = "state : JUMP";
+		//return print_out;
 	}
-	else if (state == PLSTATE::RUN_R)
-	{
-		cout << "state : RUN_R" << endl;
-	}
-	else if (state == PLSTATE::RUN_R)
-	{
-		cout << "state : RUN_R" << endl;
-	}
-	else if (state == PLSTATE::RUN_R)
-	{
-		cout << "state : RUN_R" << endl;
-	}
+	//else if (state == PLSTATE::RUN_R)
+	//{
+	//	cout << "state : RUN_R" << endl;
+	//	print_out = "state : START";
+	//	return print_out;
+	//}
+	//else if (state == PLSTATE::RUN_R)
+	//{
+	//	cout << "state : RUN_R" << endl;
+	//	print_out = "state : START";
+	//	return print_out;
+	//}
+	//else if (state == PLSTATE::RUN_R)
+	//	print_out = "state : START";
+	//return print_out;
+	//{
+	//	cout << "state : RUN_R" << endl;
+	//}
 
 }
 
-Vector2 DnFPlayer::getPlDir()
+void DnFPlayer::getPlDir()
 {
-	return playerDir;
+	if (playerDir == LEFT)
+		cout << "LEFT" << endl;
+	else if (playerDir == RIGHT)
+		cout << "RIGHT" << endl;
+	//return playerDir;
 }
 
 void DnFPlayer::TakeDamage(int damage)
