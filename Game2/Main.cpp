@@ -44,8 +44,8 @@ void Main::Update()
 		app.vSync = !app.vSync;
 	}*/
 	boss->setBossDir(player->getCol()->GetWorldPos());
-	player->printPlState();
-	player->getPlDir();
+	//player->printPlState();
+	//player->getPlDir();
 	
 	//ImGui::Text("%s", player->printPlState());
 	
@@ -148,8 +148,8 @@ void Main::Update()
 	//player->getCol()->SetWorldPosX(Utility::Saturate(player->getCol()->GetWorldPos().x, 0.0f, 1000.0f));
 	//CAM->position.x = Utility::Saturate(CAM->position.x, 0.0f, 100.0f);
 	
-	cout << "player x : " << player->getCol()->GetWorldPos().x << endl;
-	cout << "player y : " << player->getCol()->GetWorldPos().y << endl;
+	//cout << "player x : " << player->getCol()->GetWorldPos().x << endl;
+	//cout << "player y : " << player->getCol()->GetWorldPos().y << endl;
 
 	bg1->Update();
 	bg2->Update();
