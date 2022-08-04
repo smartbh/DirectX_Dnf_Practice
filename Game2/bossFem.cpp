@@ -60,7 +60,7 @@ bossFem::bossFem()
 	stand->scale.y = 201.0f;
 	stand->pivot = OFFSET_N;
 	stand->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-	stand->visible = false;	
+	stand->visible = false;
 
 	///walk
 	walk = new ObImage(L"BSwalk.png");
@@ -95,7 +95,7 @@ bossFem::bossFem()
 	disappear->pivot = OFFSET_B;
 	disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	disappear->visible = false;
-	
+
 
 	/// <summary>
 	/// 공격 애니메이션
@@ -135,17 +135,17 @@ bossFem::bossFem()
 	skill1_1->maxFrame.x = 13;
 	skill1_1->scale.x = 273.0f;
 	skill1_1->scale.y = 204.0f;
-	skill1_1->pivot = OFFSET_N;
+	skill1_1->pivot = OFFSET_B;
 	skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	skill1_1->visible = false;
-	
+
 
 	skill1_2 = new ObImage(L"BSskill1-2.png");
 	skill1_2->SetParentRT(*col);
 	skill1_2->maxFrame.x = 4;
 	skill1_2->scale.x = 273.0f;
 	skill1_2->scale.y = 204.0f;
-	skill1_2->pivot = OFFSET_N;
+	skill1_2->pivot = OFFSET_B;
 	skill1_2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	skill1_2->visible = false;
 	//1.3, 0.4
@@ -158,20 +158,20 @@ bossFem::bossFem()
 	skill2_1->maxFrame.x = 21;
 	skill2_1->scale.x = 270.0f;
 	skill2_1->scale.y = 244.0f;
-	skill2_1->pivot = OFFSET_N;
+	skill2_1->pivot = OFFSET_B;
 	skill2_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	skill2_1->visible = false;
-		 
+
 	skill2_2 = new ObImage(L"BSskill2-2.png");
 	skill2_2->SetParentRT(*col);
 	skill2_2->maxFrame.x = 6;
 	skill2_2->scale.x = 270.0f;
 	skill2_2->scale.y = 244.0f;
-	skill2_2->pivot = OFFSET_N;
+	skill2_2->pivot = OFFSET_B;
 	skill2_2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	skill2_2->visible = false;
 	//2.1, 0.6
-	
+
 	///그로기
 	grog = new ObImage(L"BSgrog.png");
 	grog->SetParentRT(*col);
@@ -812,7 +812,7 @@ void bossFem::setBossDir(Vector2 _playerPos)
 	//cout << "bossDIR.x : " << bossDir.x << endl;
 	if (bossDir.x < 0)
 		bossDir = LEFT;
-	else if(bossDir.x > 0)
+	else if (bossDir.x > 0)
 		bossDir = RIGHT;
 }
 
