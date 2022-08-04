@@ -128,9 +128,61 @@ bossFem::bossFem()
 	attack[2]->visible = false;
 
 	/// <summary>
-	/// 
+	/// skill1
 	/// </summary>
+	skill1_1 = new ObImage(L"BSskill1-1.png");
+	skill1_1->SetParentRT(*col);
+	skill1_1->maxFrame.x = 13;
+	skill1_1->scale.x = 273.0f;
+	skill1_1->scale.y = 204.0f;
+	skill1_1->pivot = OFFSET_N;
+	skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	skill1_1->visible = false;
+
+	skill1_2 = new ObImage(L"BSskill1-2.png");
+	skill1_2->SetParentRT(*col);
+	skill1_2->maxFrame.x = 4;
+	skill1_2->scale.x = 273.0f;
+	skill1_2->scale.y = 204.0f;
+	skill1_2->pivot = OFFSET_N;
+	skill1_2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	skill1_2->visible = false;
+
+	/// <summary>
+	/// skill2
+	/// </summary>
+	skill2_1 = new ObImage(L"BSskill2-1.png");
+	skill2_1->SetParentRT(*col);
+	skill2_1->maxFrame.x = 21;
+	skill2_1->scale.x = 270.0f;
+	skill2_1->scale.y = 244.0f;
+	skill2_1->pivot = OFFSET_N;
+	skill2_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	skill2_1->visible = false;
+		 
+	skill2_2 = new ObImage(L"BSskill2-2.png");
+	skill2_2->SetParentRT(*col);
+	skill2_2->maxFrame.x = 6;
+	skill2_2->scale.x = 270.0f;
+	skill2_2->scale.y = 244.0f;
+	skill2_2->pivot = OFFSET_N;
+	skill2_2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	skill2_2->visible = false;
 	
+	///그로기
+	grog = new ObImage(L"BSgrog.png");
+	grog->SetParentRT(*col);
+	grog->maxFrame.x = 8;
+	grog->scale.x = 237.0f;
+	grog->scale.y = 205.0f;
+	grog->pivot = OFFSET_B;
+	grog->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	grog->visible = false;
+
+
+	/// <summary>
+	/// 기본 변수들
+	/// </summary>
 	BSstate = BOSSSTATE::START;
 	getTickTime = 1.3f;
 	Timer = 0.0f;
@@ -138,6 +190,7 @@ bossFem::bossFem()
 
 	attackCount = 0;
 	motionRand = 0;
+	checkGrog = false;
 }
 
 bossFem::~bossFem()
@@ -315,6 +368,10 @@ void bossFem::Update()
 			walk->reverseLR = false;
 			appear->reverseLR = false;
 			disappear->reverseLR = false;
+			skill1_1->reverseLR = false;
+			skill1_2->reverseLR = false;
+			skill2_1->reverseLR = false;
+			skill2_2->reverseLR = false;
 
 			col->pivot = OFFSET_B;
 			col->scale = stand->scale;
@@ -330,7 +387,11 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(3, 4);
+				//motionRand = RANDOM->Int(1, 7);
+				motionRand = 7;
+				cout << "boss hp : " << hp << endl;
+				cout << "motionRand : " << motionRand << endl;
+				cout << "checkGrog : " << checkGrog << endl;
 				switch (motionRand)
 				{
 					case 0:
@@ -358,12 +419,27 @@ void bossFem::Update()
 						disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 						BSstate = BOSSSTATE::DISAPPEAR;
 						break;
-					//case 5:
-					//	BSstate = BOSSSTATE::SKILL1;
-					//	break;
-					//case 6:
-					//	BSstate = BOSSSTATE::SKILL2;
-					//	break;
+					case 5:
+						//BSstate = BOSSSTATE::SKILL1;
+						break;
+					case 6:
+						//BSstate = BOSSSTATE::SKILL2;
+						break;
+					case 7:
+						if (checkGrog)
+						{
+							getTickTime = 10.0f;
+							stand->visible = false;
+							grog->visible = true;
+							BSstate = BOSSSTATE::GROG;
+							break;
+						}
+						else
+						{
+							getTickTime = 6.0f;
+							BSstate = BOSSSTATE::STAND;
+							break;
+						}
 				}
 			}
 		}
@@ -374,8 +450,10 @@ void bossFem::Update()
 			attack[1]->reverseLR = true;
 			attack[2]->reverseLR = true;
 			walk->reverseLR = true;
-			appear->reverseLR = false;
-			disappear->reverseLR = false;
+			skill1_1->reverseLR = true;
+			skill1_2->reverseLR = true;
+			skill2_1->reverseLR = true;
+			skill2_2->reverseLR = true;
 
 			col->pivot = OFFSET_B;
 			col->scale = stand->scale;
@@ -569,6 +647,21 @@ void bossFem::Update()
 				BSstate = BOSSSTATE::APPEAR;
 			}
 	}
+	else if (BSstate == BOSSSTATE::GROG)
+	{
+		getTickTime -= DELTA;
+		if (getTickTime > 0.0f)
+		{
+
+		}
+		else
+		{
+			grog->visible = false;
+			stand->visible = true;
+			getTickTime = 6.0f;
+			BSstate = BOSSSTATE::STAND;
+		}
+	}
 
 	if (hp < 0)
 	{
@@ -578,6 +671,17 @@ void bossFem::Update()
 		attack[0]->visible = false;
 		attack[1]->visible = false;
 		attack[2]->visible = false;
+		appear->visible = false;
+		disappear->visible = false;
+		skill1_1->visible = false;
+		skill1_2->visible = false;
+		skill2_1->visible = false;
+		skill2_2->visible = false;
+		grog->visible = false;
+	}
+	else if (hp > 0 && hp < 50.0f)
+	{
+		checkGrog = true;
 	}
 
 
@@ -593,7 +697,11 @@ void bossFem::Update()
 	attack[2]->Update();
 	appear->Update();
 	disappear->Update();
-	//attack->Update();
+	skill1_1->Update();
+	skill1_2->Update();
+	skill2_1->Update();
+	skill2_2->Update();
+	grog->Update();
 }
 
 void bossFem::Render()
@@ -610,7 +718,11 @@ void bossFem::Render()
 	attack[2]->Render();
 	appear->Render();
 	disappear->Render();
-	//attack->Render();
+	skill1_1->Render();
+	skill1_2->Render();
+	skill2_1->Render();
+	skill2_2->Render();
+	grog->Render();
 }
 
 ObRect* bossFem::getCol()

@@ -34,7 +34,11 @@ private:
 	ObImage*		appear;
 	ObImage*		disappear;
 	ObImage*		grog;
-	ObImage*		skill[4]; //공격모션 나눠서
+	//공격모션 나눠서
+	ObImage*		skill1_1; //한번만
+	ObImage*		skill1_2; //시간동안 루프
+	ObImage*		skill2_1; //같음
+	ObImage*		skill2_2; 
 
 	Vector2			dir;
 	BOSSSTATE		BSstate;
@@ -45,6 +49,7 @@ private:
 	float			damagingTime;
 	float			gravity;
 	bool			isDamaged;
+	bool			checkGrog;
 
 	float			hp;
 	Vector2			bossDir;
