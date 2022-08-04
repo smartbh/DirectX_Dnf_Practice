@@ -138,6 +138,7 @@ bossFem::bossFem()
 	skill1_1->pivot = OFFSET_N;
 	skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	skill1_1->visible = false;
+	
 
 	skill1_2 = new ObImage(L"BSskill1-2.png");
 	skill1_2->SetParentRT(*col);
@@ -147,6 +148,7 @@ bossFem::bossFem()
 	skill1_2->pivot = OFFSET_N;
 	skill1_2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	skill1_2->visible = false;
+	//1.3, 0.4
 
 	/// <summary>
 	/// skill2
@@ -168,6 +170,7 @@ bossFem::bossFem()
 	skill2_2->pivot = OFFSET_N;
 	skill2_2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	skill2_2->visible = false;
+	//2.1, 0.6
 	
 	///그로기
 	grog = new ObImage(L"BSgrog.png");
@@ -215,7 +218,7 @@ void bossFem::Update()
 		attack[1]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
 		attack[2]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
 		walk->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
-		
+
 
 		if (damagingTime < 0.0f)
 		{
@@ -234,127 +237,125 @@ void bossFem::Update()
 		col->colOnOff = false;
 		//if (bossDir == RIGHT || bossDir == LEFT)
 		//{
-			if (start1->visible) {
-				getTickTime -= DELTA;
-				if (getTickTime > 0.0f)
-				{
-					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					//cout << "start1" << endl;
-					//cout << "start1 : " << getTickTime << endl;
-				}
-				else
-				{
-					//cout << "시간 끝 애니메이션 변화" << endl;
-					start1->visible = false;
-					start2->visible = true;
-					getTickTime = 1.0f;
-				}
-			}
-
-			if (start2->visible) {
-				getTickTime -= DELTA;
-				if (getTickTime > 0.0f)
-				{
-					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					//cout << "start2" << endl;
-					//cout << "start2 : " << getTickTime << endl;
-				}
-				else
-				{
-					//cout << "시간 끝 애니메이션 변화" << endl;
-					start2->visible = false;
-					start3->visible = true;
-					getTickTime = 1.3f;
-				}
-			}
-
-			if (start3->visible) {
-				getTickTime -= DELTA;
-				if (getTickTime > 0.0f)
-				{
-					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					//cout << "start3" << endl;
-					//cout << "start3 : " << getTickTime << endl;
-				}
-				else
-				{
-					//cout << "시간 끝 애니메이션 변화" << endl;
-					start3->visible = false;
-					start4->visible = true;
-					getTickTime = 1.4f;
-				}
-			}
-
-			if (start4->visible) 
+		if (start1->visible) {
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
 			{
-				getTickTime -= DELTA;
-				if (getTickTime > 0.0f)
-				{
-					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					//cout << "start4" << endl;
-					//cout << "start4 : " << getTickTime << endl;
-				}
-				else
-				{
-					//cout << "시간 끝 애니메이션 변화" << endl;
-					start4->visible = false;
-					disappear->visible = true;
-					getTickTime = 0.9; //0.9, 1.1, 8.0
-					//cout << "마지막 성공" << endl;
-					//col->colOnOff = true;
-					//BSstate = BOSSSTATE::STAND;
-					//col->SetWorldPos(Vector2(-20.0f, -450.0f));
-				}
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				//cout << "start1" << endl;
+				//cout << "start1 : " << getTickTime << endl;
 			}
-
-			if (disappear->visible)
+			else
 			{
-				col->scale = stand->scale;
-				getTickTime -= DELTA;
-				if (getTickTime > 0.0f)
-				{
-					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					//cout << "start4" << endl;
-					//cout << "start4 : " << getTickTime << endl;
-				}
-				else
-				{
-					//cout << "시간 끝 애니메이션 변화" << endl;
-					disappear->visible = false;
-					col->SetWorldPos(Vector2(-20.0f, -450.0f));
-					appear->visible = true;
-					getTickTime = 1.1; // 1.1, 8.0
-					//cout << "마지막 성공" << endl;
-					/*BSstate = BOSSSTATE::STAND;
-					col->SetWorldPos(Vector2(-20.0f, -450.0f));*/
-				}
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				start1->visible = false;
+				start2->visible = true;
+				getTickTime = 1.0f;
 			}
-			if (appear->visible)
-			{
-				getTickTime -= DELTA;
-				if (getTickTime > 0.0f)
-				{
-					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					//cout << "start4" << endl;
-					//cout << "start4 : " << getTickTime << endl;
-				}
-				else
-				{
-					
-					//cout << "시간 끝 애니메이션 변화" << endl;
-					appear->visible = false;
-					stand->visible = true;
-					getTickTime = 8.0f; // 1.1, 8.0
-					//cout << "마지막 성공" << endl;
-					BSstate = BOSSSTATE::STAND;
-					
-				}
-			}
+		}
 
-		
+		if (start2->visible) {
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				//cout << "start2" << endl;
+				//cout << "start2 : " << getTickTime << endl;
+			}
+			else
+			{
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				start2->visible = false;
+				start3->visible = true;
+				getTickTime = 1.3f;
+			}
+		}
+
+		if (start3->visible) {
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				//cout << "start3" << endl;
+				//cout << "start3 : " << getTickTime << endl;
+			}
+			else
+			{
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				start3->visible = false;
+				start4->visible = true;
+				getTickTime = 1.4f;
+			}
+		}
+
+		if (start4->visible)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				//cout << "start4" << endl;
+				//cout << "start4 : " << getTickTime << endl;
+			}
+			else
+			{
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				start4->visible = false;
+				disappear->visible = true;
+				getTickTime = 0.9; //0.9, 1.1, 8.0
+				//cout << "마지막 성공" << endl;
+				//col->colOnOff = true;
+				//BSstate = BOSSSTATE::STAND;
+				//col->SetWorldPos(Vector2(-20.0f, -450.0f));
+			}
+		}
+
+		if (disappear->visible)
+		{
+			col->scale = stand->scale;
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				//cout << "start4" << endl;
+				//cout << "start4 : " << getTickTime << endl;
+			}
+			else
+			{
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				disappear->visible = false;
+				col->SetWorldPos(Vector2(-20.0f, -450.0f));
+				appear->visible = true;
+				getTickTime = 1.1; // 1.1, 8.0
+				//cout << "마지막 성공" << endl;
+				/*BSstate = BOSSSTATE::STAND;
+				col->SetWorldPos(Vector2(-20.0f, -450.0f));*/
+			}
+		}
+		if (appear->visible)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				//cout << "start4" << endl;
+				//cout << "start4 : " << getTickTime << endl;
+			}
+			else
+			{
+
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				appear->visible = false;
+				stand->visible = true;
+				getTickTime = 8.0f; // 1.1, 8.0
+				//cout << "마지막 성공" << endl;
+				BSstate = BOSSSTATE::STAND;
+
+			}
+		}
+
+
 	}
-
-	
 
 	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
 	{
@@ -387,59 +388,67 @@ void bossFem::Update()
 			}
 			else
 			{
-				//motionRand = RANDOM->Int(1, 7);
-				motionRand = 7;
-				cout << "boss hp : " << hp << endl;
+				motionRand = RANDOM->Int(5, 6);
+				//motionRand = 5;
+				//cout << "boss hp : " << hp << endl;
 				cout << "motionRand : " << motionRand << endl;
-				cout << "checkGrog : " << checkGrog << endl;
+				//cout << "checkGrog : " << checkGrog << endl;
 				switch (motionRand)
 				{
-					case 0:
+				case 0:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				case 1:
+					stand->visible = false;
+					walk->visible = true;
+					walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+					getTickTime = 4.0f;
+					BSstate = BOSSSTATE::WALK;
+					break;
+				case 2:
+					stand->visible = false;
+
+					attack[0]->visible = true;
+					attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					getTickTime = 0.9f;
+					BSstate = BOSSSTATE::ATTACK;
+					break;
+				case 3:
+					stand->visible = false;
+					getTickTime = 1.3f;
+					disappear->visible = true;
+					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::DISAPPEAR;
+					break;
+				case 5:
+					getTickTime = 1.3f;//10초간 시전
+					stand->visible = false;
+					skill1_1->visible = true;
+					skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::SKILL1;
+					break;
+				case 6:
+					getTickTime = 2.1f;//10초간 시전
+					stand->visible = false;
+					skill2_1->visible = true;
+					skill2_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::SKILL2;
+					break;
+				case 7:
+					if (checkGrog)
+					{
+						getTickTime = 10.0f;
+						stand->visible = false;
+						grog->visible = true;
+						BSstate = BOSSSTATE::GROG;
+						break;
+					}
+					else
+					{
+						getTickTime = 6.0f;
 						BSstate = BOSSSTATE::STAND;
 						break;
-					case 1:
-						stand->visible = false;
-						walk->visible = true;
-						walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-						getTickTime = 4.0f;
-						BSstate = BOSSSTATE::WALK;
-						break;
-					case 2:
-						stand->visible = false;
-
-						attack[0]->visible = true;
-						attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-						getTickTime = 0.9f;
-						BSstate = BOSSSTATE::ATTACK;
-						break;
-					case 3:
-						stand->visible = false;
-						getTickTime = 1.3f;
-						disappear->visible = true;
-						disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-						BSstate = BOSSSTATE::DISAPPEAR;
-						break;
-					case 5:
-						//BSstate = BOSSSTATE::SKILL1;
-						break;
-					case 6:
-						//BSstate = BOSSSTATE::SKILL2;
-						break;
-					case 7:
-						if (checkGrog)
-						{
-							getTickTime = 10.0f;
-							stand->visible = false;
-							grog->visible = true;
-							BSstate = BOSSSTATE::GROG;
-							break;
-						}
-						else
-						{
-							getTickTime = 6.0f;
-							BSstate = BOSSSTATE::STAND;
-							break;
-						}
+					}
 				}
 			}
 		}
@@ -508,7 +517,7 @@ void bossFem::Update()
 				}
 			}
 		}
-			
+
 	}
 	else if (BSstate == BOSSSTATE::ATTACK)
 	{
@@ -605,48 +614,49 @@ void bossFem::Update()
 	{
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
-			{
+		{
 
-			}
+		}
 		else
-			{
-				appear->visible = false;
-				stand->visible = true;
-				getTickTime = 6.0f; //일단 6초동안 스탠드
-				BSstate = BOSSSTATE::STAND;
-			}
+		{
+			appear->visible = false;
+			stand->visible = true;
+			getTickTime = 6.0f; //일단 6초동안 스탠드
+			BSstate = BOSSSTATE::STAND;
+		}
 	}
 	else if (BSstate == BOSSSTATE::DISAPPEAR)
 	{
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
-			{
+		{
 
-			}
+		}
 		else
+		{
+			getTickTime = 1.0f;
+			//cout << "시간 끝 애니메이션 변화" << endl;
+			disappear->visible = false;
+			appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			appear->visible = true;
+			motionRand = RANDOM->Int(0, 2);
+			cout << "motionRand = " << motionRand << endl;
+			switch (motionRand)
 			{
-				getTickTime = 1.0f;
-				//cout << "시간 끝 애니메이션 변화" << endl;
-				disappear->visible = false;
-				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				appear->visible = true;
-				motionRand = RANDOM->Int(0, 2);
-				cout << "motionRand = " << motionRand << endl;
-				switch (motionRand)
-				{
-				case 0:
-					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
-					break;
-				case 1:
-					col->SetWorldPosX((col->GetWorldPos().x * -1.0f) * 2.0f);
-					break;
-				case 2:
-					col->SetWorldPosX(0.0f);
-					break;
-				}
-				BSstate = BOSSSTATE::APPEAR;
+			case 0:
+				col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
+				break;
+			case 1:
+				col->SetWorldPosX((col->GetWorldPos().x * -1.0f) * 2.0f);
+				break;
+			case 2:
+				col->SetWorldPosX(0.0f);
+				break;
 			}
+			BSstate = BOSSSTATE::APPEAR;
+		}
 	}
+
 	else if (BSstate == BOSSSTATE::GROG)
 	{
 		getTickTime -= DELTA;
@@ -660,6 +670,72 @@ void bossFem::Update()
 			stand->visible = true;
 			getTickTime = 6.0f;
 			BSstate = BOSSSTATE::STAND;
+		}
+	}
+
+	else if (BSstate == BOSSSTATE::SKILL1)
+	{
+		if (skill1_1->visible)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
+				skill1_1->visible = false;
+				skill1_2->visible = true;
+				getTickTime = 10.0f;
+			}
+		}
+		if (skill1_2->visible)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
+				skill1_2->visible = false;
+				stand->visible = true;
+				getTickTime = 6.0f;
+				BSstate = BOSSSTATE::STAND;
+			}
+		}
+
+	}
+	else if (BSstate == BOSSSTATE::SKILL2)
+	{
+		if (skill2_1->visible)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
+				skill2_1->visible = false;
+				skill2_2->visible = true;
+				getTickTime = 10.0f;
+			}
+		}
+		if (skill2_2->visible)
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
+				skill2_2->visible = false;
+				stand->visible = true;
+				getTickTime = 6.0f;
+				BSstate = BOSSSTATE::STAND;
+			}
 		}
 	}
 
