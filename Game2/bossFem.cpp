@@ -61,6 +61,38 @@ bossFem::bossFem()
 	stand->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand->visible = false;	
 
+	///walk
+	stand = new ObImage(L"BSwalk.png");
+	stand->SetParentRT(*col);
+	stand->maxFrame.x = 12;
+	stand->scale.x = 221.0f;
+	stand->scale.y = 204.0f;
+	stand->pivot = OFFSET_N;
+	stand->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	stand->visible = false;
+
+
+	///appear
+	appear = new ObImage(L"BSappear.png");
+	appear->SetParentRT(*col);
+	appear->maxFrame.x = 11;
+	appear->scale.x = 261.0f;
+	appear->scale.y = 204.0f;
+	appear->pivot = OFFSET_N;
+	appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	appear->visible = false;
+
+	///disappear
+	disappear = new ObImage(L"BSdisappear.png");
+	disappear->SetParentRT(*col);
+	disappear->maxFrame.x = 9;
+	disappear->scale.x = 249.0f;
+	disappear->scale.y = 182.0f;
+	disappear->pivot = OFFSET_N;
+	disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	disappear->visible = false;
+	
+
 	/// <summary>
 	/// 공격 애니메이션
 	/// </summary>
@@ -101,6 +133,7 @@ bossFem::bossFem()
 	hp = 100.0f;
 
 	attackCount = 0;
+	motionRand = 0;
 }
 
 bossFem::~bossFem()
@@ -138,15 +171,15 @@ void bossFem::Update()
 	if (BSstate == BOSSSTATE::START) {
 		cout << "스타트 성공" << endl;
 		col->colOnOff = false;
-		if (bossDir == RIGHT || bossDir == LEFT)
-		{
+		//if (bossDir == RIGHT || bossDir == LEFT)
+		//{
 			if (start1->visible) {
 				getTickTime -= DELTA;
 				if (getTickTime > 0.0f)
 				{
 					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					cout << "start1" << endl;
-					cout << getTickTime << endl;
+					cout << "start1 : " << getTickTime << endl;
 				}
 				else
 				{
@@ -163,7 +196,7 @@ void bossFem::Update()
 				{
 					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					cout << "start2" << endl;
-					cout << getTickTime << endl;
+					cout << "start2 : " << getTickTime << endl;
 				}
 				else
 				{
@@ -180,7 +213,7 @@ void bossFem::Update()
 				{
 					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					cout << "start3" << endl;
-					cout << getTickTime << endl;
+					cout << "start3 : " << getTickTime << endl;
 				}
 				else
 				{
@@ -197,7 +230,7 @@ void bossFem::Update()
 				{
 					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					cout << "start4" << endl;
-					cout << getTickTime << endl;
+					cout << "start4 : " << getTickTime << endl;
 				}
 				else
 				{
@@ -209,24 +242,73 @@ void bossFem::Update()
 					BSstate = BOSSSTATE::STAND;
 					col->SetWorldPos(Vector2(-20.0f, -450.0f));
 				}
-			}
+			//}
 		}
 		
 	}
 	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
 	{
+		motionRand = RANDOM->Int(0, 6);
+
+		getTickTime = 8.0f; //일단 8초동안 스탠드
+
 		if (bossDir == RIGHT)
 		{
 			stand->reverseLR = false;
 			attack[0]->reverseLR = false;
 			attack[1]->reverseLR = false;
 			attack[2]->reverseLR = false;
+			walk->reverseLR = false;
 
 			col->pivot = OFFSET_B;
 			col->scale = stand->scale;
 			col->scale.y += 70.0f;
 			stand->pivot = OFFSET_B;
 			stand->visible = true;
+
+
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				cout << "dddd" << endl;
+				cout << getTickTime << endl;
+				cout << "attackCount : " << attackCount << endl;
+			}
+			else
+			{
+				switch (motionRand)
+				{
+				case 0:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				case 1:
+					BSstate = BOSSSTATE::WALK;
+					break;
+				case 2:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				case 3:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				case 4:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				case 5:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				case 6:
+					BSstate = BOSSSTATE::STAND;
+					break;
+				}
+				cout << "시간 끝 애니메이션 변화" << endl;
+				jumpAttack->visible = false;
+				jump->visible = true;
+				getTickTime = 0.0f;
+				cout << "attackCount : " << attackCount << endl;
+				state = PLSTATE::JUMP;
+			}
+
 
 			if (INPUT->KeyDown('Z'))
 			{
@@ -334,6 +416,8 @@ void bossFem::Update()
 	attack[0]->Update();
 	attack[1]->Update();
 	attack[2]->Update();
+	appear->Update();
+	disappear->Update();
 	//attack->Update();
 }
 
@@ -348,6 +432,8 @@ void bossFem::Render()
 	attack[0]->Render();
 	attack[1]->Render();
 	attack[2]->Render();
+	appear->Render();
+	disappear->Render();
 	//attack->Render();
 }
 

@@ -48,6 +48,7 @@ private:
 	float			hp;
 	Vector2			bossDir;
 	int				attackCount;
+	int				motionRand;
 
 public:
 	bossFem();
