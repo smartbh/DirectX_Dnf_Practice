@@ -117,19 +117,30 @@ void Main::Update()
 	}
 	if (INPUT->KeyDown('A')) //스킬 돌진
 	{
-		if (player->getPlDir() == RIGHT)
-		{
-			//player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 100.0f);
-			player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
-			bgCol->MoveWorldPos(RIGHT * 1000.0f * DELTA);
-			CAM->position += RIGHT * 1000.0f * DELTA;
-		}
-		else if (player->getPlDir() == LEFT)
-		{
-			player->getCol()->MoveWorldPos(LEFT * 1000.0f * DELTA);
-			bgCol->MoveWorldPos(LEFT * 1000.0f * DELTA);
-			CAM->position += LEFT * 1000.0f * DELTA;
-		}
+		//float getTickTime = 10.0f;
+		//if (getTickTime > 0.0f)
+		//{
+			if (player->getPlDir() == RIGHT)
+			{
+				for (int i = 0; i < 1000; i++)
+				{
+					//player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 100.0f);
+					player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
+					bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
+					CAM->position += RIGHT * 10.0f * DELTA;
+				}
+
+			}
+			else if (player->getPlDir() == LEFT)
+			{
+				for (int i = 0; i < 1000; i++)
+				{
+					player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
+					bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
+					CAM->position += LEFT * 10.0f * DELTA;
+				}
+			}
+		//}
 
 	}
 
