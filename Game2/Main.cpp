@@ -43,6 +43,7 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
+	//cout << "boss x : " <<boss->getCol()->GetWorldPos().x << endl;
 	boss->setBossDir(player->getCol()->GetWorldPos());
 	//player->printPlState();
 	//player->getPlDir();
@@ -173,6 +174,12 @@ void Main::LateUpdate()
 
 		player->Update();
 	}
+
+	//if (bgCol->Intersect(boss->getCol()->GetWorldPos()))
+	//{
+	//	boss->getCol()->SetWorldPosY(bgCol->GetWorldPos().y);
+	//	boss->setBSGravity(0.0f);
+	//}
 
 	if (boss->getCol()->Intersect(player->getWeaponCol()))
 	{

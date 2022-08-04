@@ -43,6 +43,7 @@ private:
 	float			getTickTime;
 	float			Timer;
 	float			damagingTime;
+	float			gravity;
 	bool			isDamaged;
 
 	float			hp;
@@ -59,5 +60,6 @@ public:
 	ObRect*		getCol();
 	void		setBossDir(Vector2 _playerPos);
 	void		TakeDamage(int damage);
+	void		setBSGravity(float _gravity);
 };
 

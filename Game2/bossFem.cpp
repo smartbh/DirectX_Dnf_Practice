@@ -5,7 +5,7 @@ bossFem::bossFem()
 	col = new ObRect();
 	col->scale = Vector2(678.0f, 527.0f);
 	col->SetWorldPos(Vector2(0.0f, 0.0f));
-	col->pivot = OFFSET_N;
+	col->pivot = OFFSET_B;
 	col->isFilled = false;
 	col->visible = true;
 	col->collider = COLLIDER::RECT;
@@ -18,7 +18,7 @@ bossFem::bossFem()
 	start1->maxFrame.x = 13;
 	start1->scale.x = 678.0f;
 	start1->scale.y = 527.0f;
-	start1->pivot = OFFSET_N;
+	start1->pivot = OFFSET_B;
 	start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	start1->visible = true;
 
@@ -27,7 +27,7 @@ bossFem::bossFem()
 	start2->maxFrame.x = 10;
 	start2->scale.x = 678.0f;
 	start2->scale.y = 527.0f;
-	start2->pivot = OFFSET_N;
+	start2->pivot = OFFSET_B;
 	start2->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	start2->visible = false;
 
@@ -36,13 +36,14 @@ bossFem::bossFem()
 	start3->maxFrame.x = 13;
 	start3->scale.x = 678.0f;
 	start3->scale.y = 527.0f;
-	start3->pivot = OFFSET_N;
+	start3->pivot = OFFSET_B;
 	start3->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	start3->visible = false;
 
 	start4 = new ObImage(L"start4.png");
 	start4->SetParentRT(*col);
 	start4->maxFrame.x = 14;
+	start4->SetLocalPosY(100.0f);
 	start4->scale.x = 678.0f;
 	start4->scale.y = 527.0f;
 	start4->pivot = OFFSET_N;
@@ -79,6 +80,7 @@ bossFem::bossFem()
 	appear->maxFrame.x = 11;
 	appear->scale.x = 261.0f;
 	appear->scale.y = 204.0f;
+	appear->SetLocalPosY(85.0f);
 	appear->pivot = OFFSET_N;
 	appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	appear->visible = false;
@@ -86,10 +88,11 @@ bossFem::bossFem()
 	///disappear
 	disappear = new ObImage(L"BSdisappear.png");
 	disappear->SetParentRT(*col);
-	disappear->maxFrame.x = 9;
+	disappear->maxFrame.x = 13;
 	disappear->scale.x = 249.0f;
 	disappear->scale.y = 182.0f;
-	disappear->pivot = OFFSET_N;
+	appear->SetLocalPosY(85.0f);
+	disappear->pivot = OFFSET_B;
 	disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	disappear->visible = false;
 	
@@ -143,6 +146,7 @@ bossFem::~bossFem()
 
 void bossFem::Update()
 {
+
 	/*if (bossDir.x < 0)
 		cout << "bossDir = LEFT" << endl;
 	else if (bossDir.x > 0)
@@ -228,7 +232,8 @@ void bossFem::Update()
 				}
 			}
 
-			if (start4->visible) {
+			if (start4->visible) 
+			{
 				getTickTime -= DELTA;
 				if (getTickTime > 0.0f)
 				{
@@ -240,18 +245,67 @@ void bossFem::Update()
 				{
 					//cout << "시간 끝 애니메이션 변화" << endl;
 					start4->visible = false;
-					getTickTime = 8.0f;
+					disappear->visible = true;
+					getTickTime = 0.9; //0.9, 1.1, 8.0
 					//cout << "마지막 성공" << endl;
-					col->colOnOff = true;
-					BSstate = BOSSSTATE::STAND;
-					col->SetWorldPos(Vector2(-20.0f, -450.0f));
+					//col->colOnOff = true;
+					//BSstate = BOSSSTATE::STAND;
+					//col->SetWorldPos(Vector2(-20.0f, -450.0f));
 				}
-			//}
-		}
+			}
+
+			if (disappear->visible)
+			{
+				col->scale = stand->scale;
+				getTickTime -= DELTA;
+				if (getTickTime > 0.0f)
+				{
+					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					//cout << "start4" << endl;
+					//cout << "start4 : " << getTickTime << endl;
+				}
+				else
+				{
+					//cout << "시간 끝 애니메이션 변화" << endl;
+					disappear->visible = false;
+					col->SetWorldPos(Vector2(-20.0f, -450.0f));
+					appear->visible = true;
+					getTickTime = 1.1; // 1.1, 8.0
+					//cout << "마지막 성공" << endl;
+					/*BSstate = BOSSSTATE::STAND;
+					col->SetWorldPos(Vector2(-20.0f, -450.0f));*/
+				}
+			}
+			if (appear->visible)
+			{
+				getTickTime -= DELTA;
+				if (getTickTime > 0.0f)
+				{
+					//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					//cout << "start4" << endl;
+					//cout << "start4 : " << getTickTime << endl;
+				}
+				else
+				{
+					
+					//cout << "시간 끝 애니메이션 변화" << endl;
+					appear->visible = false;
+					stand->visible = true;
+					getTickTime = 8.0f; // 1.1, 8.0
+					//cout << "마지막 성공" << endl;
+					BSstate = BOSSSTATE::STAND;
+					
+				}
+			}
+
 		
 	}
+
+	
+
 	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
 	{
+		col->colOnOff = true;
 		if (bossDir == RIGHT)
 		{
 			stand->reverseLR = false;
@@ -259,7 +313,8 @@ void bossFem::Update()
 			attack[1]->reverseLR = false;
 			attack[2]->reverseLR = false;
 			walk->reverseLR = false;
-			appear->reverseLR = 
+			appear->reverseLR = false;
+			disappear->reverseLR = false;
 
 			col->pivot = OFFSET_B;
 			col->scale = stand->scale;
@@ -271,6 +326,66 @@ void bossFem::Update()
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
+
+			}
+			else
+			{
+				motionRand = RANDOM->Int(3, 4);
+				switch (motionRand)
+				{
+					case 0:
+						BSstate = BOSSSTATE::STAND;
+						break;
+					case 1:
+						stand->visible = false;
+						walk->visible = true;
+						walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+						getTickTime = 4.0f;
+						BSstate = BOSSSTATE::WALK;
+						break;
+					case 2:
+						stand->visible = false;
+
+						attack[0]->visible = true;
+						attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+						getTickTime = 0.9f;
+						BSstate = BOSSSTATE::ATTACK;
+						break;
+					case 3:
+						stand->visible = false;
+						getTickTime = 1.3f;
+						disappear->visible = true;
+						disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+						BSstate = BOSSSTATE::DISAPPEAR;
+						break;
+					//case 5:
+					//	BSstate = BOSSSTATE::SKILL1;
+					//	break;
+					//case 6:
+					//	BSstate = BOSSSTATE::SKILL2;
+					//	break;
+				}
+			}
+		}
+		else if (bossDir == LEFT)
+		{
+			stand->reverseLR = true;
+			attack[0]->reverseLR = true;
+			attack[1]->reverseLR = true;
+			attack[2]->reverseLR = true;
+			walk->reverseLR = true;
+			appear->reverseLR = false;
+			disappear->reverseLR = false;
+
+			col->pivot = OFFSET_B;
+			col->scale = stand->scale;
+			col->scale.y += 70.0f;
+			stand->pivot = OFFSET_B;
+			stand->visible = true;
+
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
 				//cout << "dddd" << endl;
 				//cout << getTickTime << endl;
 				//cout << "attackCount : " << attackCount << endl;
@@ -278,7 +393,7 @@ void bossFem::Update()
 			else
 			{
 				motionRand = RANDOM->Int(0, 2);
-				//cout << "motionRand = " << motionRand << endl;
+				cout << "motionRand = " << motionRand << endl;
 				switch (motionRand)
 				{
 				case 0:
@@ -288,7 +403,7 @@ void bossFem::Update()
 					stand->visible = false;
 					walk->visible = true;
 					walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-					getTickTime = 6.0f;
+					getTickTime = 4.0f;
 					BSstate = BOSSSTATE::WALK;
 					break;
 				case 2:
@@ -300,79 +415,12 @@ void bossFem::Update()
 					BSstate = BOSSSTATE::ATTACK;
 					break;
 				case 3:
-					if (BSstate == BOSSSTATE::DISAPPEAR)
-					{
-						appear->visible = true;
-						appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-						BSstate = BOSSSTATE::APPEAR;
-						break;
-					}
-					break;
-				case 4:
+					stand->visible = false;
+					getTickTime = 1.3f;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				//case 5:
-				//	BSstate = BOSSSTATE::SKILL1;
-				//	break;
-				//case 6:
-				//	BSstate = BOSSSTATE::SKILL2;
-				//	break;
-				}
-			}
-		}
-		else if (bossDir == LEFT)
-		{
-			stand->reverseLR = true;
-			attack[0]->reverseLR = true;
-			attack[1]->reverseLR = true;
-			attack[2]->reverseLR = true;
-			walk->reverseLR = true;
-
-			col->pivot = OFFSET_B;
-			col->scale = stand->scale;
-			col->scale.y += 70.0f;
-			stand->pivot = OFFSET_B;
-			stand->visible = true;
-
-			getTickTime -= DELTA;
-			if (getTickTime > 0.0f)
-			{
-				//cout << "dddd" << endl;
-				//cout << getTickTime << endl;
-				//cout << "attackCount : " << attackCount << endl;
-			}
-			else
-			{
-				motionRand = RANDOM->Int(0, 2);
-				//cout << "motionRand = " << motionRand << endl;
-				switch (motionRand)
-				{
-				case 0:
-					BSstate = BOSSSTATE::STAND;
-					break;
-				case 1:
-					stand->visible = false;
-					walk->visible = true;
-					walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-					getTickTime = 6.0f;
-					BSstate = BOSSSTATE::WALK;
-					break;
-				case 2:
-					stand->visible = false;
-
-					attack[0]->visible = true;
-					attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					getTickTime = 0.9f;
-					BSstate = BOSSSTATE::ATTACK;
-					break;
-					//case 3:
-					//	BSstate = BOSSSTATE::APPEAR;
-					//	break;
-					//case 4:
-					//	BSstate = BOSSSTATE::DISAPPEAR;
-					//	break;
 					//case 5:
 					//	BSstate = BOSSSTATE::SKILL1;
 					//	break;
@@ -448,7 +496,6 @@ void bossFem::Update()
 				stand->visible = true;
 				getTickTime = 5.0f;
 				//cout << "마지막 성공" << endl;
-				col->colOnOff = true;
 				BSstate = BOSSSTATE::STAND;
 			}
 		}
@@ -478,11 +525,49 @@ void bossFem::Update()
 	}
 	else if (BSstate == BOSSSTATE::APPEAR)
 	{
+		getTickTime -= DELTA;
+		if (getTickTime > 0.0f)
+			{
 
+			}
+		else
+			{
+				appear->visible = false;
+				stand->visible = true;
+				getTickTime = 6.0f; //일단 6초동안 스탠드
+				BSstate = BOSSSTATE::STAND;
+			}
 	}
 	else if (BSstate == BOSSSTATE::DISAPPEAR)
 	{
+		getTickTime -= DELTA;
+		if (getTickTime > 0.0f)
+			{
 
+			}
+		else
+			{
+				getTickTime = 1.0f;
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				disappear->visible = false;
+				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				appear->visible = true;
+				motionRand = RANDOM->Int(0, 2);
+				cout << "motionRand = " << motionRand << endl;
+				switch (motionRand)
+				{
+				case 0:
+					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
+					break;
+				case 1:
+					col->SetWorldPosX((col->GetWorldPos().x * -1.0f) * 2.0f);
+					break;
+				case 2:
+					col->SetWorldPosX(0.0f);
+					break;
+				}
+				BSstate = BOSSSTATE::APPEAR;
+			}
 	}
 
 	if (hp < 0)
@@ -556,4 +641,9 @@ void bossFem::TakeDamage(int damage)
 	}
 	else
 		col->color.w = 0.5f;
+}
+
+void bossFem::setBSGravity(float _gravity)
+{
+	gravity = _gravity;
 }

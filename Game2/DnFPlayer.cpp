@@ -643,7 +643,7 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::ATTACK) {
 
-		if (INPUT->KeyDown('Z') && attack1->visible == true) //2연타
+		if (INPUT->KeyDown('Z') && attackCount == 1) //2연타
 		{
 			attack1->visible = false;
 			attack2->visible = true;
@@ -652,7 +652,7 @@ void DnFPlayer::Update()
 			state = PLSTATE::ATTACK;
 		}
 
-		else if (INPUT->KeyDown('Z') && attack2->visible == true) //3연타
+		else if (INPUT->KeyDown('Z') && attackCount == 2) //3연타
 		{
 			//cout << "공격3" << endl;
 			attack2->visible = false;
@@ -663,7 +663,7 @@ void DnFPlayer::Update()
 			//cout << attackCount << endl;
 			state = PLSTATE::ATTACK;
 		}
-		else if (INPUT->KeyDown('Z') && attack3->visible == true) //3연타
+		else if (INPUT->KeyDown('Z') && attackCount == 3) //3연타
 		{
 			//cout << "공격4" << endl;
 			attack3->visible = false;
@@ -680,7 +680,7 @@ void DnFPlayer::Update()
 			state = PLSTATE::ATTACK;
 		}
 
-		if (attack3->visible == true) //attackcount == 0
+		if (attackCount == 0) //attackcount == 0
 		{
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
