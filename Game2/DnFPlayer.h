@@ -99,5 +99,7 @@ public:
 	void		printPlState();
 	Vector2		getPlDir();
 	void		TakeDamage(int damage);
+	void		playerWeaponColon();
+	void		playerWeaponColoff();
 };
 

@@ -645,6 +645,7 @@ void DnFPlayer::Update()
 
 		if (INPUT->KeyDown('Z') && attackCount == 1) //2연타
 		{
+			weaponCol->colOnOff = true;
 			attack1->visible = false;
 			attack2->visible = true;
 			attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
@@ -654,6 +655,7 @@ void DnFPlayer::Update()
 
 		else if (INPUT->KeyDown('Z') && attackCount == 2) //3연타
 		{
+			weaponCol->colOnOff = true;
 			//cout << "공격3" << endl;
 			attack2->visible = false;
 			attack3->visible = true;
@@ -665,6 +667,7 @@ void DnFPlayer::Update()
 		}
 		else if (INPUT->KeyDown('Z') && attackCount == 3) //3연타
 		{
+			weaponCol->colOnOff = true;
 			//cout << "공격4" << endl;
 			attack3->visible = false;
 			attack4->visible = true;
@@ -706,7 +709,7 @@ void DnFPlayer::Update()
 
 	else if (state == PLSTATE::SKILL1)
 	{
-		weaponCol->colOnOff = true;
+		//weaponCol->colOnOff = true;
 
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
@@ -728,7 +731,7 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::SKILL2) 
 	{
-		weaponCol->colOnOff = true;
+		//weaponCol->colOnOff = true;
 
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
@@ -935,4 +938,14 @@ void DnFPlayer::TakeDamage(int damage)
 		skill1->visible = false; //대쉬
 		skill2->visible = false; //찌르기
 	}
+}
+
+void DnFPlayer::playerWeaponColon()
+{
+	weaponCol->colOnOff = true;
+}
+
+void DnFPlayer::playerWeaponColoff()
+{
+	weaponCol->colOnOff = false;
 }

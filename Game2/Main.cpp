@@ -183,7 +183,9 @@ void Main::LateUpdate()
 
 	if (boss->getCol()->Intersect(player->getWeaponCol()))
 	{
-		boss->TakeDamage(10.0f);
+		boss->TakeDamage(1000.0f);
+		boss->printBossHp();
+		player->playerWeaponColoff();
 	}
 }
 

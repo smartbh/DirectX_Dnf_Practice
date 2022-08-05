@@ -70,5 +70,6 @@ public:
 	void		setBossDir(Vector2 _playerPos);
 	void		TakeDamage(int damage);
 	void		setBSGravity(float _gravity);
+	void		printBossHp();
 };
 

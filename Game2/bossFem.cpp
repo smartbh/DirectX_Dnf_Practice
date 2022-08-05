@@ -231,6 +231,13 @@ void bossFem::Update()
 		attack[1]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
 		attack[2]->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
 		walk->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		skill1_1->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		skill1_2->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		skill2_1->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		skill2_2->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		appear->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		disappear->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		grog->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
 
 
 		if (damagingTime < 0.0f)
@@ -240,6 +247,13 @@ void bossFem::Update()
 			attack[1]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 			attack[2]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 			walk->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			skill1_1->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			skill1_2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			skill2_1->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			skill2_2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			appear->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			disappear->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			grog->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 			isDamaged = false;
 		}
 
@@ -247,6 +261,7 @@ void bossFem::Update()
 
 	if (BSstate == BOSSSTATE::START) {
 		//cout << "스타트 성공" << endl;
+		attackCol->visible = false;
 		col->colOnOff = false;
 		//if (bossDir == RIGHT || bossDir == LEFT)
 		//{
@@ -372,6 +387,8 @@ void bossFem::Update()
 
 	if (BSstate == BOSSSTATE::STAND) //여기서부터 모든 동작으로 Idle이 나뉘게 
 	{
+		attackCol->visible = false;
+		attackCol->colOnOff = false;
 		col->colOnOff = true;
 		if (bossDir == RIGHT)
 		{
@@ -401,7 +418,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(1, 6);
+				motionRand = RANDOM->Int(2, 2);
 				//motionRand = 5;
 				//cout << "boss hp : " << hp << endl;
 				cout << "motionRand : " << motionRand << endl;
@@ -420,7 +437,10 @@ void bossFem::Update()
 					break;
 				case 2:
 					stand->visible = false;
-
+					attackCol->colOnOff = true;
+					attackCol->visible = true;
+					attackCol->SetLocalPosX(100.0f);
+					attackCol->scale = Vector2(100.0f, 400.0f);
 					attack[0]->visible = true;
 					attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					getTickTime = 0.9f;
@@ -433,7 +453,7 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 5:
+				case 5: //스킬1
 					getTickTime = 1.3f;//10초간 시전
 					checkSkill_1On = true;
 					stand->visible = false;
@@ -441,9 +461,9 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 6:
+				case 6: //스킬2
 					getTickTime = 1.3f;//10초간 시전
-					checkSkill_1On = true;
+					checkSkill_2On = true;
 					stand->visible = false;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
@@ -494,7 +514,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(0, 2);
+				motionRand = RANDOM->Int(2, 2);
 				cout << "motionRand = " << motionRand << endl;
 				switch (motionRand)
 				{
@@ -510,7 +530,7 @@ void bossFem::Update()
 					break;
 				case 2:
 					stand->visible = false;
-
+					attackCol->colOnOff = true;
 					attack[0]->visible = true;
 					attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					getTickTime = 0.9f;
@@ -523,12 +543,37 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-					//case 5:
-					//	BSstate = BOSSSTATE::SKILL1;
-					//	break;
-					//case 6:
-					//	BSstate = BOSSSTATE::SKILL2;
-					//	break;
+				case 5:
+					getTickTime = 1.3f;//10초간 시전
+					checkSkill_1On = true;
+					stand->visible = false;
+					disappear->visible = true;
+					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::DISAPPEAR;
+					break;
+				case 6:
+					getTickTime = 1.3f;//10초간 시전
+					checkSkill_2On = true;
+					stand->visible = false;
+					disappear->visible = true;
+					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::DISAPPEAR;
+					break;
+				case 7:
+					if (checkGrog)
+					{
+						getTickTime = 10.0f;
+						stand->visible = false;
+						grog->visible = true;
+						BSstate = BOSSSTATE::GROG;
+						break;
+					}
+					else
+					{
+						getTickTime = 6.0f;
+						BSstate = BOSSSTATE::STAND;
+						break;
+					}
 				}
 			}
 		}
@@ -550,6 +595,7 @@ void bossFem::Update()
 			}
 			else
 			{
+				attackCol->colOnOff = true;
 				//cout << "시간 끝 애니메이션 변화" << endl;
 				attack[1]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				attack[0]->visible = false;
@@ -572,6 +618,7 @@ void bossFem::Update()
 			}
 			else
 			{
+				attackCol->colOnOff = true;
 				//cout << "시간 끝 애니메이션 변화" << endl;
 				attack[2]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				attack[1]->visible = false;
@@ -634,10 +681,41 @@ void bossFem::Update()
 		}
 		else
 		{
-			appear->visible = false;
-			stand->visible = true;
-			getTickTime = 6.0f; //일단 6초동안 스탠드
-			BSstate = BOSSSTATE::STAND;
+			if (checkSkill_1On)
+			{
+				getTickTime = 1.3f; //일단 6초동안 스탠드
+				appear->visible = false;
+
+				if (bossDir == RIGHT) {
+					skill1_1->reverseLR = false;
+					skill1_2->reverseLR = false;
+				}
+				else if (bossDir == LEFT)
+				{
+					skill1_1->reverseLR = true;
+					skill1_2->reverseLR = true;
+				}
+				attackCol->colOnOff = true;
+				skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				skill1_1->visible = true;
+				BSstate = BOSSSTATE::SKILL1;
+			}
+			else if (checkSkill_2On)
+			{
+				attackCol->colOnOff = true;
+				getTickTime = 2.1f; //일단 6초동안 스탠드
+				appear->visible = false;
+				skill2_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				skill2_1->visible = true;
+				BSstate = BOSSSTATE::SKILL2;
+			}
+			else
+			{
+				appear->visible = false;
+				stand->visible = true;
+				getTickTime = 6.0f; //일단 6초동안 스탠드
+				BSstate = BOSSSTATE::STAND;
+			}
 		}
 	}
 	else if (BSstate == BOSSSTATE::DISAPPEAR)
@@ -649,7 +727,7 @@ void bossFem::Update()
 		}
 		else
 		{
-			if (checkSkill_1On)
+			if (checkSkill_1On) //스킬 1이면
 			{
 				getTickTime = 1.0f;
 				disappear->visible = false;
@@ -658,10 +736,10 @@ void bossFem::Update()
 				switch (motionRand)
 				{
 				case 0:
-					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
+					col->SetWorldPosX(-450.0f);
 					break;
 				case 1:
-					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
+					col->SetWorldPosX(450.0f);
 					break;
 				}
 
@@ -669,11 +747,11 @@ void bossFem::Update()
 				appear->visible = true;
 				BSstate = BOSSSTATE::APPEAR;
 			}
-			else if (checkSkill_2On)
+			else if (checkSkill_2On) //스킬 2면
 			{
 				getTickTime = 1.0f;
 				disappear->visible = false;
-				col->SetWorldPosX(0.0f);
+				col->SetWorldPosX(0.0f); //가운데로 가서
 				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				appear->visible = true;
 				BSstate = BOSSSTATE::APPEAR;
@@ -722,6 +800,7 @@ void bossFem::Update()
 
 	else if (BSstate == BOSSSTATE::SKILL1)
 	{
+		attackCol->colOnOff = true;
 		if (skill1_1->visible)
 		{
 			getTickTime -= DELTA;
@@ -748,6 +827,7 @@ void bossFem::Update()
 				skill1_2->visible = false;
 				stand->visible = true;
 				getTickTime = 6.0f;
+				checkSkill_1On = false;
 				BSstate = BOSSSTATE::STAND;
 			}
 		}
@@ -755,6 +835,7 @@ void bossFem::Update()
 	}
 	else if (BSstate == BOSSSTATE::SKILL2)
 	{
+		attackCol->colOnOff = true;
 		if (skill2_1->visible)
 		{
 			getTickTime -= DELTA;
@@ -781,6 +862,7 @@ void bossFem::Update()
 				skill2_2->visible = false;
 				stand->visible = true;
 				getTickTime = 6.0f;
+				checkSkill_2On = false;
 				BSstate = BOSSSTATE::STAND;
 			}
 		}
@@ -825,6 +907,7 @@ void bossFem::Update()
 	skill2_1->Update();
 	skill2_2->Update();
 	grog->Update();
+	attackCol->Update();
 }
 
 void bossFem::Render()
@@ -846,6 +929,7 @@ void bossFem::Render()
 	skill2_1->Render();
 	skill2_2->Render();
 	grog->Render();
+	attackCol->Render();
 }
 
 ObRect* bossFem::getCol()
@@ -881,4 +965,9 @@ void bossFem::TakeDamage(int damage)
 void bossFem::setBSGravity(float _gravity)
 {
 	gravity = _gravity;
+}
+
+void bossFem::printBossHp()
+{
+	cout << "Boss Hp : " << hp << endl;
 }
