@@ -657,12 +657,26 @@ void bossFem::Update()
 
 				switch (motionRand)
 				{
-				default:
+				case 0:
+					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
+					break;
+				case 1:
+					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
 					break;
 				}
 
 				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				appear->visible = true;
+				BSstate = BOSSSTATE::APPEAR;
+			}
+			else if (checkSkill_2On)
+			{
+				getTickTime = 1.0f;
+				disappear->visible = false;
+				col->SetWorldPosX(0.0f);
+				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				appear->visible = true;
+				BSstate = BOSSSTATE::APPEAR;
 			}
 			else
 			{
