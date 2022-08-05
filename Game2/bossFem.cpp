@@ -132,6 +132,7 @@ bossFem::bossFem()
 	attack[2] = new ObImage(L"attack3.png");
 	attack[2]->SetParentRT(*col);
 	attack[2]->maxFrame.x = 17;
+	attack[2]->SetLocalPos(Vector2(20.0f ,-5.0f));
 	attack[2]->scale.x = 359.0f;
 	attack[2]->scale.y = 239.0f;
 	attack[2]->pivot = OFFSET_B;
@@ -390,6 +391,7 @@ void bossFem::Update()
 		attackCol->visible = false;
 		attackCol->colOnOff = false;
 		col->colOnOff = true;
+		col->SetLocalPos(Vector2(0.0f, -450.0f)); 
 		if (bossDir == RIGHT)
 		{
 			stand->reverseLR = false;
@@ -418,7 +420,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(2, 2);
+				motionRand = RANDOM->Int(6, 6);
 				//motionRand = 5;
 				//cout << "boss hp : " << hp << endl;
 				cout << "motionRand : " << motionRand << endl;
@@ -514,7 +516,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(2, 2);
+				motionRand = RANDOM->Int(6, 6);
 				cout << "motionRand = " << motionRand << endl;
 				switch (motionRand)
 				{
@@ -531,6 +533,9 @@ void bossFem::Update()
 				case 2:
 					stand->visible = false;
 					attackCol->colOnOff = true;
+					attackCol->visible = true;
+					attackCol->SetLocalPosX(-100.0f);
+					attackCol->scale = Vector2(100.0f, 400.0f);
 					attack[0]->visible = true;
 					attack[0]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					getTickTime = 0.9f;
@@ -587,9 +592,17 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				if (bossDir == RIGHT)
+				{
 					attack[0]->reverseLR = false;
+					attackCol->SetLocalPosX(100.0f);
+				}
+					
 				else if (bossDir == LEFT)
+				{
 					attack[0]->reverseLR = true;
+					attackCol->SetLocalPosX(-100.0f);
+				}
+					
 				//cout << "attack[0]" << endl;
 				//cout << "attack[0] : " << getTickTime << endl;
 			}
@@ -609,10 +622,17 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				if (bossDir == RIGHT)
+				{
 					attack[1]->reverseLR = false;
+					attackCol->SetLocalPosX(100.0f);
+				}
+
 				else if (bossDir == LEFT)
+				{
 					attack[1]->reverseLR = true;
-				start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					attackCol->SetLocalPosX(-100.0f);
+				}
+				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				//cout << "attack[1]" << endl;
 				//cout << "attack[1] : " << getTickTime << endl;
 			}
@@ -632,9 +652,16 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				if (bossDir == RIGHT)
+				{
 					attack[2]->reverseLR = false;
+					attackCol->SetLocalPosX(100.0f);
+				}
+
 				else if (bossDir == LEFT)
+				{
 					attack[2]->reverseLR = true;
+					attackCol->SetLocalPosX(-100.0f);
+				}
 				//cout << "attack[2]" << endl;
 				//cout << "attack[2] : " << getTickTime << endl;
 			}
@@ -689,13 +716,20 @@ void bossFem::Update()
 				if (bossDir == RIGHT) {
 					skill1_1->reverseLR = false;
 					skill1_2->reverseLR = false;
+					attackCol->visible = true;
+					attackCol->pivot = OFFSET_L;
+					attackCol->SetLocalPosX(100.0f);
+					attackCol->scale = Vector2(app.GetWidth() - 200.0f, 400.0f);
 				}
 				else if (bossDir == LEFT)
 				{
 					skill1_1->reverseLR = true;
 					skill1_2->reverseLR = true;
+					attackCol->visible = true;
+					attackCol->pivot = OFFSET_R;
+					attackCol->SetLocalPosX(-100.0f);
+					attackCol->scale = Vector2(app.GetWidth() - 200.0f, 400.0f);
 				}
-				attackCol->colOnOff = true;
 				skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				skill1_1->visible = true;
 				BSstate = BOSSSTATE::SKILL1;
@@ -705,6 +739,10 @@ void bossFem::Update()
 				attackCol->colOnOff = true;
 				getTickTime = 2.1f; //일단 6초동안 스탠드
 				appear->visible = false;
+				col->SetLocalPosY(100.0f);
+				attackCol->visible = true;
+				attackCol->SetLocalPos(Vector2(0.0f, -350.0f));
+				attackCol->scale = Vector2(app.GetWidth(), 400.0f);
 				skill2_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				skill2_1->visible = true;
 				BSstate = BOSSSTATE::SKILL2;
@@ -825,7 +863,7 @@ void bossFem::Update()
 			else
 			{
 				skill1_2->visible = false;
-				stand->visible = true;
+				disappear->visible = true;
 				getTickTime = 6.0f;
 				checkSkill_1On = false;
 				BSstate = BOSSSTATE::STAND;
@@ -860,10 +898,11 @@ void bossFem::Update()
 			else
 			{
 				skill2_2->visible = false;
-				stand->visible = true;
-				getTickTime = 6.0f;
+				disappear->visible = true;
+				disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				getTickTime = 1.3f;
 				checkSkill_2On = false;
-				BSstate = BOSSSTATE::STAND;
+				BSstate = BOSSSTATE::DISAPPEAR;
 			}
 		}
 	}
