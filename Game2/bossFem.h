@@ -43,13 +43,17 @@ private:
 	Vector2			dir;
 	BOSSSTATE		BSstate;
 	ObRect*			col; //콜라이더
+	ObRect*			attackCol; //공격 콜라이더
 
 	float			getTickTime;
 	float			Timer;
 	float			damagingTime;
 	float			gravity;
+
 	bool			isDamaged;
 	bool			checkGrog;
+	bool			checkSkill_1On;
+	bool			checkSkill_2On;
 
 	float			hp;
 	Vector2			bossDir;

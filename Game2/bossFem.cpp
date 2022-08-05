@@ -10,6 +10,17 @@ bossFem::bossFem()
 	col->visible = true;
 	col->collider = COLLIDER::RECT;
 
+	//무기 콜라이더
+	attackCol = new ObRect();
+	attackCol->SetParentRT(*col);
+	attackCol->scale = Vector2(120.0f, 300.0f) / 2.0f;
+	attackCol->SetLocalPos(Vector2(0.0f, 50.0f));
+	attackCol->pivot = OFFSET_N;
+	attackCol->isFilled = false;
+	attackCol->visible = true;
+	attackCol->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
+	attackCol->collider = COLLIDER::RECT;
+
 	/// <summary>
 	/// 시작 애니메이션 (1번만 실행)
 	/// </summary>
@@ -194,6 +205,8 @@ bossFem::bossFem()
 	attackCount = 0;
 	motionRand = 0;
 	checkGrog = false;
+	checkSkill_1On = false;
+	checkSkill_2On = false;
 }
 
 bossFem::~bossFem()
@@ -388,7 +401,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(5, 6);
+				motionRand = RANDOM->Int(1, 6);
 				//motionRand = 5;
 				//cout << "boss hp : " << hp << endl;
 				cout << "motionRand : " << motionRand << endl;
@@ -422,17 +435,19 @@ void bossFem::Update()
 					break;
 				case 5:
 					getTickTime = 1.3f;//10초간 시전
+					checkSkill_1On = true;
 					stand->visible = false;
-					skill1_1->visible = true;
-					skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					BSstate = BOSSSTATE::SKILL1;
+					disappear->visible = true;
+					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
 				case 6:
-					getTickTime = 2.1f;//10초간 시전
+					getTickTime = 1.3f;//10초간 시전
+					checkSkill_1On = true;
 					stand->visible = false;
-					skill2_1->visible = true;
-					skill2_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-					BSstate = BOSSSTATE::SKILL2;
+					disappear->visible = true;
+					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
 				case 7:
 					if (checkGrog)
@@ -634,26 +649,44 @@ void bossFem::Update()
 		}
 		else
 		{
-			getTickTime = 1.0f;
-			//cout << "시간 끝 애니메이션 변화" << endl;
-			disappear->visible = false;
-			appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			appear->visible = true;
-			motionRand = RANDOM->Int(0, 2);
-			cout << "motionRand = " << motionRand << endl;
-			switch (motionRand)
+			if (checkSkill_1On)
 			{
-			case 0:
-				col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
-				break;
-			case 1:
-				col->SetWorldPosX((col->GetWorldPos().x * -1.0f) * 2.0f);
-				break;
-			case 2:
-				col->SetWorldPosX(0.0f);
-				break;
+				getTickTime = 1.0f;
+				disappear->visible = false;
+				motionRand = RANDOM->Int(0, 1); //좌, 우 맵 끝에서
+
+				switch (motionRand)
+				{
+				default:
+					break;
+				}
+
+				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				appear->visible = true;
 			}
-			BSstate = BOSSSTATE::APPEAR;
+			else
+			{
+				getTickTime = 1.0f;
+				//cout << "시간 끝 애니메이션 변화" << endl;
+				disappear->visible = false;
+				motionRand = RANDOM->Int(0, 2);
+				cout << "motionRand = " << motionRand << endl;
+				switch (motionRand)
+				{
+				case 0:
+					col->SetWorldPosX((col->GetWorldPos().x + 1.0f) * 2.0f);
+					break;
+				case 1:
+					col->SetWorldPosX((col->GetWorldPos().x * -1.0f) * 2.0f);
+					break;
+				case 2:
+					col->SetWorldPosX(0.0f);
+					break;
+				}
+				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				appear->visible = true;
+				BSstate = BOSSSTATE::APPEAR;
+			}
 		}
 	}
 
