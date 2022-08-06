@@ -237,6 +237,10 @@ bossFem::bossFem()
 	checkGrog = false;
 	checkSkill_1On = false;
 	checkSkill_2On = false;
+
+	SOUND->AddSound("BSbeamCharge.wav", "BGM",true);
+	SOUND->AddSound("BSbeamFire.wav", "GUN");
+	SOUND->Play("BGM");
 }
 
 bossFem::~bossFem()
@@ -245,6 +249,7 @@ bossFem::~bossFem()
 
 void bossFem::Update()
 {
+	
 
 	if (isDamaged) //update¿¡, isDamaged°¡ true¸é
 	{

@@ -25,6 +25,7 @@ void Main::Init()
 
 	bgColor = 0.5f;
 
+
 }
 
 void Main::Release()
