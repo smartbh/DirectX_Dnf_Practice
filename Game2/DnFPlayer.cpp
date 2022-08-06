@@ -176,14 +176,11 @@ DnFPlayer::DnFPlayer()
 	Timer = 0.0f;
 	hp = 100.0f;
 
-	attackCount = 0;
 	attackTrigger1 = false;
 	attackTrigger2 = false;
 	attackTrigger3 = false;
 	attackTrigger4 = false;
 
-
-	walkCount = 0;
 	playerDir = RIGHT;
 }
 
@@ -247,7 +244,6 @@ void DnFPlayer::Update()
 				stand1->visible = false;
 				walk->visible = true;
 				playerDir = RIGHT;
-				walkCount = 1;
 				standTime = 0.0f;
 				getTickTime = 0.5f;
 				state = PLSTATE::WALK_R;
@@ -259,7 +255,6 @@ void DnFPlayer::Update()
 				walk->reverseLR = true;
 				walk->visible = true;
 				playerDir = LEFT;
-				walkCount = 1;
 				standTime = 0.0f;
 				getTickTime = 0.5f;
 				state = PLSTATE::WALK_L;
@@ -285,7 +280,6 @@ void DnFPlayer::Update()
 				weaponCol->colOnOff = true;
 				weaponCol->scale = Vector2( 200.0f, 100.0f);
 				weaponCol->SetLocalPos(Vector2 (150.0f,50.0f));
-				attackCount = 1;
 				attackTrigger1 = true;
 				getTickTime = 0.25f;
 				state = PLSTATE::ATTACK;
@@ -362,7 +356,6 @@ void DnFPlayer::Update()
 				stand1->visible = false;
 				walk->visible = true;
 				playerDir = LEFT;
-				walkCount = 1;
 				standTime = 0.0f;
 				getTickTime = 0.5f;
 				state = PLSTATE::WALK_L;
@@ -375,7 +368,6 @@ void DnFPlayer::Update()
 				walk->reverseLR = false;
 				walk->visible = true;
 				playerDir = RIGHT;
-				walkCount = 1;
 				standTime = 0.0f;
 				getTickTime = 0.5f;
 				state = PLSTATE::WALK_R;
@@ -401,7 +393,6 @@ void DnFPlayer::Update()
 				weaponCol->colOnOff = true;
 				weaponCol->scale = Vector2(200.0f, 100.0f);
 				weaponCol->SetLocalPos(Vector2(-150.0f, 50.0f));
-				attackCount = 1;
 				attackTrigger1 = true;
 				getTickTime = 0.25f;
 				state = PLSTATE::ATTACK;
@@ -472,7 +463,6 @@ void DnFPlayer::Update()
 			walk->reverseLR = true;
 			walk->visible = true;
 			playerDir = LEFT;
-			walkCount = 1;
 			standTime = 0.0f;
 			getTickTime = 0.5f;
 			state = PLSTATE::WALK_L;
@@ -511,7 +501,6 @@ void DnFPlayer::Update()
 			walk->reverseLR = false;
 			walk->visible = true;
 			playerDir = RIGHT;
-			walkCount = 1;
 			standTime = 0.0f;
 			getTickTime = 0.5f;
 			state = PLSTATE::WALK_R;
@@ -673,7 +662,6 @@ void DnFPlayer::Update()
 					attackTrigger2 = true;
 					weaponCol->colOnOff = true;
 					attack1->visible = false;
-					attackCount = 2;
 					attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 					attack2->visible = true;
 					getTickTime = 0.2f;
@@ -710,7 +698,6 @@ void DnFPlayer::Update()
 					attackTrigger3 = true;
 					weaponCol->colOnOff = true;
 					attack2->visible = false;
-					attackCount = 2;
 					attack3->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 					attack3->visible = true;
 					getTickTime = 0.45f;
@@ -745,7 +732,6 @@ void DnFPlayer::Update()
 					attackTrigger4 = true;
 					weaponCol->colOnOff = true;
 					attack3->visible = false;
-					attackCount = 2;
 					attack4->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 					attack4->visible = true;
 					getTickTime = 1.0f;
@@ -767,7 +753,7 @@ void DnFPlayer::Update()
 
 		}
 
-		else if (attackTrigger4) //attackcount == 0
+		else if (attackTrigger4)
 		{
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
@@ -789,41 +775,30 @@ void DnFPlayer::Update()
 
 	else if (state == PLSTATE::SKILL1)
 	{
-		//weaponCol->colOnOff = true;
-
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
 		{
-			//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			//cout << "dddd" << endl;
-			//cout << getTickTime << endl;
-			//cout << "attackCount : " << attackCount << endl;
+
 		}
 		else
 		{
-			//cout << "시간 끝 애니메이션 변화" << endl;
 			skill1->visible = false;
 			stand1->visible = true;
 			getTickTime = 0.0f;
-			//cout << "attackCount : " << attackCount << endl;
+
 			state = PLSTATE::STAND;
 		}
 	}
 	else if (state == PLSTATE::SKILL2) 
 	{
-		//weaponCol->colOnOff = true;
 
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
 		{
-			//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			//cout << "dddd" << endl;
-			//cout << getTickTime << endl;
-			//cout << "attackCount : " << attackCount << endl;
+
 		}
 		else
 		{
-			//cout << "시간 끝 애니메이션 변화" << endl;
 			skill2->visible = false;
 			stand1->visible = true;
 			getTickTime = 0.0f;
@@ -896,11 +871,6 @@ PLSTATE DnFPlayer::getPlState()
 void DnFPlayer::setPlState(PLSTATE new_state)
 {
 	state = new_state;
-}
-
-int DnFPlayer::getPlAttackCount()
-{
-	return attackCount;
 }
 
 void DnFPlayer::printPlState()

@@ -36,22 +36,9 @@ void Main::Update()
 {	
 	//창크기에 맞춰서 배경 충돌체 위치조정;
 	bgCol->scale = Vector2(app.GetWidth() * 3.0f, 20.0f);
-	//bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f));
-	
-	/*ImGui::Text("FPS : %d", TIMER->GetFramePerSecond());
 
-	if (ImGui::Button("vSync"))
-	{
-		cout << app.vSync << endl;
-		app.vSync = !app.vSync;
-	}*/
-	//cout << "boss x : " <<boss->getCol()->GetWorldPos().x << endl;
-	//cout << "boss y : " << boss->getCol()->GetWorldPos().y << endl;
 	boss->setBossDir(player->getCol()->GetWorldPos());
-	//player->printPlState();
-	//player->getPlDir();
-	
-	//ImGui::Text("%s", player->printPlState());
+
 	
 	if (INPUT->KeyPress(VK_RIGHT))//player->getPlState() == PLSTATE::WALK_R
 	{
@@ -113,7 +100,7 @@ void Main::Update()
 	}
 	if (INPUT->KeyDown('Z'))//공격
 	{
-		if(player->getPlAttackCount() < 3 && player->getPlState() == PLSTATE::ATTACK)
+		if(player->getPlState() == PLSTATE::ATTACK)
 			if(player->getPlDir() == RIGHT)
 				player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
 			else if(player->getPlDir() == LEFT)
@@ -151,9 +138,6 @@ void Main::Update()
 	//맵 이동범위 제한
 	//player->getCol()->SetWorldPosX(Utility::Saturate(player->getCol()->GetWorldPos().x, 0.0f, 1000.0f));
 	//CAM->position.x = Utility::Saturate(CAM->position.x, 0.0f, 100.0f);
-	
-	//cout << "player x : " << player->getCol()->GetWorldPos().x << endl;
-	//cout << "player y : " << player->getCol()->GetWorldPos().y << endl;
 
 	bg1->Update();
 	bg2->Update();
@@ -180,23 +164,18 @@ void Main::LateUpdate()
 		player->Update();
 	}
 
-	//if (bgCol->Intersect(boss->getCol()->GetWorldPos()))
-	//{
-	//	boss->getCol()->SetWorldPosY(bgCol->GetWorldPos().y);
-	//	boss->setBSGravity(0.0f);
-	//}
-
 	if (boss->getCol()->Intersect(player->getWeaponCol()))
 	{
 		boss->TakeDamage(1000.0f);
 		boss->printBossHp();
 		player->playerWeaponColoff();
 	}
+
 	if (player->getCol()->Intersect(boss->getAttackCol()))
 	{
 		player->TakeDamage(10.0f);
 		player->printPlayerHp();
-		//boss->bossAttackColoff();
+		boss->bossAttackColoff();
 	}
 
 

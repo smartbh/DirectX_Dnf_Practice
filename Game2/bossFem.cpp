@@ -416,7 +416,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(1, 7);
+				motionRand = RANDOM->Int(1, 6);
 
 				cout << "motionRand : " << motionRand << endl;
 
@@ -425,14 +425,14 @@ void bossFem::Update()
 				case 0:
 					BSstate = BOSSSTATE::STAND;
 					break;
-				case 1:
+				case 1: //걷기
 					stand->visible = false;
 					walk->visible = true;
 					walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 					getTickTime = 4.0f;
 					BSstate = BOSSSTATE::WALK;
 					break;
-				case 2:
+				case 2: //일반공격
 					stand->visible = false;
 					attackCol->colOnOff = true;
 					attackCol->visible = true;
@@ -443,14 +443,14 @@ void bossFem::Update()
 					getTickTime = 0.9f;
 					BSstate = BOSSSTATE::ATTACK;
 					break;
-				case 3:
+				case 3: //단순 순간이동
 					stand->visible = false;
 					getTickTime = 1.3f;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 5: //스킬1
+				case 4: //스킬1
 					getTickTime = 1.3f;//10초간 시전
 					checkSkill_1On = true;
 					stand->visible = false;
@@ -458,7 +458,7 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 6: //스킬2
+				case 5: //스킬2
 					getTickTime = 1.3f;//10초간 시전
 					checkSkill_2On = true;
 					stand->visible = false;
@@ -466,7 +466,7 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 7:
+				case 6:
 					if (checkGrog)
 					{
 						getTickTime = 10.0f;
@@ -509,7 +509,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(1, 7);
+				motionRand = RANDOM->Int(1, 6);
 				cout << "motionRand = " << motionRand << endl;
 				switch (motionRand)
 				{
@@ -523,7 +523,7 @@ void bossFem::Update()
 					getTickTime = 4.0f;
 					BSstate = BOSSSTATE::WALK;
 					break;
-				case 2:
+				case 2: //공격
 					stand->visible = false;
 					attackCol->colOnOff = true;
 					attackCol->visible = true;
@@ -534,14 +534,14 @@ void bossFem::Update()
 					getTickTime = 0.9f;
 					BSstate = BOSSSTATE::ATTACK;
 					break;
-				case 3:
+				case 3: //단순 순간이동
 					stand->visible = false;
 					getTickTime = 1.3f;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 5:
+				case 4:
 					getTickTime = 1.3f;//10초간 시전
 					checkSkill_1On = true;
 					stand->visible = false;
@@ -549,7 +549,7 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 6:
+				case 5:
 					getTickTime = 1.3f;//10초간 시전
 					checkSkill_2On = true;
 					stand->visible = false;
@@ -557,7 +557,7 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 7:
+				case 6:
 					if (checkGrog)
 					{
 						getTickTime = 10.0f;
@@ -579,6 +579,7 @@ void bossFem::Update()
 	}
 	else if (BSstate == BOSSSTATE::ATTACK)
 	{
+		attackCol->visible = true;
 		//0.9 1.7
 		if (attack[0]->visible) {
 			getTickTime -= DELTA;
@@ -655,7 +656,8 @@ void bossFem::Update()
 			}
 			else
 			{
-
+				attackCol->visible = false;
+				attackCol->colOnOff = false;
 				attack[2]->visible = false;
 				stand->visible = true;
 				getTickTime = 5.0f;
@@ -893,6 +895,7 @@ void bossFem::Update()
 				getTickTime = 1.3f;
 				checkSkill_1On = false;
 				attackCol->colOnOff = false; //공격끝 콜라이더 끄기
+				imageColor = 0.0f;
 				BSstate = BOSSSTATE::DISAPPEAR;
 				skill1_2->color = Color(0.5, 0.5, 0.5, 0.5);
 			}
@@ -912,6 +915,7 @@ void bossFem::Update()
 			{
 				skill2_1->visible = false;
 				skill2_2->visible = true;
+				skill2_1effect->visible = true;
 				getTickTime = 10.0f;
 			}
 		}

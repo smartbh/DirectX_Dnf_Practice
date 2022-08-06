@@ -40,10 +40,6 @@ private:
 
 	float			gravity;//Áß·Â
 
-
-	int				attackCount; //°ø°ÝÈ½¼ö ´Ù´Ü
-	int				walkCount; //°È±â ´©¸£´Â È½¼ö(2¹ø = run)
-
 	bool			attackTrigger1;
 	bool			attackTrigger2;
 	bool			attackTrigger3;
@@ -100,7 +96,6 @@ public:
 	PLSTATE		getPlState();
 	void		setPlState(PLSTATE new_state);
 
-	int			getPlAttackCount();
 	void		printPlState();
 	void		printPlayerHp();
 	Vector2		getPlDir();
