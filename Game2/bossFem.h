@@ -39,6 +39,11 @@ private:
 	ObImage*		skill1_2; //시간동안 루프
 	ObImage*		skill2_1; //같음
 	ObImage*		skill2_2; 
+	
+	ObImage*		skill1_1effect;  //한번만
+	ObImage*		skill1_2effect;  //시간동안 루프
+
+
 
 	Vector2			dir;
 	BOSSSTATE		BSstate;

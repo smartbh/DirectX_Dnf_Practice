@@ -43,7 +43,8 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
-	//cout << "boss x : " <<boss->getCol()->GetWorldPos().x << endl;
+	cout << "boss x : " <<boss->getCol()->GetWorldPos().x << endl;
+	cout << "boss y : " << boss->getCol()->GetWorldPos().y << endl;
 	boss->setBossDir(player->getCol()->GetWorldPos());
 	//player->printPlState();
 	//player->getPlDir();

@@ -162,6 +162,16 @@ bossFem::bossFem()
 	skill1_2->visible = false;
 	//1.3, 0.4
 
+	skill1_2effect = new ObImage(L"BSskill_1effect.png");
+	skill1_2effect->SetParentRT(*col);
+	skill1_2effect->SetWorldPos(Vector2(0.0f, 0.0f));
+	skill1_2effect->maxFrame.x = 24;
+	skill1_2effect->scale.x = 256.0f * 7.0f;
+	skill1_2effect->scale.y = 256.0f * 1.5f;
+	skill1_2effect->pivot = OFFSET_B;
+	skill1_2effect->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	skill1_2effect->visible = true;
+
 	/// <summary>
 	/// skill2
 	/// </summary>
@@ -420,7 +430,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(6, 6);
+				motionRand = RANDOM->Int(5, 5);
 				//motionRand = 5;
 				//cout << "boss hp : " << hp << endl;
 				cout << "motionRand : " << motionRand << endl;
@@ -716,6 +726,11 @@ void bossFem::Update()
 				if (bossDir == RIGHT) {
 					skill1_1->reverseLR = false;
 					skill1_2->reverseLR = false;
+					//skill1_1effect->reverseLR = false;
+					skill1_2effect->reverseLR = false;
+					skill1_2effect->SetLocalPosX(100.0f);
+					skill1_2effect->SetLocalPosY(100.0f);
+					skill1_2effect->pivot = OFFSET_L;
 					attackCol->visible = true;
 					attackCol->pivot = OFFSET_L;
 					attackCol->SetLocalPosX(100.0f);
@@ -725,6 +740,11 @@ void bossFem::Update()
 				{
 					skill1_1->reverseLR = true;
 					skill1_2->reverseLR = true;
+					//skill1_1effect->reverseLR = true;
+					skill1_2effect->reverseLR = true;
+					skill1_2effect->SetLocalPosX(-100.0f);
+					skill1_2effect->SetLocalPosY(100.0f);
+					skill1_2effect->pivot = OFFSET_R;
 					attackCol->visible = true;
 					attackCol->pivot = OFFSET_R;
 					attackCol->SetLocalPosX(-100.0f);
@@ -789,7 +809,7 @@ void bossFem::Update()
 			{
 				getTickTime = 1.0f;
 				disappear->visible = false;
-				col->SetWorldPosX(0.0f); //가운데로 가서
+				col->SetWorldPos(Vector2( 0.0f, 100.0f)); //가운데로 가서
 				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				appear->visible = true;
 				BSstate = BOSSSTATE::APPEAR;
@@ -943,6 +963,7 @@ void bossFem::Update()
 	disappear->Update();
 	skill1_1->Update();
 	skill1_2->Update();
+	skill1_2effect->Update();
 	skill2_1->Update();
 	skill2_2->Update();
 	grog->Update();
@@ -951,6 +972,8 @@ void bossFem::Update()
 
 void bossFem::Render()
 {
+	skill1_2effect->Render();
+
 	col->Render();
 	start1->Render();
 	start2->Render();
