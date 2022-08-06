@@ -42,6 +42,8 @@ private:
 	
 	ObImage*		skill1_1effect;  //한번만
 	ObImage*		skill1_2effect;  //시간동안 루프
+	
+	ObImage*		skill2_1effect;  //시간동안 루프
 
 
 

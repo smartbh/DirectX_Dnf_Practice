@@ -112,6 +112,7 @@ DnFPlayer::DnFPlayer()
 	attack1->pivot = OFFSET_N;
 	attack1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	attack1->visible = false;
+	//0.25
 
 	attack2 = new ObImage(L"PLattack2.png");
 	attack2->SetParentRT(*col);
@@ -122,6 +123,7 @@ DnFPlayer::DnFPlayer()
 	attack2->pivot = OFFSET_N;
 	attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	attack2->visible = false;
+	//0.2
 
 	attack3 = new ObImage(L"PLattack3.png");
 	attack3->SetParentRT(*col);
@@ -132,7 +134,7 @@ DnFPlayer::DnFPlayer()
 	attack3->pivot = OFFSET_N;
 	attack3->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 	attack3->visible = false;
-
+	//0.45
 	attack4 = new ObImage(L"PLattack4.png");
 	attack4->SetParentRT(*col);
 	attack4->maxFrame.x = 4;
@@ -142,6 +144,7 @@ DnFPlayer::DnFPlayer()
 	attack4->pivot = OFFSET_N;
 	attack4->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 	attack4->visible = false;
+	//0.2
 
 	// skill 1 ~ 4
 	skill1 = new ObImage(L"PLskill1_dash.png"); //대쉬
@@ -174,6 +177,12 @@ DnFPlayer::DnFPlayer()
 	hp = 100.0f;
 
 	attackCount = 0;
+	attackTrigger1 = false;
+	attackTrigger2 = false;
+	attackTrigger3 = false;
+	attackTrigger4 = false;
+
+
 	walkCount = 0;
 	playerDir = RIGHT;
 }
@@ -276,9 +285,12 @@ void DnFPlayer::Update()
 				weaponCol->colOnOff = true;
 				weaponCol->scale = Vector2( 200.0f, 100.0f);
 				weaponCol->SetLocalPos(Vector2 (150.0f,50.0f));
+				attackCount = 1;
+				attackTrigger1 = true;
+				getTickTime = 0.25f;
 				state = PLSTATE::ATTACK;
 				//cout << "공격1" << endl;
-				attackCount = 1;
+				
 			}
 
 			if (INPUT->KeyDown('A')) //스킬1
@@ -382,15 +394,18 @@ void DnFPlayer::Update()
 			if (INPUT->KeyDown('Z'))
 			{
 				weaponCol->visible = true;
+				stand1->visible = false;
+
+				attack1->visible = true;
+				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 				weaponCol->colOnOff = true;
 				weaponCol->scale = Vector2(200.0f, 100.0f);
 				weaponCol->SetLocalPos(Vector2(-150.0f, 50.0f));
-				stand1->visible = false;
-				attack1->visible = true;
-				attack1->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
-				state = PLSTATE::ATTACK;
-				cout << "공격1" << endl;
 				attackCount = 1;
+				attackTrigger1 = true;
+				getTickTime = 0.25f;
+				state = PLSTATE::ATTACK;
+				//cout << "공격1" << endl;
 			}
 
 			if (INPUT->KeyDown('A')) //스킬1 돌진
@@ -641,65 +656,130 @@ void DnFPlayer::Update()
 			state = PLSTATE::JUMP;
 		}
 	}
-	else if (state == PLSTATE::ATTACK) {
-
-		if (INPUT->KeyDown('Z') && attackCount == 1) //2연타
-		{
-			weaponCol->colOnOff = true;
-			attack1->visible = false;
-			attack2->visible = true;
-			attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
-			attackCount = 2;
-			state = PLSTATE::ATTACK;
-		}
-
-		else if (INPUT->KeyDown('Z') && attackCount == 2) //3연타
-		{
-			weaponCol->colOnOff = true;
-			//cout << "공격3" << endl;
-			attack2->visible = false;
-			attack3->visible = true;
-			attack3->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
-			weaponCol->SetLocalPosY(100.0f);
-			attackCount = 3;
-			//cout << attackCount << endl;
-			state = PLSTATE::ATTACK;
-		}
-		else if (INPUT->KeyDown('Z') && attackCount == 3) //3연타
-		{
-			weaponCol->colOnOff = true;
-			//cout << "공격4" << endl;
-			attack3->visible = false;
-			attack4->visible = true;
-			attack4->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
-			
-			weaponCol->scale.y *= 2.0f;
-			weaponCol->SetLocalPosY(50.0f);
-			
-
-			getTickTime = 1.0f;
-			attackCount = 0;
-			//cout << attackCount << endl;
-			state = PLSTATE::ATTACK;
-		}
-
-		if (attackCount == 0) //attackcount == 0
+	else if (state == PLSTATE::ATTACK) 
+	{
+		if (attackTrigger1) //2연타
 		{
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
-				//start1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-				//cout << "dddd" << endl;
-				//cout << getTickTime << endl;
-				//cout << "attackCount : " << attackCount << endl;
+
 			}
 			else
 			{
-				//cout << "시간 끝 애니메이션 변화" << endl;
+				if (INPUT->KeyDown('Z'))
+				{
+					attackTrigger1 = false;
+					attackTrigger2 = true;
+					weaponCol->colOnOff = true;
+					attack1->visible = false;
+					attackCount = 2;
+					attack2->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
+					attack2->visible = true;
+					getTickTime = 0.2f;
+				}
+				if (INPUT->KeyDown('X'))
+				{
+					attackTrigger1 = false;
+					attackTrigger2 = false;
+					attackTrigger3 = false;
+					attackTrigger4 = false;
+					attack1->visible = false;
+					attack2->visible = false;
+					attack3->visible = false;
+					attack4->visible = false;
+					stand1->visible = true;
+					state = PLSTATE::STAND;
+				}
+			}
+		}
+		
+
+		else if (attackTrigger2) //3연타
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
+				if (INPUT->KeyDown('Z'))
+				{
+					attackTrigger2 = false;
+					attackTrigger3 = true;
+					weaponCol->colOnOff = true;
+					attack2->visible = false;
+					attackCount = 2;
+					attack3->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
+					attack3->visible = true;
+					getTickTime = 0.45f;
+				}
+				if (INPUT->KeyDown('X'))
+				{
+					attackTrigger1 = false;
+					attackTrigger2 = false;
+					attackTrigger3 = false;
+					attackTrigger4 = false;
+					attack1->visible = false;
+					attack2->visible = false;
+					attack3->visible = false;
+					attack4->visible = false;
+					stand1->visible = true;
+					state = PLSTATE::STAND;
+				}
+			}
+		}
+		else if (attackTrigger3) //3연타
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
+				if (INPUT->KeyDown('Z'))
+				{
+					attackTrigger3 = false;
+					attackTrigger4 = true;
+					weaponCol->colOnOff = true;
+					attack3->visible = false;
+					attackCount = 2;
+					attack4->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
+					attack4->visible = true;
+					getTickTime = 1.0f;
+				}
+				if (INPUT->KeyDown('X'))
+				{
+					attackTrigger1 = false;
+					attackTrigger2 = false;
+					attackTrigger3 = false;
+					attackTrigger4 = false;
+					attack1->visible = false;
+					attack2->visible = false;
+					attack3->visible = false;
+					attack4->visible = false;
+					stand1->visible = true;
+					state = PLSTATE::STAND;
+				}
+			}
+
+		}
+
+		else if (attackTrigger4) //attackcount == 0
+		{
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+
+			}
+			else
+			{
 				attack4->visible = false;
 				stand1->visible = true;
 				getTickTime = 0.0f;
-				//cout << "attackCount : " << attackCount << endl;
+				attackTrigger4 = false;
 				state = PLSTATE::STAND;
 			}
 

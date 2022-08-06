@@ -44,6 +44,11 @@ private:
 	int				attackCount; //°ø°ÝÈ½¼ö ´Ù´Ü
 	int				walkCount; //°È±â ´©¸£´Â È½¼ö(2¹ø = run)
 
+	bool			attackTrigger1;
+	bool			attackTrigger2;
+	bool			attackTrigger3;
+	bool			attackTrigger4;
+
 	Vector2			playerDir;
 
 	/// <summary>

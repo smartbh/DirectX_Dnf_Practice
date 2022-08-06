@@ -68,7 +68,7 @@ void ObImage::DeleteStaticMember()
 
 void ObImage::PlayAnim()
 {
-    if (maxFrame.x == 1 && maxFrame.y == 1)
+    if (maxFrame.x == 1 && maxFrame.y == 1) //전부 재생했으면
         return;
 
     if (animState != ANIMSTATE::STOP)
