@@ -896,6 +896,11 @@ void DnFPlayer::printPlState()
 
 }
 
+void DnFPlayer::printPlayerHp()
+{
+	cout << "player hp : " << hp << endl;
+}
+
 Vector2 DnFPlayer::getPlDir()
 {
 	if (playerDir == LEFT) {

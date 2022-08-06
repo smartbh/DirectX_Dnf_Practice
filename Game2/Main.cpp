@@ -23,6 +23,8 @@ void Main::Init()
 	player = new DnFPlayer();
 	boss = new bossFem();
 
+	bgColor = 0.5f;
+
 }
 
 void Main::Release()
@@ -43,8 +45,8 @@ void Main::Update()
 		cout << app.vSync << endl;
 		app.vSync = !app.vSync;
 	}*/
-	cout << "boss x : " <<boss->getCol()->GetWorldPos().x << endl;
-	cout << "boss y : " << boss->getCol()->GetWorldPos().y << endl;
+	//cout << "boss x : " <<boss->getCol()->GetWorldPos().x << endl;
+	//cout << "boss y : " << boss->getCol()->GetWorldPos().y << endl;
 	boss->setBossDir(player->getCol()->GetWorldPos());
 	//player->printPlState();
 	//player->getPlDir();
@@ -163,6 +165,8 @@ void Main::Update()
 
 void Main::LateUpdate()
 {
+	getTickTime = boss->getBsGetTickTime();
+
 	if (bgCol->Intersect(player->getCol()->GetWorldPos())) //땅이랑 충돌시
 	{
 		player->getCol()->SetWorldPosY(bgCol->GetWorldPos().y);
@@ -187,6 +191,59 @@ void Main::LateUpdate()
 		boss->TakeDamage(1000.0f);
 		boss->printBossHp();
 		player->playerWeaponColoff();
+	}
+	if (player->getCol()->Intersect(boss->getAttackCol()))
+	{
+		player->TakeDamage(10.0f);
+		player->printPlayerHp();
+		//boss->bossAttackColoff();
+	}
+
+
+	/// <summary>
+	/// 배경 밝기 조절 실험
+	/// </summary>
+	if (boss->getBossState() == BOSSSTATE::SKILL1 || 
+		boss->getBossState() == BOSSSTATE::SKILL2)
+	{
+
+			getTickTime -= DELTA;
+			if (getTickTime > 0.0f)
+			{
+				if (bgColor > 0.0f && bgColor <= 0.5f)
+				{
+					bgColor -= 0.001f;
+					bg1->color = Color(bgColor, bgColor, bgColor, 0.5f);
+				}
+				getTickTime = 1.3f;
+			}
+			else
+			{
+				/*bgColor = 0.5f;
+				bg1->color = Color(bgColor, bgColor, bgColor, 0.5f);*/
+				////cout << "시간 끝 애니메이션 변화" << endl;
+				//appear->visible = false;
+				//stand->visible = true;
+				//getTickTime = 8.0f; // 1.1, 8.0
+				////cout << "마지막 성공" << endl;
+				//BSstate = BOSSSTATE::STAND;
+				//col->SetLocalPos(Vector2(0.0f, -450.0f));
+			}
+	}
+	else if (boss->getBossState() == BOSSSTATE::STAND)
+	{
+		if (bgColor < 0.5)
+		{
+			if (getTickTime > 0.0f)
+			{
+				bgColor += 0.001f;
+				bg1->color = Color(bgColor, bgColor, bgColor, 0.5f);
+			}
+			else
+			{
+				bgColor = 0.5f;
+			}
+		}
 	}
 }
 

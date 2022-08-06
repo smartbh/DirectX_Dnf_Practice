@@ -97,6 +97,7 @@ public:
 
 	int			getPlAttackCount();
 	void		printPlState();
+	void		printPlayerHp();
 	Vector2		getPlDir();
 	void		TakeDamage(int damage);
 	void		playerWeaponColon();

@@ -54,6 +54,7 @@ private:
 	float			Timer;
 	float			damagingTime;
 	float			gravity;
+	float			imageColor;
 
 	bool			isDamaged;
 	bool			checkGrog;
@@ -69,12 +70,17 @@ public:
 	bossFem();
 	~bossFem();
 
-	void		Update();
-	void		Render();
-	ObRect*		getCol();
-	void		setBossDir(Vector2 _playerPos);
-	void		TakeDamage(int damage);
-	void		setBSGravity(float _gravity);
-	void		printBossHp();
+	void			Update();
+	void			Render();
+	ObRect*			getCol();
+	ObRect*			getAttackCol();
+	void			setBossDir(Vector2 _playerPos);
+	void			TakeDamage(int damage);
+	void			setBSGravity(float _gravity);
+	void			printBossHp();
+	void			bossAttackColon();
+	void			bossAttackColoff();
+	BOSSSTATE		getBossState();
+	float			getBsGetTickTime();
 };
 

@@ -9,6 +9,9 @@ private:
 	DnFPlayer*	player; //플레이어
 	bossFem *	boss;
 
+	float		getTickTime;
+	float		bgColor;
+
 
 public:
 	virtual void Init() override;
