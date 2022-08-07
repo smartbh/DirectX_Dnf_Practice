@@ -204,8 +204,16 @@ DnFPlayer::DnFPlayer()
 	SOUND->AddSound("player_skill2.wav", "PLSKILL21");  //스킬2
 	SOUND->AddSound("player_skill2-2.wav", "PLSKILL22"); 
 	
-
 	//사운드 작업, 무기,공격
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
+	SOUND->AddSound("", "");
 
 }
 
@@ -364,6 +372,7 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('Z')) //일반공격
 			{
+				SOUND->Play()
 				weaponCol->visible = true;
 				stand1->visible = false;
 

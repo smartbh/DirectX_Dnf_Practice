@@ -108,10 +108,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound", "Sound", "{031D9208
 		Contents\Sound\sword_attack1.wav = Contents\Sound\sword_attack1.wav
 		Contents\Sound\sword_attack2.wav = Contents\Sound\sword_attack2.wav
 		Contents\Sound\sword_attack3.wav = Contents\Sound\sword_attack3.wav
-		Contents\Sound\sword_attack4-1.wav = Contents\Sound\sword_attack4-1.wav
-		Contents\Sound\sword_attack4-2.wav = Contents\Sound\sword_attack4-2.wav
 		Contents\Sound\sword_attack4.wav = Contents\Sound\sword_attack4.wav
 		Contents\Sound\sword_skill1.wav = Contents\Sound\sword_skill1.wav
+		Contents\Sound\sword_skill2.wav = Contents\Sound\sword_skill2.wav
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "boss", "boss", "{990869FE-3C2F-4397-9062-25FB5DE6562B}"
