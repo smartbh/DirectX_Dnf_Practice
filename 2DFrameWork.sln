@@ -43,6 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{54A271
 		Contents\Images\BSskill_1effect.png = Contents\Images\BSskill_1effect.png
 		Contents\Images\BSskill_2effect.png = Contents\Images\BSskill_2effect.png
 		Contents\Images\BSwalk.png = Contents\Images\BSwalk.png
+		Contents\Images\floor.png = Contents\Images\floor.png
 		Contents\Images\PLattack1.png = Contents\Images\PLattack1.png
 		Contents\Images\PLattack2.png = Contents\Images\PLattack2.png
 		Contents\Images\PLattack3.png = Contents\Images\PLattack3.png
@@ -61,6 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{54A271
 		Contents\Images\start2.png = Contents\Images\start2.png
 		Contents\Images\start3.png = Contents\Images\start3.png
 		Contents\Images\start4.png = Contents\Images\start4.png
+		Contents\Images\wall.png = Contents\Images\wall.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Txt", "Txt", "{BC1DD457-26F1-4145-994B-7D33F751C292}"
@@ -74,10 +76,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Txt", "Txt", "{BC1DD457-26F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound", "Sound", "{031D9208-75CB-45ED-AE3F-F9B0AA28E8CC}"
 	ProjectSection(SolutionItems) = preProject
-		Contents\bgm.wav = Contents\bgm.wav
 		Contents\BSbeamCharge.wav = Contents\BSbeamCharge.wav
 		Contents\BSbeamFire.wav = Contents\BSbeamFire.wav
-		Contents\gun.wav = Contents\gun.wav
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "boss", "boss", "{990869FE-3C2F-4397-9062-25FB5DE6562B}"
