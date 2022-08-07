@@ -269,6 +269,9 @@ bossFem::bossFem()
 	SOUND->AddSound("boss_normal3.wav", "BSNORMAL3");
 	SOUND->AddSound("boss_normal4.wav", "BSNORMAL4");
 	SOUND->AddSound("boss_normal5.wav", "BSNORMAL5");
+	
+	//사망
+	SOUND->AddSound("boss_death.wav", "BSDEATH");
 
 	//순간이동
 	SOUND->AddSound("boss_disappear.wav", "BSTELEPORT");
@@ -386,6 +389,7 @@ void bossFem::Update()
 			else
 			{
 				start4->visible = false;
+				col->SetLocalPos(Vector2(-20.0f, -150.0f));
 				disappear->visible = true;
 				getTickTime = 0.9; //0.9, 1.1, 8.0
 			}
@@ -433,7 +437,7 @@ void bossFem::Update()
 		attackCol->visible = false;
 		attackCol->colOnOff = false;
 		col->colOnOff = true;
-		
+
 		if (bossDir == RIGHT)
 		{
 			stand->reverseLR = false;
@@ -622,7 +626,7 @@ void bossFem::Update()
 					break;
 				case 2: //공격
 					SOUND->Play("BSATTACK1");
-					stand->visible = true;
+					stand->visible = false;
 					attackCol->colOnOff = true;
 					attackCol->visible = true;
 					attackCol->SetLocalPosX(-100.0f);
@@ -1109,6 +1113,7 @@ void bossFem::Update()
 		}
 	}
 
+
 	if (hp < 0)
 	{
 		die->visible = true;
@@ -1128,6 +1133,7 @@ void bossFem::Update()
 		skill1_2effect->visible = false;
 		skill2_1->visible = false;
 		skill2_2->visible = false;
+		skill2_1effect->visible = false;
 		grog->visible = false;
 	}
 	else if (hp > 0 && hp < 50.0f)

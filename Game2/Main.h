@@ -17,6 +17,16 @@ class Main : public Scene
 private:
 	ObImage*	bg1; //배경
 	ObImage*	bg2;
+	
+	ObImage*	bossPortrait;
+	ObImage*	playerPortrait;
+
+	ObImage*	blackBar;
+	ObImage*	blackBar2;
+
+	ObRect*		bossHPbar;
+	ObRect*		playerHPbar;
+
 	ObRect*		bgCol; //배경아래 충돌체 발판
 
 	DnFPlayer*	player; //플레이어

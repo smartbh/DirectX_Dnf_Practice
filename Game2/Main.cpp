@@ -7,11 +7,34 @@ void Main::Init()
 	bg1->scale = Vector2 (1600.0f, 900.0f ) * 1.5;
 	bg1->space = SPACE::SCREEN;
 	
-
 	bg2 = new ObImage(L"bg_2_fix.png");
 	bg2->scale = Vector2(1344.0f, 274.0f) * 1.5f;
 	bg2->SetWorldPosY(-500.0f + 100.0f);
 	bg2->space = SPACE::SCREEN;
+
+	//ui
+	bossPortrait = new ObImage(L"boss_portrait.png");
+	bossPortrait->scale = Vector2(264.0f, 256.0f);
+	bossPortrait->SetWorldPos(Vector2(-600.0f, 400.0f));
+	bossPortrait->space = SPACE::SCREEN;
+
+	playerPortrait = new ObImage(L"player_portrait.png");
+	playerPortrait->scale = Vector2(259.0f, 253.0f);
+	playerPortrait->SetWorldPos(Vector2(-600.0f, -400.0f));
+	playerPortrait->space = SPACE::SCREEN;
+
+	blackBar = new ObImage(L"black_bar.png");
+	blackBar->scale = Vector2(2000.0f, 500.0f);
+	blackBar->SetWorldPos(Vector2(0.0f, 300.0f));
+	blackBar->space = SPACE::SCREEN;
+	blackBar->Update();
+
+	blackBar2 = new ObImage(L"black_bar.png");
+	blackBar2->scale = Vector2(2000.0f, 500.0f);
+	blackBar2->SetWorldPos(Vector2(0.0f, -300.0f));
+	blackBar2->space = SPACE::SCREEN;
+	blackBar2->Update();
+	//
 
 	bgCol = new ObRect();
 	bgCol->scale = Vector2(app.GetWidth(), 20.0f);
@@ -114,10 +137,17 @@ void Main::Update()
 	{
 		SOUND->Play("BGM");
 		SOUND->SetVolume("BGM", 0.3f);
+		blackBar->MoveWorldPos(UP * DELTA * 100.0f);
+		blackBar2->MoveWorldPos(DOWN * DELTA * 100.0f);
+		blackBar->Update();
+		blackBar2->Update();
 		player->Update();
 	}
 	else
 	{
+		bossPortrait->Update();
+		playerPortrait->Update();
+
 		boss->setBossDir(player->getCol()->GetWorldPos());
 
 		if (INPUT->KeyPress(VK_RIGHT))
@@ -252,7 +282,6 @@ void Main::Update()
 	bgCol->Update();
 	player->Update();
 	boss->Update();
-
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -390,6 +419,10 @@ void Main::Render()
 
 	player->Render();
 	boss->Render();
+	bossPortrait->Render();
+	playerPortrait->Render();
+	blackBar->Render();
+	blackBar2->Render();
 }
 
 void Main::ResizeScreen()
