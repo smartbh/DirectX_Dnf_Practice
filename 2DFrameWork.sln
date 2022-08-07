@@ -76,8 +76,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Txt", "Txt", "{BC1DD457-26F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound", "Sound", "{031D9208-75CB-45ED-AE3F-F9B0AA28E8CC}"
 	ProjectSection(SolutionItems) = preProject
-		Contents\BSbeamCharge.wav = Contents\BSbeamCharge.wav
-		Contents\BSbeamFire.wav = Contents\BSbeamFire.wav
+		Contents\Sound\BSbeamCharge.wav = Contents\Sound\BSbeamCharge.wav
+		Contents\Sound\BSbeamFire.wav = Contents\Sound\BSbeamFire.wav
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "boss", "boss", "{990869FE-3C2F-4397-9062-25FB5DE6562B}"

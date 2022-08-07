@@ -182,6 +182,7 @@ DnFPlayer::DnFPlayer()
 	attackTrigger4 = false;
 
 	playerDir = RIGHT;
+
 }
 
 DnFPlayer::~DnFPlayer()
