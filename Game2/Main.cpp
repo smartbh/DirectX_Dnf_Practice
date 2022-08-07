@@ -20,6 +20,73 @@ void Main::Init()
 	bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f)); // -226.0f
 	bgCol->collider = COLLIDER::RECT;
 
+	//발판 세개 만들기
+	floors[0].col = new ObRect();
+	floors[0].col->scale = Vector2(79.0f, 10.0f);
+	floors[0].col->pivot = OFFSET_T;
+	floors[0].col->isFilled = false;
+	floors[0].col->SetWorldPos(Vector2(100.0f, -200.0f));
+	floors[0].col->collider = COLLIDER::RECT;
+
+	floors[0].img = new ObImage(L"floor.png");
+	floors[0].img->scale = Vector2(79.0f, 48.0f);
+	floors[0].img->pivot = OFFSET_T;
+	floors[0].img->SetParentRT(*floors[0].col);
+	//
+
+	floors[1].col = new ObRect();
+	floors[1].col->scale = Vector2(79.0f, 10.0f) * 2.0f;
+	floors[1].col->pivot = OFFSET_T;
+	floors[1].col->isFilled = false;
+	floors[1].col->SetWorldPos(Vector2(300.0f, 50.0f));
+	floors[1].col->collider = COLLIDER::RECT;
+
+	floors[1].img = new ObImage(L"floor.png");
+	floors[1].img->scale = Vector2(79.0f, 48.0f) * 2.0f;
+	floors[1].img->pivot = OFFSET_T;
+	floors[1].img->SetParentRT(*floors[1].col);
+	//
+
+	floors[2].col = new ObRect();
+	floors[2].col->scale = Vector2(79.0f * 1.5f, 10.0f);
+	floors[2].col->pivot = OFFSET_T;
+	floors[2].col->isFilled = false;
+	floors[2].col->SetWorldPos(Vector2(-200.0f, -100.0f));
+	floors[2].col->collider = COLLIDER::RECT;
+
+	floors[2].img = new ObImage(L"floor.png");
+	floors[2].img->scale = Vector2(79.0f * 1.5f, 48.0f);
+	floors[2].img->pivot = OFFSET_T;
+	floors[2].img->SetParentRT(*floors[2].col);
+	//
+
+	//양쪽 벽
+	walls[0].col = new ObRect();
+	walls[0].col->scale = Vector2(174.0f * 3.0f, 1169.0f);
+	walls[0].col->pivot = OFFSET_B;
+	walls[0].col->isFilled = false;
+	walls[0].col->SetWorldPos(Vector2(app.GetHalfWidth(), -600.0f));
+	walls[0].col->collider = COLLIDER::RECT;
+
+	walls[0].img = new ObImage(L"wall.png");
+	walls[0].img->scale = Vector2(174.0f * 3.0f, 1169.0f);
+	walls[0].img->pivot = OFFSET_B;
+	walls[0].img->SetParentRT(*walls[0].col);
+	//
+
+	walls[1].col = new ObRect();
+	walls[1].col->scale = Vector2(174.0f * 3.0f, 1169.0f);
+	walls[1].col->pivot = OFFSET_B;
+	walls[1].col->isFilled = false;
+	walls[1].col->SetWorldPos(Vector2(-app.GetHalfWidth(), -600.0f));
+	walls[1].col->collider = COLLIDER::RECT;
+
+	walls[1].img = new ObImage(L"wall.png");
+	walls[1].img->scale = Vector2(174.0f * 3.0f, 1169.0f);
+	walls[1].img->pivot = OFFSET_B;
+	walls[1].img->SetParentRT(*walls[1].col);
+	//
+
 	player = new DnFPlayer();
 	boss = new bossFem();
 
@@ -37,6 +104,8 @@ void Main::Update()
 {	
 	//창크기에 맞춰서 배경 충돌체 위치조정;
 	bgCol->scale = Vector2(app.GetWidth() * 3.0f, 20.0f);
+	walls[0].col->SetWorldPosX(app.GetHalfWidth());
+	walls[1].col->SetWorldPosX(-app.GetHalfWidth());
 
 	boss->setBossDir(player->getCol()->GetWorldPos());
 
@@ -109,44 +178,76 @@ void Main::Update()
 	}
 	if (INPUT->KeyDown('A')) //스킬 돌진
 	{
-		//float getTickTime = 10.0f;
-		//if (getTickTime > 0.0f)
-		//{
-			if (player->getPlDir() == RIGHT)
+		if (player->getPlDir() == RIGHT)
+		{
+			for (int i = 0; i < 1000; i++)
 			{
-				for (int i = 0; i < 1000; i++)
-				{
-					//player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 100.0f);
-					player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
-					bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
-					CAM->position += RIGHT * 10.0f * DELTA;
-				}
-
+				player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
+				bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
+				CAM->position += RIGHT * 10.0f * DELTA;
 			}
-			else if (player->getPlDir() == LEFT)
+
+		}
+		else if (player->getPlDir() == LEFT)
+		{
+			for (int i = 0; i < 1000; i++)
 			{
-				for (int i = 0; i < 1000; i++)
-				{
-					player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
-					bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
-					CAM->position += LEFT * 10.0f * DELTA;
-				}
+				player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
+				bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
+				CAM->position += LEFT * 10.0f * DELTA;
 			}
-		//}
-
+		}
 	}
 
-	//맵 이동범위 제한
-	//player->getCol()->SetWorldPosX(Utility::Saturate(player->getCol()->GetWorldPos().x, 0.0f, 1000.0f));
-	//CAM->position.x = Utility::Saturate(CAM->position.x, 0.0f, 100.0f);
 
+
+	//맵 이동범위 제한
+
+	player->Update();
+
+	float minX = Utility::Saturate(player->getCol()->GetWorldPos().x, -app.GetHalfWidth(), app.GetHalfWidth());
+
+	player->getCol()->SetWorldPosX(minX);
+
+	minX = Utility::Saturate(boss->getCol()->GetWorldPos().x, -700.0f + 25.0f, 700.0f - 25.0f);
+
+	boss->getCol()->SetWorldPosX(minX);
+
+	minX = Utility::Saturate(CAM->position.x, -700.0f + 25.0f, 700.0f - 25.0f);
+
+	CAM->position.x = minX;
+
+	minX = Utility::Saturate(bgCol->GetWorldPos().x, -700.0f + 25.0f, 700.0f - 25.0f);
+
+	bgCol->SetWorldPosX(minX);
+
+	//배경이동도 제한
+	minX = Utility::Saturate(bg1->uv.x, -700.0f + 25.0f, 700.0f - 25.0f);
+	//
+
+	//cout << "bg1.uv.x = " << bg1->uv.x << endl;
+	
 	bg1->Update();
 	bg2->Update();
 	bgCol->Update();
 	player->Update();
 	boss->Update();
 
+
+	for (int i = 0; i < 2; i++)
+	{
+		walls[i].img->Update();
+		walls[i].col->Update();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		floors[i].img->Update();
+		floors[i].col->Update();
+	}
 }
+
+
 
 void Main::LateUpdate()
 {
@@ -165,6 +266,25 @@ void Main::LateUpdate()
 		player->Update();
 	}
 
+	/// <summary>
+	/// 발판
+	/// </summary>
+	for (int i = 0; i < 3; i++)
+	{
+		if (floors[i].col->Intersect(player->getCol()->GetWorldPos()))
+		{
+			player->getCol()->SetWorldPosY(floors[i].col->GetWorldPos().y);
+			player->setPlGravity(0.0f);
+
+			if (player->getPlState() == PLSTATE::JUMP)
+			{
+				player->setPlState(PLSTATE::STAND);
+			}
+		}
+	}
+
+
+	//플레이어 공격 -> 보스 검사
 	if (boss->getCol()->Intersect(player->getWeaponCol()))
 	{
 		boss->TakeDamage(1000.0f);
@@ -172,6 +292,7 @@ void Main::LateUpdate()
 		player->playerWeaponColoff();
 	}
 
+	//보스 공격 -> 플레이어 검사
 	if (player->getCol()->Intersect(boss->getAttackCol()))
 	{
 		player->TakeDamage(10.0f);
@@ -232,6 +353,19 @@ void Main::Render()
 	bg1->Render();
 	bg2->Render();
 	bgCol->Render();
+
+	for (int i = 0; i < 2; i++)
+	{
+		walls[i].img->Render();
+		walls[i].col->Render();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		floors[i].img->Render();
+		floors[i].col->Render();
+	}
+
 	player->Render();
 	boss->Render();
 }
