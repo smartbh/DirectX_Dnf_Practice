@@ -237,10 +237,41 @@ bossFem::bossFem()
 	checkGrog = false;
 	checkSkill_1On = false;
 	checkSkill_2On = false;
+	soundRand = 0;
 
-	//SOUND->AddSound("BSbeamCharge.wav", "BGM",true);
-	//SOUND->AddSound("BSbeamFire.wav", "GUN");
-	//SOUND->Play("BGM");
+	///보스 사운드 작업
+	SOUND->AddSound("boss_attack1.wav", "BSATTACK1");
+	SOUND->AddSound("boss_attack2.wav", "BSATTACK2");
+	SOUND->AddSound("boss_attack3.wav", "BSATTACK3");
+	SOUND->AddSound("boss_grog1.wav", "BSGROG1");
+	SOUND->AddSound("boss_grog2.wav", "BSGROG2");
+	SOUND->AddSound("boss_skills1.wav", "BSSKILL1"); //스킬 공용
+	SOUND->AddSound("boss_skills2.wav", "BSSKILL2");
+	SOUND->AddSound("boss_skills3.wav", "BSSKILL3");
+	SOUND->AddSound("boss_skills4.wav", "BSSKILL4");
+	
+	SOUND->AddSound("boss_skill1.wav", "BSSKILL11");
+	SOUND->AddSound("boss_skill1_laugh.wav", "BSSKILL12");
+
+	//스탠드일때 한번
+	SOUND->AddSound("boss_normal1.wav", "BSNORMAL1");
+	SOUND->AddSound("boss_normal2.wav", "BSNORMAL2");
+	SOUND->AddSound("boss_normal3.wav", "BSNORMAL3");
+	SOUND->AddSound("boss_normal4.wav", "BSNORMAL4");
+	SOUND->AddSound("boss_normal5.wav", "BSNORMAL5");
+
+	//순간이동
+	SOUND->AddSound("boss_disappear.wav", "BSTELEPORT");
+
+	SOUND->AddSound("boss_start.wav", "BSSTART"); //시작할때 한번
+
+
+	//보스 스킬 사운드 작업
+	SOUND->AddSound("boss_skill1_charge.wav", "BSSKILLCHARGE");
+	SOUND->AddSound("boss_skill1_fire.wav", "BSSKILLFIRE");
+	SOUND->AddSound("boss_skill2_explode.wav", "BSBOOM");
+
+	
 }
 
 bossFem::~bossFem()
@@ -289,11 +320,11 @@ void bossFem::Update()
 	}
 
 	if (BSstate == BOSSSTATE::START) {
-
 		attackCol->visible = false;
 		col->colOnOff = false;
 
 		if (start1->visible) {
+			SOUND->Play("BSSTART");
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
@@ -421,13 +452,32 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(1, 6);
+				motionRand = RANDOM->Int(2, 2);
 
 				cout << "motionRand : " << motionRand << endl;
 
 				switch (motionRand)
 				{
 				case 0:
+					soundRand = RANDOM->Int(0, 4);
+					switch (soundRand)
+					{
+					case 0:
+						SOUND->Play("BSNORMAL1");
+						break;
+					case 1:
+						SOUND->Play("BSNORMAL2");
+						break;
+					case 2:
+						SOUND->Play("BSNORMAL3");
+						break;
+					case 3:
+						SOUND->Play("BSNORMAL4");
+						break;
+					case 4:
+						SOUND->Play("BSNORMAL5");
+						break;
+					}
 					BSstate = BOSSSTATE::STAND;
 					break;
 				case 1: //걷기
@@ -438,6 +488,7 @@ void bossFem::Update()
 					BSstate = BOSSSTATE::WALK;
 					break;
 				case 2: //일반공격
+					SOUND->Play("BSATTACK1");
 					stand->visible = false;
 					attackCol->colOnOff = true;
 					attackCol->visible = true;
@@ -454,6 +505,7 @@ void bossFem::Update()
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
+					SOUND->Play("BSTELEPORT");
 					break;
 				case 4: //스킬1
 					getTickTime = 1.3f;//10초간 시전
@@ -471,9 +523,20 @@ void bossFem::Update()
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
-				case 6:
+				case 6: //그로기
 					if (checkGrog)
 					{
+						soundRand = RANDOM->Int(0, 1);
+						switch (soundRand)
+						{
+						case 0:
+							SOUND->Play("BSGROG1");
+							break;
+						case 1:
+							SOUND->Play("BSGROG2");
+							break;
+						}
+
 						getTickTime = 10.0f;
 						stand->visible = false;
 						grog->visible = true;
@@ -514,11 +577,30 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(1, 6);
+				motionRand = RANDOM->Int(0, 6);
 				cout << "motionRand = " << motionRand << endl;
 				switch (motionRand)
 				{
 				case 0:
+					soundRand = RANDOM->Int(0, 4);
+					switch (soundRand)
+					{
+					case 0:
+						SOUND->Play("BSNORMAL1");
+						break;
+					case 1:
+						SOUND->Play("BSNORMAL2");
+						break;
+					case 2:
+						SOUND->Play("BSNORMAL3");
+						break;
+					case 3:
+						SOUND->Play("BSNORMAL4");
+						break;
+					case 4:
+						SOUND->Play("BSNORMAL5");
+						break;
+					}
 					BSstate = BOSSSTATE::STAND;
 					break;
 				case 1:
@@ -529,6 +611,7 @@ void bossFem::Update()
 					BSstate = BOSSSTATE::WALK;
 					break;
 				case 2: //공격
+					SOUND->Play("BSATTACK1");
 					stand->visible = false;
 					attackCol->colOnOff = true;
 					attackCol->visible = true;
@@ -545,6 +628,7 @@ void bossFem::Update()
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
+					SOUND->Play("BSTELEPORT");
 					break;
 				case 4:
 					getTickTime = 1.3f;//10초간 시전
@@ -565,6 +649,17 @@ void bossFem::Update()
 				case 6:
 					if (checkGrog)
 					{
+						soundRand = RANDOM->Int(0, 1);
+						switch (soundRand)
+						{
+						case 0:
+							SOUND->Play("BSGROG1");
+							break;
+						case 1:
+							SOUND->Play("BSGROG2");
+							break;
+						}
+
 						getTickTime = 10.0f;
 						stand->visible = false;
 						grog->visible = true;
@@ -605,6 +700,7 @@ void bossFem::Update()
 			}
 			else
 			{
+				SOUND->Play("BSATTACK2");
 				attackCol->colOnOff = true;
 
 				attack[0]->visible = false;
@@ -633,6 +729,7 @@ void bossFem::Update()
 			}
 			else
 			{
+				SOUND->Play("BSATTACK3");
 				attackCol->colOnOff = true;
 
 				attack[1]->visible = false;
@@ -746,7 +843,7 @@ void bossFem::Update()
 					attackCol->SetLocalPosX(-100.0f);
 					attackCol->scale = Vector2(app.GetWidth() - 200.0f, 400.0f);
 				}
-
+				SOUND->Play("BSSKILLCHARGE");
 				skill1_1->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				skill1_1->visible = true;
 
@@ -864,6 +961,8 @@ void bossFem::Update()
 		
 		if (skill1_1->visible)
 		{
+
+
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
@@ -871,6 +970,30 @@ void bossFem::Update()
 			}
 			else
 			{
+				soundRand = RANDOM->Int(0, 5);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("BSSKILL1");
+					break;
+				case 1:
+					SOUND->Play("BSSKILL2");
+					break;
+				case 2:
+					SOUND->Play("BSSKILL3");
+					break;
+				case 3:
+					SOUND->Play("BSSKILL4");
+					break;
+				case 4:
+					SOUND->Play("BSSKILL11");
+					break;
+				case 5:
+					SOUND->Play("BSSKILL12");
+					break;
+				}
+
+				SOUND->Play("BSSKILLFIRE");
 				skill1_1->visible = false;
 				skill1_2->visible = true;
 				skill1_1effect->visible = false;
@@ -924,6 +1047,22 @@ void bossFem::Update()
 			}
 			else
 			{
+				soundRand = RANDOM->Int(0, 3);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("BSSKILL1");
+					break;
+				case 1:
+					SOUND->Play("BSSKILL2");
+					break;
+				case 2:
+					SOUND->Play("BSSKILL3");
+					break;
+				case 3:
+					SOUND->Play("BSSKILL4");
+					break;
+				}
 				skill2_1->visible = false;
 				skill2_2->visible = true;
 				skill2_1effect->visible = true;
@@ -942,6 +1081,7 @@ void bossFem::Update()
 				attackCol->colOnOff = true;
 				skill2_1effect->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 				attackCol->SetLocalPosX(XlocalPos += 0.3f);
+				SOUND->Play("BSBOOM");
 			}
 			else
 			{

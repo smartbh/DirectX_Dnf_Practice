@@ -1112,13 +1112,7 @@ void DnFPlayer::printPlState()
 {
 	string print_out;
 
-	if (state == PLSTATE::START)
-	{
-		//cout << "state : START" << endl;
-		print_out = "state : START";
-		//return print_out;
-	}
-	else if (state == PLSTATE::STAND)
+	if (state == PLSTATE::STAND)
 	{
 		//cout << "state : STAND" << endl;
 		print_out = "state : STAND";

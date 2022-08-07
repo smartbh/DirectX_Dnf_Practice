@@ -67,6 +67,7 @@ private:
 	Vector2			bossDir;
 	int				attackCount;
 	int				motionRand;
+	int				soundRand;
 
 public:
 	bossFem();

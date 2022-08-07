@@ -1,10 +1,8 @@
 #pragma once
 enum class PLSTATE
 {
-	START,
 	STAND,
 	STAND2,
-	SIT,
 	JUMP,
 	JUMPATTACK,
 	ATTACK,
@@ -12,14 +10,8 @@ enum class PLSTATE
 	WALK_L,
 	RUN_R,
 	RUN_L,
-	DIE,
-	APPEAR,
-	DISAPPEAR,
-	GORG,
 	SKILL1,
 	SKILL2,
-	SKILL3,
-	SKILL4
 };
 
 class DnFPlayer

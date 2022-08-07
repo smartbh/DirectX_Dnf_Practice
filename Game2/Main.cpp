@@ -92,6 +92,7 @@ void Main::Init()
 
 	bgColor = 0.5f;
 
+	SOUND->AddSound("bgm.wav", "BGM",true);
 
 }
 
@@ -104,8 +105,8 @@ void Main::Update()
 {	
 	//창크기에 맞춰서 배경 충돌체 위치조정;
 	bgCol->scale = Vector2(app.GetWidth() * 3.0f, 20.0f);
-	walls[0].col->SetWorldPosX(app.GetHalfWidth());
-	walls[1].col->SetWorldPosX(-app.GetHalfWidth());
+	walls[0].col->SetWorldPosX(app.GetHalfWidth() + 200.0f);
+	walls[1].col->SetWorldPosX(-app.GetHalfWidth() - 200.0f);
 
 	boss->setBossDir(player->getCol()->GetWorldPos());
 
@@ -180,22 +181,24 @@ void Main::Update()
 	{
 		if (player->getPlDir() == RIGHT)
 		{
-			for (int i = 0; i < 1000; i++)
-			{
-				player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
-				bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
-				CAM->position += RIGHT * 10.0f * DELTA;
-			}
+			if (player->getPlState() == PLSTATE::SKILL1)
+				for (int i = 0; i < 1000; i++)
+				{
+					player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
+					bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
+					CAM->position += RIGHT * 10.0f * DELTA;
+				}
 
 		}
 		else if (player->getPlDir() == LEFT)
 		{
-			for (int i = 0; i < 1000; i++)
-			{
-				player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
-				bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
-				CAM->position += LEFT * 10.0f * DELTA;
-			}
+			if (player->getPlState() == PLSTATE::SKILL1)
+				for (int i = 0; i < 1000; i++)
+				{
+					player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
+					bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
+					CAM->position += LEFT * 10.0f * DELTA;
+				}
 		}
 	}
 
@@ -231,7 +234,7 @@ void Main::Update()
 	//bg2->uv.x -= DELTA / bg2->scale.x * 300.0f;
 	//bg2->uv.z -= DELTA / bg2->scale.x * 300.0f;
 
-	cout << "bg1.uv.x = " << bg1->uv.x << endl;
+	//cout << "bg1.uv.x = " << bg1->uv.x << endl;
 	//오른쪽, 0.0867723, -0.09
 	
 	bg1->Update();
