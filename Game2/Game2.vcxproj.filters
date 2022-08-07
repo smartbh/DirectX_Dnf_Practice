@@ -3,10 +3,6 @@
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="ST_Player.h" />
-    <ClInclude Include="ST_Bullet.h" />
-    <ClInclude Include="ST_playerBullet.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="bossFem.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -19,10 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ST_Player.cpp" />
-    <ClCompile Include="ST_Bullet.cpp" />
-    <ClCompile Include="ST_playerBullet.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="bossFem.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
