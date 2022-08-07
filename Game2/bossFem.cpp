@@ -516,6 +516,8 @@ void bossFem::Update()
 				case 3: //단순 순간이동
 					stand->visible = false;
 					getTickTime = 1.3f;
+					attackCol->colOnOff = true;
+					attackCol->visible = true;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
@@ -524,6 +526,8 @@ void bossFem::Update()
 				case 4: //스킬1
 					getTickTime = 1.3f;
 					checkSkill_1On = true;
+					attackCol->colOnOff = true;
+					attackCol->visible = true;
 					stand->visible = false;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
@@ -531,6 +535,8 @@ void bossFem::Update()
 					break;
 				case 5: //스킬2
 					getTickTime = 1.3f;
+					attackCol->colOnOff = true;
+					attackCol->visible = true;
 					checkSkill_2On = true;
 					stand->visible = false;
 					disappear->visible = true;
@@ -797,7 +803,6 @@ void bossFem::Update()
 		}
 		else
 		{
-
 			walk->visible = false;
 			stand->visible = true;
 			getTickTime = 4.0f; //일단 8초동안 스탠드
@@ -1029,7 +1034,7 @@ void bossFem::Update()
 				if (imageColor < 0.7)
 				{
 					imageColor += 0.0001f;
-					skill1_2->color = Color(imageColor, imageColor, imageColor,0.5);
+					skill1_2->color = Color(imageColor, imageColor, imageColor,0.5f);
 				}
 					
 			}
@@ -1044,8 +1049,8 @@ void bossFem::Update()
 				attackCol->colOnOff = false; //공격끝 콜라이더 끄기
 				attackCol->visible = false;
 				imageColor = 0.0f;
+				skill1_2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 				BSstate = BOSSSTATE::DISAPPEAR;
-				skill1_2->color = Color(0.5, 0.5, 0.5, 0.5);
 			}
 		}
 
