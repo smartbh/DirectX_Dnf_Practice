@@ -17,7 +17,6 @@ enum class PLSTATE
 class DnFPlayer
 {
 private:
-	Vector2			dir;
 	ObRect*			col;
 	ObRect*			weaponCol;
 

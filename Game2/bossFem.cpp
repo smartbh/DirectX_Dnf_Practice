@@ -1085,6 +1085,7 @@ void bossFem::Update()
 		}
 		if (skill2_2->visible)
 		{
+			attackCol->colOnOff = true;
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
@@ -1092,9 +1093,9 @@ void bossFem::Update()
 
 				attackCol->SetLocalPosX(XlocalPos);
 				attackCol->visible = true;
-				attackCol->colOnOff = true;
+				//attackCol->colOnOff = true;
 				skill2_1effect->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-				attackCol->SetLocalPosX(XlocalPos += 0.3f);
+				attackCol->SetLocalPosX(XlocalPos += 0.5f);
 				SOUND->Play("BSBOOM");
 			}
 			else
@@ -1103,20 +1104,25 @@ void bossFem::Update()
 				skill2_2->visible = false;
 				skill2_1effect->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				attackCol->visible = false;
+				attackCol->colOnOff = false; //공격끝 콜라이더 끄기
 				disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				disappear->visible = true;
 				getTickTime = 1.3f;
 				checkSkill_2On = false; //스킬끝
-				attackCol->colOnOff = false; //공격끝 콜라이더 끄기
 				BSstate = BOSSSTATE::DISAPPEAR;
 			}
 		}
+	}
+	else if (BSstate == BOSSSTATE::DIE)
+	{
+
 	}
 
 
 	if (hp < 0)
 	{
 		die->visible = true;
+		SOUND->Play("BSDEATH");
 		col->visible = false;
 		col->colOnOff = false;
 		attackCol->visible = false;
@@ -1135,6 +1141,7 @@ void bossFem::Update()
 		skill2_2->visible = false;
 		skill2_1effect->visible = false;
 		grog->visible = false;
+		BSstate = BOSSSTATE::DIE;
 	}
 	else if (hp > 0 && hp < 50.0f)
 	{

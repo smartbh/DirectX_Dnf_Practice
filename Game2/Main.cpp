@@ -15,13 +15,35 @@ void Main::Init()
 	//ui
 	bossPortrait = new ObImage(L"boss_portrait.png");
 	bossPortrait->scale = Vector2(264.0f, 256.0f);
-	bossPortrait->SetWorldPos(Vector2(-600.0f, 400.0f));
+	bossPortrait->SetWorldPos(Vector2(-app.GetHalfWidth() - 220.0f, 450.0f));
 	bossPortrait->space = SPACE::SCREEN;
+
+	bossHPbar = new ObRect();
+	bossHPbar->scale = Vector2(1000.0f, 50.0f);
+	bossHPbar->SetParentT(*bossPortrait);
+	bossHPbar->SetLocalPosX(85.0f);
+	bossHPbar->SetLocalPosY(50.0f);
+	bossHPbar->color = Color(0.5f, 0.0f, 0.0f, 1.0f);
+	bossHPbar->visible - false;
+	bossHPbar->isFilled = true;
+	bossHPbar->pivot = OFFSET_L;
+	bossHPbar->space = SPACE::SCREEN;
 
 	playerPortrait = new ObImage(L"player_portrait.png");
 	playerPortrait->scale = Vector2(259.0f, 253.0f);
-	playerPortrait->SetWorldPos(Vector2(-600.0f, -400.0f));
+	playerPortrait->SetWorldPos(Vector2(-app.GetHalfWidth()-220.0f, -450.0f));
 	playerPortrait->space = SPACE::SCREEN;
+
+	playerHPbar = new ObRect();
+	playerHPbar->scale = Vector2(1000.0f, 50.0f);
+	playerHPbar->SetParentT(*playerPortrait);
+	playerHPbar->SetLocalPosX(100.0f);
+	playerHPbar->SetLocalPosY(-40.0f);
+	playerHPbar->color = Color(0.5f, 0.0f, 0.0f, 1.0f);
+	playerHPbar->visible = false;
+	playerHPbar->isFilled = true;
+	playerHPbar->pivot = OFFSET_L;
+	playerHPbar->space = SPACE::SCREEN;
 
 	blackBar = new ObImage(L"black_bar.png");
 	blackBar->scale = Vector2(2000.0f, 500.0f);
@@ -135,8 +157,10 @@ void Main::Update()
 	startSceneTime -= DELTA;
 	if (startSceneTime > 0.0f)
 	{
+		bossHPbar->visible - false;
+		playerHPbar->visible = false;
 		SOUND->Play("BGM");
-		SOUND->SetVolume("BGM", 0.3f);
+		SOUND->SetVolume("BGM", 0.2f);
 		blackBar->MoveWorldPos(UP * DELTA * 100.0f);
 		blackBar2->MoveWorldPos(DOWN * DELTA * 100.0f);
 		blackBar->Update();
@@ -145,8 +169,15 @@ void Main::Update()
 	}
 	else
 	{
+		SOUND->SetVolume("BGM", 0.2f);
+		bossPortrait->SetWorldPos(Vector2(-app.GetHalfWidth() + 50.0f, 430.0f));
+		playerPortrait->SetWorldPos(Vector2(-app.GetHalfWidth() + 50.0f, -450.0f));
 		bossPortrait->Update();
+		bossHPbar->visible = true;
 		playerPortrait->Update();
+		playerHPbar->visible = true;
+		bossHPbar->Update();
+		playerHPbar->Update();
 
 		boss->setBossDir(player->getCol()->GetWorldPos());
 
@@ -162,8 +193,8 @@ void Main::Update()
 				bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
 
 				////1초에 100픽셀 움직여라
-				//bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
-				//bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
+				bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
+				bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
 
 				player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
 				bgCol->MoveWorldPos(RIGHT * 200.0f * DELTA);
@@ -272,7 +303,15 @@ void Main::Update()
 
 		bg1->uv.z = minX;
 
-		//cout << "bg1.uv.x = " << bg1->uv.x << endl;
+		minX = Utility::Saturate(bg2->uv.x, 0.0f, 0.125f);
+
+		bg2->uv.x = minX;
+
+		minX = Utility::Saturate(bg2->uv.z, 0.88f, 1.0f);
+
+		bg2->uv.z = minX;
+
+		//cout << "bg2.uv.x = " << bg2->uv.x << endl;
 		//cout << "bg1.uv.z = " << bg1->uv.z << endl;
 
 	}
@@ -282,6 +321,7 @@ void Main::Update()
 	bgCol->Update();
 	player->Update();
 	boss->Update();
+
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -339,6 +379,8 @@ void Main::LateUpdate()
 	if (boss->getCol()->Intersect(player->getWeaponCol()))
 	{
 		boss->TakeDamage(1000.0f);
+		bossHPbar->scale.x -= 50.0f;
+		bossHPbar->Update();
 		boss->printBossHp();
 		player->playerWeaponColoff();
 	}
@@ -346,9 +388,28 @@ void Main::LateUpdate()
 	//보스 공격 -> 플레이어 검사
 	if (player->getCol()->Intersect(boss->getAttackCol()))
 	{
-		player->TakeDamage(10.0f);
+		
+		if (boss->getBossState() == BOSSSTATE::SKILL1)
+		{
+			player->TakeDamage(5.0f);
+			playerHPbar->scale.x -= 25.0f * DELTA;
+		}
+		else if (boss->getBossState() == BOSSSTATE::SKILL2)
+		{
+			player->TakeDamage(5.0f);
+			playerHPbar->scale.x -= 25.0f * DELTA;
+			boss->bossAttackColoff();
+		}
+		else if (boss->getBossState() == BOSSSTATE::ATTACK)
+		{
+			player->TakeDamage(100.0f);
+			playerHPbar->scale.x -= 50.0f * DELTA;
+			boss->bossAttackColoff();
+		}
+		
+		playerHPbar->Update();
 		player->printPlayerHp();
-		boss->bossAttackColoff();
+		
 	}
 
 
@@ -371,15 +432,7 @@ void Main::LateUpdate()
 			}
 			else
 			{
-				/*bgColor = 0.5f;
-				bg1->color = Color(bgColor, bgColor, bgColor, 0.5f);*/
-				////cout << "시간 끝 애니메이션 변화" << endl;
-				//appear->visible = false;
-				//stand->visible = true;
-				//getTickTime = 8.0f; // 1.1, 8.0
-				////cout << "마지막 성공" << endl;
-				//BSstate = BOSSSTATE::STAND;
-				//col->SetLocalPos(Vector2(0.0f, -450.0f));
+
 			}
 	}
 	else if (boss->getBossState() == BOSSSTATE::STAND)
@@ -417,12 +470,16 @@ void Main::Render()
 		floors[i].col->Render();
 	}
 
-	player->Render();
+	
 	boss->Render();
+	player->Render();
+	bossHPbar->Render();
+	playerHPbar->Render();
 	bossPortrait->Render();
 	playerPortrait->Render();
 	blackBar->Render();
 	blackBar2->Render();
+
 }
 
 void Main::ResizeScreen()

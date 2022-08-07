@@ -655,6 +655,16 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::WALK_R) //¿À¸¥ÂÊÀ¸·Î °È±â
 	{
+		if (playerDir == RIGHT)
+		{
+			walk->reverseLR = false;
+		}
+
+		else if (playerDir == LEFT)
+		{
+			walk->reverseLR = true;
+		}
+		
 		if (INPUT->KeyUp(VK_RIGHT)) //°È±â ³¡³»¸é
 		{
 			stand1->visible = true;
@@ -691,6 +701,17 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::WALK_L) //¿ÞÂÊÀ¸·Î °È±â
 	{
+		if (playerDir == RIGHT)
+		{
+			walk->reverseLR = false;
+		}
+
+		else if (playerDir == LEFT)
+		{
+			walk->reverseLR = true;
+		}
+
+
 		if (INPUT->KeyUp(VK_LEFT))
 		{
 			playerDir = LEFT;
@@ -733,8 +754,15 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::RUN_R)
 	{
-		/*col->MoveWorldPos(RIGHT * 400.0f * DELTA);
-		CAM->position += RIGHT * 400.0f * DELTA;*/
+		if (playerDir == RIGHT)
+		{
+			run2->reverseLR = false;
+		}
+
+		else if (playerDir == LEFT)
+		{
+			run2->reverseLR = true;
+		}	
 
 		if (INPUT->KeyUp(VK_LSHIFT))
 		{
@@ -764,6 +792,17 @@ void DnFPlayer::Update()
 	}
 	else if (state == PLSTATE::RUN_L)
 	{
+
+		if (playerDir == RIGHT)
+		{
+			run2->reverseLR = false;
+		}
+
+		else if (playerDir == LEFT)
+		{
+			run2->reverseLR = true;
+		}
+
 		if (INPUT->KeyUp(VK_LSHIFT))
 		{
 			playerDir = LEFT;
