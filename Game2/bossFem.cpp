@@ -875,6 +875,8 @@ void bossFem::Update()
 				skill1_2->visible = true;
 				skill1_1effect->visible = false;
 				skill1_2effect->visible = true;
+				attackCol->visible = true;
+				attackCol->colOnOff = true;
 				getTickTime = 10.0f; //10초 동안 레이저 공격
 			}
 		}
@@ -884,6 +886,9 @@ void bossFem::Update()
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
+				attackCol->visible = true;
+				attackCol->colOnOff = true;
+
 				if (imageColor < 0.7)
 				{
 					imageColor += 0.0001f;
@@ -900,6 +905,7 @@ void bossFem::Update()
 				getTickTime = 1.3f;
 				checkSkill_1On = false;
 				attackCol->colOnOff = false; //공격끝 콜라이더 끄기
+				attackCol->visible = false ;
 				imageColor = 0.0f;
 				BSstate = BOSSSTATE::DISAPPEAR;
 				skill1_2->color = Color(0.5, 0.5, 0.5, 0.5);

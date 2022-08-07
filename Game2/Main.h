@@ -1,4 +1,17 @@
 #pragma once
+
+struct FLOOR
+{
+	ObImage* img;
+	ObRect* col;
+};
+
+struct WALL
+{
+	ObImage* img;
+	ObRect* col;
+};
+
 class Main : public Scene
 {
 private:
@@ -8,6 +21,10 @@ private:
 
 	DnFPlayer*	player; //플레이어
 	bossFem *	boss;
+
+	FLOOR		floors[3];
+	WALL		walls[2];
+	
 
 	float		getTickTime;
 	float		bgColor;

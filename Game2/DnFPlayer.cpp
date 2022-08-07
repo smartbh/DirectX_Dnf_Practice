@@ -195,6 +195,8 @@ void DnFPlayer::Update()
 	col->MoveWorldPos(DOWN * gravity * DELTA);
 	gravity += 700.0f * DELTA;
 
+
+
 	/// <summary>
 	/// 플레이어 조작
 	/// </summary>
