@@ -289,6 +289,8 @@ void Main::LateUpdate()
 			{
 				player->setPlState(PLSTATE::STAND);
 			}
+
+			player->Update();
 		}
 	}
 

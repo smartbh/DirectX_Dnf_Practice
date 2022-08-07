@@ -181,7 +181,31 @@ DnFPlayer::DnFPlayer()
 	attackTrigger3 = false;
 	attackTrigger4 = false;
 
+	isDamaged = false;
+
+	soundRand = 0;
+
 	playerDir = RIGHT;
+
+	/// <summary>
+	/// 사운드 작업, 플레이어
+	/// </summary>
+	SOUND->AddSound("player_stand2-1.wav", "PLSTAND1"); //웃음
+	SOUND->AddSound("player_stand2-2.wav", "PLSTAND2"); //시끄럽군
+	SOUND->AddSound("player_attack1.wav", "PLATTACK1"); //공격1
+	SOUND->AddSound("player_attack2.wav", "PLATTACK2"); //공격2
+	SOUND->AddSound("player_attack3.wav", "PLATTACK3"); //공격3
+	SOUND->AddSound("player_attack4.wav", "PLATTACK4"); //공격4
+	SOUND->AddSound("player_jump.wav", "PLJUMP"); //점프
+	SOUND->AddSound("player_skill1,2.wav", "PLSKILLBOTH"); //스킬 둘다 쓸수있게
+	SOUND->AddSound("player_skill1-1.wav", "PLSKILL11"); //스킬1-1 (랜덤)
+	SOUND->AddSound("player_skill1-2.wav", "PLSKILL12"); 
+	SOUND->AddSound("player_skill1-3.wav", "PLSKILL13"); 
+	SOUND->AddSound("player_skill2.wav", "PLSKILL21");  //스킬2
+	SOUND->AddSound("player_skill2-2.wav", "PLSKILL22"); 
+	
+
+	//사운드 작업, 무기,공격
 
 }
 
@@ -197,12 +221,66 @@ void DnFPlayer::Update()
 	gravity += 700.0f * DELTA;
 
 
+	//데미지 입을시 변환
+	if (isDamaged) //update에, isDamaged가 true면
+	{
+		damagingTime -= DELTA;
+
+		stand1->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		stand2->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		walk->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		run1->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		run2->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		jump->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		jumpAttack->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		attack1->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		attack2->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		attack3->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		attack4->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		skill1->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		skill2->color = Color(RANDOM->Float(0.5f, 1.0f), 0.5f, 0.5f, 0.5f);
+		
+		if (damagingTime < 0.0f)
+		{
+			stand1->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			stand2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			walk->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			run1->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			run2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			jump->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			jumpAttack->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			attack1->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			attack2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			attack3->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			attack4->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			skill1->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			skill2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+			isDamaged = false;
+		}
+
+	}
+
 
 	/// <summary>
 	/// 플레이어 조작
 	/// </summary>
 	if (state == PLSTATE::STAND)
 	{
+		//소리 한번 초기화
+		SOUND->Stop("PLSTAND1");
+		SOUND->Stop("PLSTAND2");
+		SOUND->Stop("PLATTACK1");
+		SOUND->Stop("PLATTACK2");
+		SOUND->Stop("PLATTACK3");
+		SOUND->Stop("PLATTACK4");
+		SOUND->Stop("PLJUMP");
+		SOUND->Stop("PLSKILLBOTH");
+		SOUND->Stop("PLSKILL11");
+		SOUND->Stop("PLSKILL12");
+		SOUND->Stop("PLSKILL13");
+		SOUND->Stop("PLSKILL21");
+		SOUND->Stop("PLSKILL22");
+
 		weaponCol->colOnOff = false;
 		weaponCol->visible = false;
 		weaponCol->scale = Vector2(120.0f, 300.0f) / 2.0f;
@@ -235,6 +313,16 @@ void DnFPlayer::Update()
 
 			if (standTime > 10.0f) //가만히 있는지 10초정도 지나면
 			{
+				soundRand = RANDOM->Int(0, 1);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("PLSTAND1");
+					break;
+				case 1:
+					SOUND->Play("PLSTAND2");
+					break;
+				}
 				state = PLSTATE::STAND2;
 				stand1->visible = false;
 				stand2->visible = true;
@@ -265,6 +353,7 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('C'))
 			{
+				SOUND->Play("PLJUMP");
 				//cout << "점프" << endl;
 				state = PLSTATE::JUMP;
 				jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
@@ -810,6 +899,32 @@ void DnFPlayer::Update()
 	}
 
 
+	if (hp < 0)
+	{
+		col->visible = false;
+		col->colOnOff = false;
+
+		stand1->visible = false;
+		stand2->visible = false;
+
+		walk->visible = false;
+
+		run1->visible = false;
+		run2->visible = false;
+
+		jump->visible = false;
+		jumpAttack->visible = false;
+
+		attack1->visible = false;
+		attack2->visible = false;
+		attack3->visible = false;
+		attack4->visible = false;
+
+		skill1->visible = false; //대쉬
+		skill2->visible = false; //찌르기
+	}
+
+
 	col->Update();
 	weaponCol->Update();
 	stand1->Update();
@@ -969,33 +1084,17 @@ Vector2 DnFPlayer::getPlDir()
 
 void DnFPlayer::TakeDamage(int damage)
 {
-	hp -= damage;
+	hp -= damage * DELTA;
 	damagingTime = 0.5f;
+	isDamaged = true;
 
-	if (hp < 0)
+	if (damagingTime > 0.0f)
 	{
-		col->visible = false;
-		col->colOnOff = false;
-
-		stand1->visible = false;
-		stand2->visible = false;
-
-		walk->visible = false;
-
-		run1->visible = false;
-		run2->visible = false;
-
-		jump->visible = false;
-		jumpAttack->visible = false;
-
-		attack1->visible = false;
-		attack2->visible = false;
-		attack3->visible = false;
-		attack4->visible = false;
-
-		skill1->visible = false; //대쉬
-		skill2->visible = false; //찌르기
+		damagingTime -= DELTA;
+		col->color.w = RANDOM->Float(0.0f, 0.5f);
 	}
+	else
+		col->color.w = 0.5f;
 }
 
 void DnFPlayer::playerWeaponColon()

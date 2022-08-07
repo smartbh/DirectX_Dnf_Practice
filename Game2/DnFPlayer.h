@@ -33,6 +33,7 @@ private:
 	
 	float			hp;
 
+	bool			isDamaged;
 	float			damagingTime;
 	float			standTime;
 	float			getTickTime;
@@ -44,6 +45,9 @@ private:
 	bool			attackTrigger2;
 	bool			attackTrigger3;
 	bool			attackTrigger4;
+
+	int				soundRand;
+
 
 	Vector2			playerDir;
 
