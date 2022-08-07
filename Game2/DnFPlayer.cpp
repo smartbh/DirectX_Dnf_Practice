@@ -205,16 +205,14 @@ DnFPlayer::DnFPlayer()
 	SOUND->AddSound("player_skill2-2.wav", "PLSKILL22"); 
 	
 	//사운드 작업, 무기,공격
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-	SOUND->AddSound("", "");
-
+	SOUND->AddSound("sword_attack1.wav", "SATTACK1"); //검 공격1 사운드 랜덤
+	SOUND->AddSound("sword_attack1-1.wav", "SATTACK11");
+	SOUND->AddSound("sword_attack1-2.wav", "SATTACK12");//여기까지
+	SOUND->AddSound("sword_attack2.wav", "SATTACK2");
+	SOUND->AddSound("sword_attack3.wav", "SATTACK3");
+	SOUND->AddSound("sword_attack4.wav", "SATTACK4");
+	SOUND->AddSound("sword_skill1.wav", "SSKILL1"); 
+	SOUND->AddSound("sword_skill2.wav", "SSKILL2");
 }
 
 DnFPlayer::~DnFPlayer()
@@ -288,6 +286,15 @@ void DnFPlayer::Update()
 		SOUND->Stop("PLSKILL13");
 		SOUND->Stop("PLSKILL21");
 		SOUND->Stop("PLSKILL22");
+
+		SOUND->Stop("SATTACK1");
+		SOUND->Stop("SATTACK11");
+		SOUND->Stop("SATTACK12");
+		SOUND->Stop("SATTACK2");
+		SOUND->Stop("SATTACK3");
+		SOUND->Stop("SATTACK4");
+		SOUND->Stop("SSKILL1");
+		SOUND->Stop("SSKILL2");
 
 		weaponCol->colOnOff = false;
 		weaponCol->visible = false;
@@ -372,7 +379,21 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('Z')) //일반공격
 			{
-				SOUND->Play()
+				SOUND->Play("PLATTACK1");
+
+				soundRand = RANDOM->Int(0, 2);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("SATTACK1");
+					break;
+				case 1:
+					SOUND->Play("SATTACK11");
+					break;
+				case 2:
+					SOUND->Play("SATTACK12");
+					break;
+				}
 				weaponCol->visible = true;
 				stand1->visible = false;
 
@@ -390,6 +411,24 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('A')) //스킬1
 			{
+				soundRand = RANDOM->Int(0, 3);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("PLSKILLBOTH");
+					break;
+				case 1:
+					SOUND->Play("PLSKILL11");
+					break;
+				case 2:
+					SOUND->Play("PLSKILL12");
+					break;
+				case 3:
+					SOUND->Play("PLSKILL13");
+					break;
+				}
+
+				SOUND->Play("SSKILL1");
 				weaponCol->visible = true;
 				stand1->visible = false;
 
@@ -405,6 +444,21 @@ void DnFPlayer::Update()
 			}
 			else if (INPUT->KeyDown('S')) //스킬2
 			{
+				soundRand = RANDOM->Int(0, 2);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("PLSKILLBOTH");
+					break;
+				case 1:
+					SOUND->Play("PLSKILL21");
+					break;
+				case 2:
+					SOUND->Play("PLSKILL22");
+					break;
+				}
+
+				SOUND->Play("SSKILL2");
 				weaponCol->visible = true;
 				stand1->visible = false;
 
@@ -476,6 +530,7 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('C'))
 			{
+				SOUND->Play("PLJUMP");
 				////cout << "점프" << endl;
 				state = PLSTATE::JUMP;
 				jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
@@ -486,6 +541,21 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('Z'))
 			{
+				SOUND->Play("PLATTACK1");
+
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("SATTACK1");
+					break;
+				case 1:
+					SOUND->Play("SATTACK11");
+					break;
+				case 2:
+					SOUND->Play("SATTACK12");
+					break;
+				}
+
 				weaponCol->visible = true;
 				stand1->visible = false;
 
@@ -502,6 +572,24 @@ void DnFPlayer::Update()
 
 			if (INPUT->KeyDown('A')) //스킬1 돌진
 			{
+				soundRand = RANDOM->Int(0, 3);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("PLSKILLBOTH");
+					break;
+				case 1:
+					SOUND->Play("PLSKILL11");
+					break;
+				case 2:
+					SOUND->Play("PLSKILL12");
+					break;
+				case 3:
+					SOUND->Play("PLSKILL13");
+					break;
+				}
+
+				SOUND->Play("SSKILL1");
 				weaponCol->visible = true;
 				stand1->visible = false;
 
@@ -517,6 +605,21 @@ void DnFPlayer::Update()
 			}
 			else if (INPUT->KeyDown('S')) //스킬2 찌르기
 			{
+				soundRand = RANDOM->Int(0, 2);
+				switch (soundRand)
+				{
+				case 0:
+					SOUND->Play("PLSKILLBOTH");
+					break;
+				case 1:
+					SOUND->Play("PLSKILL21");
+					break;
+				case 2:
+					SOUND->Play("PLSKILL22");
+					break;
+				}
+
+				SOUND->Play("SSKILL2");
 				weaponCol->visible = true;
 
 				stand1->visible = false;
@@ -628,7 +731,6 @@ void DnFPlayer::Update()
 			gravity = -500.0f;
 		}
 	}
-
 	else if (state == PLSTATE::RUN_R)
 	{
 		/*col->MoveWorldPos(RIGHT * 400.0f * DELTA);
@@ -759,6 +861,8 @@ void DnFPlayer::Update()
 			{
 				if (INPUT->KeyDown('Z'))
 				{
+					SOUND->Play("PLATTACK2");
+					SOUND->Play("SATTACK2");
 					attackTrigger1 = false;
 					attackTrigger2 = true;
 					weaponCol->colOnOff = true;
@@ -795,6 +899,8 @@ void DnFPlayer::Update()
 			{
 				if (INPUT->KeyDown('Z'))
 				{
+					SOUND->Play("PLATTACK3");
+					SOUND->Play("SATTACK3");
 					attackTrigger2 = false;
 					attackTrigger3 = true;
 					weaponCol->colOnOff = true;
@@ -829,6 +935,8 @@ void DnFPlayer::Update()
 			{
 				if (INPUT->KeyDown('Z'))
 				{
+					//SOUND->Play("PLATTACK4");
+					SOUND->Play("SATTACK4");
 					attackTrigger3 = false;
 					attackTrigger4 = true;
 					weaponCol->colOnOff = true;
