@@ -43,7 +43,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{54A271
 		Contents\Images\BSskill_1effect.png = Contents\Images\BSskill_1effect.png
 		Contents\Images\BSskill_2effect.png = Contents\Images\BSskill_2effect.png
 		Contents\Images\BSwalk.png = Contents\Images\BSwalk.png
-		Contents\Images\floor.png = Contents\Images\floor.png
 		Contents\Images\PLattack1.png = Contents\Images\PLattack1.png
 		Contents\Images\PLattack2.png = Contents\Images\PLattack2.png
 		Contents\Images\PLattack3.png = Contents\Images\PLattack3.png
@@ -62,7 +61,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{54A271
 		Contents\Images\start2.png = Contents\Images\start2.png
 		Contents\Images\start3.png = Contents\Images\start3.png
 		Contents\Images\start4.png = Contents\Images\start4.png
-		Contents\Images\wall.png = Contents\Images\wall.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Txt", "Txt", "{BC1DD457-26F1-4145-994B-7D33F751C292}"
