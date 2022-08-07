@@ -28,6 +28,8 @@ private:
 	float		getTickTime;
 	float		bgColor;
 
+	float		startSceneTime;
+
 
 public:
 	virtual void Init() override;

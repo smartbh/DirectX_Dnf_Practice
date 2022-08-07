@@ -80,6 +80,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound", "Sound", "{031D9208
 		Contents\Sound\boss_attack1.wav = Contents\Sound\boss_attack1.wav
 		Contents\Sound\boss_attack2.wav = Contents\Sound\boss_attack2.wav
 		Contents\Sound\boss_attack3.wav = Contents\Sound\boss_attack3.wav
+		Contents\Sound\boss_death.wav = Contents\Sound\boss_death.wav
 		Contents\Sound\boss_disappear.wav = Contents\Sound\boss_disappear.wav
 		Contents\Sound\boss_grog1.wav = Contents\Sound\boss_grog1.wav
 		Contents\Sound\boss_grog2.wav = Contents\Sound\boss_grog2.wav

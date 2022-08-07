@@ -73,6 +73,16 @@ bossFem::bossFem()
 	stand->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	stand->visible = false;
 
+	die = new ObImage(L"BSdeath.png");
+	die->SetParentRT(*col);
+	die->maxFrame.x = 11;
+	die->SetLocalPosY(100.0f);
+	die->scale.x = 207.0f;
+	die->scale.y = 201.0f;
+	die->pivot = OFFSET_N;
+	die->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	die->visible = false;
+
 	///walk
 	walk = new ObImage(L"BSwalk.png");
 	walk->SetParentRT(*col);
@@ -102,7 +112,7 @@ bossFem::bossFem()
 	disappear->maxFrame.x = 13;
 	disappear->scale.x = 249.0f;
 	disappear->scale.y = 182.0f;
-	appear->SetLocalPosY(85.0f);
+	disappear->SetLocalPosY(85.0f);
 	disappear->pivot = OFFSET_B;
 	disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 	disappear->visible = false;
@@ -452,7 +462,7 @@ void bossFem::Update()
 			}
 			else
 			{
-				motionRand = RANDOM->Int(2, 2);
+				motionRand = RANDOM->Int(0, 6);
 
 				cout << "motionRand : " << motionRand << endl;
 
@@ -508,7 +518,7 @@ void bossFem::Update()
 					SOUND->Play("BSTELEPORT");
 					break;
 				case 4: //스킬1
-					getTickTime = 1.3f;//10초간 시전
+					getTickTime = 1.3f;
 					checkSkill_1On = true;
 					stand->visible = false;
 					disappear->visible = true;
@@ -516,7 +526,7 @@ void bossFem::Update()
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
 				case 5: //스킬2
-					getTickTime = 1.3f;//10초간 시전
+					getTickTime = 1.3f;
 					checkSkill_2On = true;
 					stand->visible = false;
 					disappear->visible = true;
@@ -545,7 +555,7 @@ void bossFem::Update()
 					}
 					else
 					{
-						getTickTime = 6.0f;
+						getTickTime = 4.0f;
 						BSstate = BOSSSTATE::STAND;
 						break;
 					}
@@ -612,7 +622,7 @@ void bossFem::Update()
 					break;
 				case 2: //공격
 					SOUND->Play("BSATTACK1");
-					stand->visible = false;
+					stand->visible = true;
 					attackCol->colOnOff = true;
 					attackCol->visible = true;
 					attackCol->SetLocalPosX(-100.0f);
@@ -631,7 +641,7 @@ void bossFem::Update()
 					SOUND->Play("BSTELEPORT");
 					break;
 				case 4:
-					getTickTime = 1.3f;//10초간 시전
+					getTickTime = 1.3f;
 					checkSkill_1On = true;
 					stand->visible = false;
 					disappear->visible = true;
@@ -639,7 +649,7 @@ void bossFem::Update()
 					BSstate = BOSSSTATE::DISAPPEAR;
 					break;
 				case 5:
-					getTickTime = 1.3f;//10초간 시전
+					getTickTime = 1.3f;
 					checkSkill_2On = true;
 					stand->visible = false;
 					disappear->visible = true;
@@ -668,7 +678,7 @@ void bossFem::Update()
 					}
 					else
 					{
-						getTickTime = 6.0f;
+						getTickTime = 4.0f;
 						BSstate = BOSSSTATE::STAND;
 						break;
 					}
@@ -762,7 +772,7 @@ void bossFem::Update()
 				attackCol->colOnOff = false;
 				attack[2]->visible = false;
 				stand->visible = true;
-				getTickTime = 5.0f;
+				getTickTime = 4.0f;
 
 				BSstate = BOSSSTATE::STAND;
 			}
@@ -786,7 +796,7 @@ void bossFem::Update()
 
 			walk->visible = false;
 			stand->visible = true;
-			getTickTime = 8.0f; //일단 8초동안 스탠드
+			getTickTime = 4.0f; //일단 8초동안 스탠드
 			BSstate = BOSSSTATE::STAND;
 		}
 	}
@@ -951,7 +961,7 @@ void bossFem::Update()
 		{
 			grog->visible = false;
 			stand->visible = true;
-			getTickTime = 6.0f;
+			getTickTime = 4.0f;
 			BSstate = BOSSSTATE::STAND;
 		}
 	}
@@ -1000,7 +1010,7 @@ void bossFem::Update()
 				skill1_2effect->visible = true;
 				attackCol->visible = true;
 				attackCol->colOnOff = true;
-				getTickTime = 10.0f; //10초 동안 레이저 공격
+				getTickTime = 6.0f; //10초 동안 레이저 공격
 			}
 		}
 		if (skill1_2->visible)
@@ -1066,7 +1076,7 @@ void bossFem::Update()
 				skill2_1->visible = false;
 				skill2_2->visible = true;
 				skill2_1effect->visible = true;
-				getTickTime = 10.0f;
+				getTickTime = 8.0f;
 			}
 		}
 		if (skill2_2->visible)
@@ -1101,6 +1111,7 @@ void bossFem::Update()
 
 	if (hp < 0)
 	{
+		die->visible = true;
 		col->visible = false;
 		col->colOnOff = false;
 		attackCol->visible = false;
@@ -1146,6 +1157,7 @@ void bossFem::Update()
 	skill2_1effect->Update();
 	grog->Update();
 	attackCol->Update();
+	die->Update();
 }
 
 void bossFem::Render()
@@ -1171,6 +1183,7 @@ void bossFem::Render()
 	skill2_2->Render();
 	grog->Render();
 	attackCol->Render();
+	die->Render();
 }
 
 ObRect* bossFem::getCol()

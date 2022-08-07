@@ -94,6 +94,7 @@ void Main::Init()
 
 	SOUND->AddSound("bgm.wav", "BGM",true);
 
+	startSceneTime = 5.0f;
 }
 
 void Main::Release()
@@ -108,135 +109,144 @@ void Main::Update()
 	walls[0].col->SetWorldPosX(app.GetHalfWidth() + 200.0f);
 	walls[1].col->SetWorldPosX(-app.GetHalfWidth() - 200.0f);
 
-	boss->setBossDir(player->getCol()->GetWorldPos());
-
-	
-	if (INPUT->KeyPress(VK_RIGHT))//player->getPlState() == PLSTATE::WALK_R
+	startSceneTime -= DELTA;
+	if (startSceneTime > 0.0f)
 	{
-		if (player->getPlState() == PLSTATE::WALK_R ||
-			player->getPlState() == PLSTATE::JUMP)
+		SOUND->Play("BGM");
+		SOUND->SetVolume("BGM", 0.3f);
+		player->Update();
+	}
+	else
+	{
+		boss->setBossDir(player->getCol()->GetWorldPos());
+
+		if (INPUT->KeyPress(VK_RIGHT))
 		{
-			//1초에 100픽셀 움직여라
-			bg1->uv.x += DELTA / bg1->scale.x * 50.0f;
-			bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
+			if (player->getPlState() == PLSTATE::WALK_R ||
+				player->getPlState() == PLSTATE::JUMP)
+			{
+				////1초에 50픽셀 움직여라
+				//bg1->uv.x += DELTA / bg1->scale.x * 50.0f;
+				//bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
+				bg1->uv.x += DELTA / bg1->scale.x * 50.0f;
+				bg1->uv.z += DELTA / bg1->scale.x * 50.0f;
 
-			bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
-			bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
+				////1초에 100픽셀 움직여라
+				//bg2->uv.x += DELTA / bg2->scale.x * 100.0f;
+				//bg2->uv.z += DELTA / bg2->scale.x * 100.0f;
 
-			player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
-			bgCol->MoveWorldPos(RIGHT * 200.0f * DELTA);
-			CAM->position += RIGHT * 200.0f * DELTA;
-		}
-
-	}
-	else if (INPUT->KeyPress(VK_LEFT))
-	{
-		if (player->getPlState() == PLSTATE::WALK_L ||
-			player->getPlState() == PLSTATE::JUMP)
-		{
-			bg1->uv.x -= DELTA / bg1->scale.x * 50.0f;
-			bg1->uv.z -= DELTA / bg1->scale.x * 50.0f;
-
-			bg2->uv.x -= DELTA / bg2->scale.x * 100.0f;
-			bg2->uv.z -= DELTA / bg2->scale.x * 100.0f;
-
-			player->getCol()->MoveWorldPos(LEFT * 200.0f * DELTA);
-			bgCol->MoveWorldPos(LEFT * 200.0f * DELTA);
-			CAM->position += LEFT * 200.0f * DELTA;
-		}
-
-	}
-	if (player->getPlState() == PLSTATE::RUN_R)//달리기 INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT)
-	{
-		bg1->uv.x += DELTA / bg1->scale.x * 200.0f;
-		bg1->uv.z += DELTA / bg1->scale.x * 200.0f;
-
-		bg2->uv.x += DELTA / bg2->scale.x * 300.0f;
-		bg2->uv.z += DELTA / bg2->scale.x * 300.0f;
-
-		player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
-		bgCol->MoveWorldPos(RIGHT * 1000.0f * DELTA);
-		CAM->position += RIGHT * 1000.0f * DELTA;
-	}
-	else if (player->getPlState() == PLSTATE::RUN_L) {
-		bg1->uv.x -= DELTA / bg1->scale.x * 200.0f;
-		bg1->uv.z -= DELTA / bg1->scale.x * 200.0f;
-
-		bg2->uv.x -= DELTA / bg2->scale.x * 300.0f;
-		bg2->uv.z -= DELTA / bg2->scale.x * 300.0f;
-
-		player->getCol()->MoveWorldPos(LEFT * 1000.0f * DELTA);
-		bgCol->MoveWorldPos(LEFT * 1000.0f * DELTA);
-		CAM->position += LEFT * 1000.0f * DELTA;
-	}
-	if (INPUT->KeyDown('Z'))//공격
-	{
-		if(player->getPlState() == PLSTATE::ATTACK)
-			if(player->getPlDir() == RIGHT)
-				player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
-			else if(player->getPlDir() == LEFT)
-				player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x - 5.0f);
-	}
-	if (INPUT->KeyDown('A')) //스킬 돌진
-	{
-		if (player->getPlDir() == RIGHT)
-		{
-			if (player->getPlState() == PLSTATE::SKILL1)
-				for (int i = 0; i < 1000; i++)
-				{
-					player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
-					bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
-					CAM->position += RIGHT * 10.0f * DELTA;
-				}
+				player->getCol()->MoveWorldPos(RIGHT * 200.0f * DELTA);
+				bgCol->MoveWorldPos(RIGHT * 200.0f * DELTA);
+				CAM->position += RIGHT * 200.0f * DELTA;
+			}
 
 		}
-		else if (player->getPlDir() == LEFT)
+		else if (INPUT->KeyPress(VK_LEFT))
 		{
-			if (player->getPlState() == PLSTATE::SKILL1)
-				for (int i = 0; i < 1000; i++)
-				{
-					player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
-					bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
-					CAM->position += LEFT * 10.0f * DELTA;
-				}
+			if (player->getPlState() == PLSTATE::WALK_L ||
+				player->getPlState() == PLSTATE::JUMP)
+			{
+				bg1->uv.x -= DELTA / bg1->scale.x * 50.0f;
+				bg1->uv.z -= DELTA / bg1->scale.x * 50.0f;
+
+				bg2->uv.x -= DELTA / bg2->scale.x * 100.0f;
+				bg2->uv.z -= DELTA / bg2->scale.x * 100.0f;
+
+				player->getCol()->MoveWorldPos(LEFT * 200.0f * DELTA);
+				bgCol->MoveWorldPos(LEFT * 200.0f * DELTA);
+				CAM->position += LEFT * 200.0f * DELTA;
+			}
+
 		}
+		if (player->getPlState() == PLSTATE::RUN_R)//달리기 INPUT->KeyPress(VK_RIGHT) && INPUT->KeyPress(VK_LSHIFT)
+		{
+			bg1->uv.x += DELTA / bg1->scale.x * 200.0f;
+			bg1->uv.z += DELTA / bg1->scale.x * 200.0f;
+
+			bg2->uv.x += DELTA / bg2->scale.x * 300.0f;
+			bg2->uv.z += DELTA / bg2->scale.x * 300.0f;
+
+			player->getCol()->MoveWorldPos(RIGHT * 1000.0f * DELTA);
+			bgCol->MoveWorldPos(RIGHT * 1000.0f * DELTA);
+			CAM->position += RIGHT * 1000.0f * DELTA;
+		}
+		else if (player->getPlState() == PLSTATE::RUN_L) {
+			bg1->uv.x -= DELTA / bg1->scale.x * 200.0f;
+			bg1->uv.z -= DELTA / bg1->scale.x * 200.0f;
+
+			bg2->uv.x -= DELTA / bg2->scale.x * 300.0f;
+			bg2->uv.z -= DELTA / bg2->scale.x * 300.0f;
+
+			player->getCol()->MoveWorldPos(LEFT * 1000.0f * DELTA);
+			bgCol->MoveWorldPos(LEFT * 1000.0f * DELTA);
+			CAM->position += LEFT * 1000.0f * DELTA;
+		}
+		if (INPUT->KeyDown('Z'))//공격
+		{
+			if (player->getPlState() == PLSTATE::ATTACK)
+				if (player->getPlDir() == RIGHT)
+					player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x + 5.0f);
+				else if (player->getPlDir() == LEFT)
+					player->getCol()->SetWorldPosX(player->getCol()->GetWorldPos().x - 5.0f);
+		}
+		if (INPUT->KeyDown('A')) //스킬 돌진
+		{
+			if (player->getPlDir() == RIGHT)
+			{
+				if (player->getPlState() == PLSTATE::SKILL1)
+					for (int i = 0; i < 1000; i++)
+					{
+						player->getCol()->MoveWorldPos(RIGHT * 10.0f * DELTA);
+						bgCol->MoveWorldPos(RIGHT * 10.0f * DELTA);
+						CAM->position += RIGHT * 10.0f * DELTA;
+					}
+
+			}
+			else if (player->getPlDir() == LEFT)
+			{
+				if (player->getPlState() == PLSTATE::SKILL1)
+					for (int i = 0; i < 1000; i++)
+					{
+						player->getCol()->MoveWorldPos(LEFT * 10.0f * DELTA);
+						bgCol->MoveWorldPos(LEFT * 10.0f * DELTA);
+						CAM->position += LEFT * 10.0f * DELTA;
+					}
+			}
+		}
+
+		//맵 이동범위 제한
+
+		player->Update();
+
+		float minX = Utility::Saturate(player->getCol()->GetWorldPos().x, -app.GetHalfWidth(), app.GetHalfWidth());
+
+		player->getCol()->SetWorldPosX(minX);
+
+		minX = Utility::Saturate(boss->getCol()->GetWorldPos().x, -700.0f + 25.0f, 700.0f - 25.0f);
+
+		boss->getCol()->SetWorldPosX(minX);
+
+		minX = Utility::Saturate(CAM->position.x, -400.0f + 25.0f, 400.0f - 25.0f);
+
+		CAM->position.x = minX;
+
+		minX = Utility::Saturate(bgCol->GetWorldPos().x, -700.0f + 25.0f, 700.0f - 25.0f);
+
+		bgCol->SetWorldPosX(minX);
+
+		minX = Utility::Saturate(bg1->uv.x, 0.0f, 0.05f);
+
+		bg1->uv.x = minX;
+
+		minX = Utility::Saturate(bg1->uv.z, 0.95f, 1.0f);
+
+		bg1->uv.z = minX;
+
+		//cout << "bg1.uv.x = " << bg1->uv.x << endl;
+		//cout << "bg1.uv.z = " << bg1->uv.z << endl;
+
 	}
 
-
-
-	//맵 이동범위 제한
-
-	player->Update();
-
-	float minX = Utility::Saturate(player->getCol()->GetWorldPos().x, -app.GetHalfWidth(), app.GetHalfWidth());
-
-	player->getCol()->SetWorldPosX(minX);
-
-	minX = Utility::Saturate(boss->getCol()->GetWorldPos().x, -700.0f + 25.0f, 700.0f - 25.0f);
-
-	boss->getCol()->SetWorldPosX(minX);
-
-	minX = Utility::Saturate(CAM->position.x, -700.0f + 25.0f, 700.0f - 25.0f);
-
-	CAM->position.x = minX;
-
-	minX = Utility::Saturate(bgCol->GetWorldPos().x, -700.0f + 25.0f, 700.0f - 25.0f);
-
-	bgCol->SetWorldPosX(minX);
-
-	//배경이동도 제한
-	//minX = Utility::Saturate(bg1->uv.x, -0.09f, 0.09f);
-	//bg1->uv.x = minX;
-	//
-	//minX = Utility::Saturate(bg1->uv.z, -0.09f, 0.09f);
-	//bg1->uv.z = minX;
-
-	//bg2->uv.x -= DELTA / bg2->scale.x * 300.0f;
-	//bg2->uv.z -= DELTA / bg2->scale.x * 300.0f;
-
-	//cout << "bg1.uv.x = " << bg1->uv.x << endl;
-	//오른쪽, 0.0867723, -0.09
-	
 	bg1->Update();
 	bg2->Update();
 	bgCol->Update();

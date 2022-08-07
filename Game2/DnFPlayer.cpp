@@ -4,7 +4,7 @@ DnFPlayer::DnFPlayer()
 {
 	col = new ObRect();
 	col->scale = Vector2(120.0f, 300.0f) / 2.0f;
-	col->SetWorldPos(Vector2(150.0f, -450.0f));
+	col->SetWorldPos(Vector2(-450.0f, 450.0f));
 	col->pivot = OFFSET_B;
 	col->isFilled = false;
 	col->visible = true;
@@ -1018,6 +1018,8 @@ void DnFPlayer::Update()
 
 	if (hp < 0)
 	{
+
+
 		col->visible = false;
 		col->colOnOff = false;
 
