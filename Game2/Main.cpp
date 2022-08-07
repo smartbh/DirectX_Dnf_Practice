@@ -222,10 +222,19 @@ void Main::Update()
 	bgCol->SetWorldPosX(minX);
 
 	//배경이동도 제한
-	minX = Utility::Saturate(bg1->uv.x, -700.0f + 25.0f, 700.0f - 25.0f);
+	minX = Utility::Saturate(bg1->uv.x, -0.09f, 0.09f);
+	bg1->uv.x = minX;
+	
+	minX = Utility::Saturate(bg1->uv.z, -0.09f, 0.09f);
+	bg1->uv.z = minX;
+	//
 	//
 
-	//cout << "bg1.uv.x = " << bg1->uv.x << endl;
+	//bg2->uv.x -= DELTA / bg2->scale.x * 300.0f;
+	//bg2->uv.z -= DELTA / bg2->scale.x * 300.0f;
+
+	cout << "bg1.uv.x = " << bg1->uv.x << endl;
+	//오른쪽, 0.0867723, -0.09
 	
 	bg1->Update();
 	bg2->Update();
