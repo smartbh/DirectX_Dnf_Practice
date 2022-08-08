@@ -142,7 +142,7 @@ bossFem::bossFem()
 	attack[2] = new ObImage(L"attack3.png");
 	attack[2]->SetParentRT(*col);
 	attack[2]->maxFrame.x = 17;
-	attack[2]->SetLocalPos(Vector2(20.0f ,-5.0f));
+	attack[2]->SetLocalPos(Vector2(20.0f, -5.0f));
 	attack[2]->scale.x = 359.0f;
 	attack[2]->scale.y = 239.0f;
 	attack[2]->pivot = OFFSET_B;
@@ -259,7 +259,7 @@ bossFem::bossFem()
 	SOUND->AddSound("boss_skills2.wav", "BSSKILL2");
 	SOUND->AddSound("boss_skills3.wav", "BSSKILL3");
 	SOUND->AddSound("boss_skills4.wav", "BSSKILL4");
-	
+
 	SOUND->AddSound("boss_skill1.wav", "BSSKILL11");
 	SOUND->AddSound("boss_skill1_laugh.wav", "BSSKILL12");
 
@@ -269,7 +269,7 @@ bossFem::bossFem()
 	SOUND->AddSound("boss_normal3.wav", "BSNORMAL3");
 	SOUND->AddSound("boss_normal4.wav", "BSNORMAL4");
 	SOUND->AddSound("boss_normal5.wav", "BSNORMAL5");
-	
+
 	//사망
 	SOUND->AddSound("boss_death.wav", "BSDEATH");
 
@@ -284,7 +284,7 @@ bossFem::bossFem()
 	SOUND->AddSound("boss_skill1_fire.wav", "BSSKILLFIRE");
 	SOUND->AddSound("boss_skill2_explode.wav", "BSBOOM");
 
-	
+
 }
 
 bossFem::~bossFem()
@@ -293,7 +293,7 @@ bossFem::~bossFem()
 
 void bossFem::Update()
 {
-	
+
 
 	if (isDamaged) //update에, isDamaged가 true면
 	{
@@ -492,6 +492,7 @@ void bossFem::Update()
 						SOUND->Play("BSNORMAL5");
 						break;
 					}
+					getTickTime = 4.0f;
 					BSstate = BOSSSTATE::STAND;
 					break;
 				case 1: //걷기
@@ -621,6 +622,7 @@ void bossFem::Update()
 						SOUND->Play("BSNORMAL5");
 						break;
 					}
+					getTickTime = 4.0f;
 					BSstate = BOSSSTATE::STAND;
 					break;
 				case 1:
@@ -710,7 +712,7 @@ void bossFem::Update()
 					attack[0]->reverseLR = false;
 					attackCol->SetLocalPosX(100.0f);
 				}
-					
+
 				else if (bossDir == LEFT)
 				{
 					attack[0]->reverseLR = true;
@@ -846,7 +848,7 @@ void bossFem::Update()
 				{
 					skill1_1->reverseLR = true;
 					skill1_2->reverseLR = true;
-					
+
 					skill1_1effect->reverseLR = true;
 					skill1_1effect->SetLocalPosX(100.0f);
 					skill1_1effect->SetLocalPosY(100.0f);
@@ -925,7 +927,7 @@ void bossFem::Update()
 			{
 				getTickTime = 1.0f;
 				disappear->visible = false;
-				col->SetWorldPos(Vector2( 0.0f, 100.0f)); //가운데로 가서
+				col->SetWorldPos(Vector2(0.0f, 100.0f)); //가운데로 가서
 				appear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 				appear->visible = true;
 				BSstate = BOSSSTATE::APPEAR;
@@ -977,7 +979,7 @@ void bossFem::Update()
 
 	else if (BSstate == BOSSSTATE::SKILL1)
 	{
-		
+
 		if (skill1_1->visible)
 		{
 
@@ -1029,7 +1031,7 @@ void bossFem::Update()
 			if (getTickTime > 0.0f)
 			{
 				attackCol->visible = false;
-				attackCol->colOnOff = true;					
+				attackCol->colOnOff = true;
 			}
 			else
 			{
@@ -1111,7 +1113,7 @@ void bossFem::Update()
 	}
 	else if (BSstate == BOSSSTATE::DIE)
 	{
-		
+
 		getTickTime -= DELTA;
 		if (getTickTime > 0.0f)
 		{
