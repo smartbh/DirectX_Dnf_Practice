@@ -7,7 +7,7 @@ DnFPlayer::DnFPlayer()
 	col->SetWorldPos(Vector2(-450.0f, 450.0f));
 	col->pivot = OFFSET_B;
 	col->isFilled = false;
-	col->visible = true;
+	col->visible = false;
 	col->collider = COLLIDER::RECT;
 
 
@@ -18,7 +18,7 @@ DnFPlayer::DnFPlayer()
 	weaponCol->SetLocalPos(Vector2(0.0f, 50.0f));
 	weaponCol->pivot = OFFSET_N;
 	weaponCol->isFilled = false;
-	weaponCol->visible = true;
+	weaponCol->visible = false;
 	weaponCol->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 	weaponCol->collider = COLLIDER::RECT;
 
@@ -394,7 +394,7 @@ void DnFPlayer::Update()
 					SOUND->Play("SATTACK12");
 					break;
 				}
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				stand1->visible = false;
 
 				attack1->visible = true;
@@ -429,7 +429,7 @@ void DnFPlayer::Update()
 				}
 
 				SOUND->Play("SSKILL1");
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				stand1->visible = false;
 
 				weaponCol->colOnOff = true;
@@ -459,7 +459,7 @@ void DnFPlayer::Update()
 				}
 
 				SOUND->Play("SSKILL2");
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				stand1->visible = false;
 
 				weaponCol->colOnOff = true;
@@ -556,7 +556,7 @@ void DnFPlayer::Update()
 					break;
 				}
 
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				stand1->visible = false;
 
 				attack1->visible = true;
@@ -590,7 +590,7 @@ void DnFPlayer::Update()
 				}
 
 				SOUND->Play("SSKILL1");
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				stand1->visible = false;
 
 				weaponCol->colOnOff = true;
@@ -620,7 +620,7 @@ void DnFPlayer::Update()
 				}
 
 				SOUND->Play("SSKILL2");
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 
 				stand1->visible = false;
 
@@ -834,7 +834,7 @@ void DnFPlayer::Update()
 		{
 			if (INPUT->KeyDown('Z'))
 			{
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				weaponCol->colOnOff = true;
 				weaponCol->scale = Vector2(100.0f, 200.0f);
 				weaponCol->SetLocalPos(Vector2(30.0f, 30.0f));
@@ -851,7 +851,7 @@ void DnFPlayer::Update()
 		{
 			if (INPUT->KeyDown('Z')) //¿ÞÂÊ°ø°Ý
 			{
-				weaponCol->visible = true;
+				weaponCol->visible = false;
 				weaponCol->colOnOff = true;
 				weaponCol->scale = Vector2(100.0f, 200.0f);
 				weaponCol->SetLocalPos(Vector2(-30.0f, -30.0f));

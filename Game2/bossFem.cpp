@@ -7,7 +7,7 @@ bossFem::bossFem()
 	col->SetWorldPos(Vector2(0.0f, 0.0f));
 	col->pivot = OFFSET_B;
 	col->isFilled = false;
-	col->visible = true;
+	col->visible = false;
 	col->collider = COLLIDER::RECT;
 
 	//무기 콜라이더
@@ -17,7 +17,7 @@ bossFem::bossFem()
 	attackCol->SetLocalPos(Vector2(0.0f, 50.0f));
 	attackCol->pivot = OFFSET_N;
 	attackCol->isFilled = false;
-	attackCol->visible = true;
+	attackCol->visible = false;
 	attackCol->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 	attackCol->collider = COLLIDER::RECT;
 
@@ -240,13 +240,13 @@ bossFem::bossFem()
 	getTickTime = 1.3f;
 	Timer = 0.0f;
 	hp = 100.0f;
-	imageColor = 0.5f;
 
 	attackCount = 0;
 	motionRand = 0;
 	checkGrog = false;
 	checkSkill_1On = false;
 	checkSkill_2On = false;
+	isBossDeath = false;
 	soundRand = 0;
 
 	///보스 사운드 작업
@@ -505,7 +505,7 @@ void bossFem::Update()
 					SOUND->Play("BSATTACK1");
 					stand->visible = false;
 					attackCol->colOnOff = true;
-					attackCol->visible = true;
+					attackCol->visible = false;
 					attackCol->SetLocalPosX(100.0f);
 					attackCol->scale = Vector2(100.0f, 400.0f);
 					attack[0]->visible = true;
@@ -517,7 +517,7 @@ void bossFem::Update()
 					stand->visible = false;
 					getTickTime = 1.3f;
 					attackCol->colOnOff = true;
-					attackCol->visible = true;
+					attackCol->visible = false;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 					BSstate = BOSSSTATE::DISAPPEAR;
@@ -527,7 +527,7 @@ void bossFem::Update()
 					getTickTime = 1.3f;
 					checkSkill_1On = true;
 					attackCol->colOnOff = true;
-					attackCol->visible = true;
+					attackCol->visible = false;
 					stand->visible = false;
 					disappear->visible = true;
 					disappear->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
@@ -536,7 +536,7 @@ void bossFem::Update()
 				case 5: //스킬2
 					getTickTime = 1.3f;
 					attackCol->colOnOff = true;
-					attackCol->visible = true;
+					attackCol->visible = false;
 					checkSkill_2On = true;
 					stand->visible = false;
 					disappear->visible = true;
@@ -634,7 +634,7 @@ void bossFem::Update()
 					SOUND->Play("BSATTACK1");
 					stand->visible = false;
 					attackCol->colOnOff = true;
-					attackCol->visible = true;
+					attackCol->visible = false;
 					attackCol->SetLocalPosX(-100.0f);
 					attackCol->scale = Vector2(100.0f, 400.0f);
 					attack[0]->visible = true;
@@ -699,7 +699,7 @@ void bossFem::Update()
 	}
 	else if (BSstate == BOSSSTATE::ATTACK)
 	{
-		attackCol->visible = true;
+		attackCol->visible = false;
 		//0.9 1.7
 		if (attack[0]->visible) {
 			getTickTime -= DELTA;
@@ -837,7 +837,7 @@ void bossFem::Update()
 					skill1_2effect->SetLocalPosY(100.0f);
 					skill1_2effect->pivot = OFFSET_L;
 
-					attackCol->visible = true;
+					attackCol->visible = false;
 					attackCol->pivot = OFFSET_L;
 					attackCol->SetLocalPosX(100.0f);
 					attackCol->scale = Vector2(app.GetWidth() - 200.0f, 400.0f);
@@ -857,7 +857,7 @@ void bossFem::Update()
 					skill1_2effect->SetLocalPosY(100.0f);
 					skill1_2effect->pivot = OFFSET_R;
 
-					attackCol->visible = true;
+					attackCol->visible = false;
 					attackCol->pivot = OFFSET_R;
 					attackCol->SetLocalPosX(-100.0f);
 					attackCol->scale = Vector2(app.GetWidth() - 200.0f, 400.0f);
@@ -874,7 +874,7 @@ void bossFem::Update()
 				appear->visible = false;
 				col->SetLocalPosY(100.0f);
 
-				attackCol->visible = true;
+				attackCol->visible = false;
 				attackCol->SetLocalPos(Vector2(-550.0f, -550.0f));
 				attackCol->scale = Vector2(300.0f, 700.0f);
 				attackCol->pivot = OFFSET_B;
@@ -1017,7 +1017,7 @@ void bossFem::Update()
 				skill1_2->visible = true;
 				skill1_1effect->visible = false;
 				skill1_2effect->visible = true;
-				attackCol->visible = true;
+				attackCol->visible = false;
 				attackCol->colOnOff = true;
 				getTickTime = 6.0f; //10초 동안 레이저 공격
 			}
@@ -1028,15 +1028,8 @@ void bossFem::Update()
 			getTickTime -= DELTA;
 			if (getTickTime > 0.0f)
 			{
-				attackCol->visible = true;
-				attackCol->colOnOff = true;
-
-				if (imageColor < 0.7)
-				{
-					imageColor += 0.0001f;
-					skill1_2->color = Color(imageColor, imageColor, imageColor,0.5f);
-				}
-					
+				attackCol->visible = false;
+				attackCol->colOnOff = true;					
 			}
 			else
 			{
@@ -1048,8 +1041,6 @@ void bossFem::Update()
 				checkSkill_1On = false;
 				attackCol->colOnOff = false; //공격끝 콜라이더 끄기
 				attackCol->visible = false;
-				imageColor = 0.0f;
-				skill1_2->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 				BSstate = BOSSSTATE::DISAPPEAR;
 			}
 		}
@@ -1097,7 +1088,7 @@ void bossFem::Update()
 				float XlocalPos = attackCol->GetLocalPos().x;
 
 				attackCol->SetLocalPosX(XlocalPos);
-				attackCol->visible = true;
+				attackCol->visible = false;
 				//attackCol->colOnOff = true;
 				skill2_1effect->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 				attackCol->SetLocalPosX(XlocalPos += 0.5f);
@@ -1120,11 +1111,20 @@ void bossFem::Update()
 	}
 	else if (BSstate == BOSSSTATE::DIE)
 	{
+		
+		getTickTime -= DELTA;
+		if (getTickTime > 0.0f)
+		{
 
+		}
+		else
+		{
+			SOUND->Stop("BSDEATH");
+		}
 	}
 
 
-	if (hp < 0)
+	if (hp < 0 && !isBossDeath)
 	{
 		die->visible = true;
 		SOUND->Play("BSDEATH");
@@ -1146,6 +1146,8 @@ void bossFem::Update()
 		skill2_2->visible = false;
 		skill2_1effect->visible = false;
 		grog->visible = false;
+		getTickTime = 10.0f;
+		isBossDeath = true;
 		BSstate = BOSSSTATE::DIE;
 	}
 	else if (hp > 0 && hp < 50.0f)

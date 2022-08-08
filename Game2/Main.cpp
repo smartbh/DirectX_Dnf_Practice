@@ -63,6 +63,7 @@ void Main::Init()
 	bgCol->isFilled = false;
 	bgCol->pivot = OFFSET_T;
 	bgCol->SetWorldPos(Vector2(0.0f, -app.GetHalfHeight() + 50.0f)); // -226.0f
+	bgCol->visible = false;
 	bgCol->collider = COLLIDER::RECT;
 
 	//발판 세개 만들기
@@ -71,6 +72,7 @@ void Main::Init()
 	floors[0].col->pivot = OFFSET_T;
 	floors[0].col->isFilled = false;
 	floors[0].col->SetWorldPos(Vector2(100.0f, -200.0f));
+	floors[0].col->visible = false;
 	floors[0].col->collider = COLLIDER::RECT;
 
 	floors[0].img = new ObImage(L"floor.png");
@@ -84,6 +86,7 @@ void Main::Init()
 	floors[1].col->pivot = OFFSET_T;
 	floors[1].col->isFilled = false;
 	floors[1].col->SetWorldPos(Vector2(300.0f, 50.0f));
+	floors[1].col->visible = false;
 	floors[1].col->collider = COLLIDER::RECT;
 
 	floors[1].img = new ObImage(L"floor.png");
@@ -97,6 +100,7 @@ void Main::Init()
 	floors[2].col->pivot = OFFSET_T;
 	floors[2].col->isFilled = false;
 	floors[2].col->SetWorldPos(Vector2(-200.0f, -100.0f));
+	floors[2].col->visible = false;
 	floors[2].col->collider = COLLIDER::RECT;
 
 	floors[2].img = new ObImage(L"floor.png");
@@ -111,6 +115,7 @@ void Main::Init()
 	walls[0].col->pivot = OFFSET_B;
 	walls[0].col->isFilled = false;
 	walls[0].col->SetWorldPos(Vector2(app.GetHalfWidth(), -600.0f));
+	walls[0].col->visible = false;
 	walls[0].col->collider = COLLIDER::RECT;
 
 	walls[0].img = new ObImage(L"wall.png");
@@ -124,6 +129,7 @@ void Main::Init()
 	walls[1].col->pivot = OFFSET_B;
 	walls[1].col->isFilled = false;
 	walls[1].col->SetWorldPos(Vector2(-app.GetHalfWidth(), -600.0f));
+	walls[1].col->visible = false;
 	walls[1].col->collider = COLLIDER::RECT;
 
 	walls[1].img = new ObImage(L"wall.png");

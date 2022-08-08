@@ -56,12 +56,12 @@ private:
 	float			Timer;
 	float			damagingTime;
 	float			gravity;
-	float			imageColor;
 
 	bool			isDamaged;
 	bool			checkGrog;
 	bool			checkSkill_1On;
 	bool			checkSkill_2On;
+	bool			isBossDeath;
 
 	float			hp;
 	Vector2			bossDir;
